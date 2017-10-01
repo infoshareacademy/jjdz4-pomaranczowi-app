@@ -3,6 +3,7 @@ package pomaranczowi;
 //Price objects can be stored in and returned by Currency objects
 public class Price {
 
+    private String name;
     private String date;
     private Double open;
     private Double high;
@@ -59,4 +60,11 @@ public class Price {
         this.volume = volume;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

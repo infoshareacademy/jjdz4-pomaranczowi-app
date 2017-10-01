@@ -8,6 +8,7 @@ public class App
         Currency aud = new Currency("data/currency/AUD.txt");
         String date = "20160414";
         System.out.println("Wczytano notowania dla "+aud.countPrices()+" dni.");
+        System.out.println("Wczytana waluta: "+aud.getName());
         System.out.println("Data pierwszego wczytanego notowania to: "+aud.firstDate());
         System.out.println("Data ostatniego wczytanego notowania to: "+aud.lastDate()+"\n");
         System.out.println("Wartość open dla notowania z dnia "+date+" wynosi: "+aud.getOpen(date));
