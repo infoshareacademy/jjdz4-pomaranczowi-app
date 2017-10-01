@@ -58,4 +58,5 @@ public class Price {
     public void setVolume(Double volume) {
         this.volume = volume;
     }
+
 }
