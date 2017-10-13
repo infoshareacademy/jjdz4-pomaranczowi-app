@@ -21,7 +21,7 @@ public class MenuPosition {
         this.active = isactive;
     }
 
-    public void Show() {
+    public void show() {
         System.out.println(label);
     }
 
