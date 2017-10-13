@@ -32,7 +32,11 @@ public class Menu {
         while (!correct) {
             try {
                 Integer option = input.nextInt();
-                correct = true;
+                if (option < menuPositions.size()) {
+                    correct = true;
+                } else {
+                    System.out.println("Błędny wybór!");
+                }
             } catch (InputMismatchException e) {
                 System.out.println("Podaj liczbę!");
                 input.next();
