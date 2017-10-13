@@ -9,15 +9,17 @@ public class Menu {
 
     private ArrayList<MenuPosition> menuPositions = new ArrayList<>();
     private String title;
+    private boolean exit = false;
 
     public Menu(String title) {
         this.title = title;
     }
 
     public void add(String label) {
-        menuPositions.add(new MenuPosition(label));
+        menuPositions.add(new MenuPosition(menuPositions.size(),label));
     }
 
+    //menu initialization
     public int Init() {
         System.out.println("\n"+title+"\n");
         for (MenuPosition menuPosition : menuPositions) {
@@ -27,11 +29,13 @@ public class Menu {
         System.out.println("\nWybierz pozycję (podaj liczbę): ");
 
         Scanner input = new Scanner(System.in);
-        boolean correct = false;
+        boolean correct = false; //is user choice correct?
+        Integer option = 0; //user choice
 
+        //checking if chosen option is correct
         while (!correct) {
             try {
-                Integer option = input.nextInt();
+                option = input.nextInt();
                 if (option < menuPositions.size()) {
                     correct = true;
                 } else {
@@ -43,6 +47,19 @@ public class Menu {
             }
         }
 
-        return 0;
+        return option;
+    }
+
+    //used with while loop to allow user exit from a menu
+    public boolean wantExit() {
+        if (exit) {
+            exit = false;
+            return true;
+        }  else return exit;
+    }
+
+    //gives an information that user wants to exit a menu
+    public void exit() {
+        exit = true;
     }
 }

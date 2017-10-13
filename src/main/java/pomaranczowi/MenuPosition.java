@@ -2,15 +2,13 @@ package pomaranczowi;
 
 public class MenuPosition {
 
-    static int counter;
     private String label;
     private Boolean active;
     private int id;
 
-    public MenuPosition(String label) {
-        id = counter;
+    public MenuPosition(int id, String label) {
+        this.id = id;
         this.label = label;
-        counter++;
     }
 
     public void setLabel(String label) {
