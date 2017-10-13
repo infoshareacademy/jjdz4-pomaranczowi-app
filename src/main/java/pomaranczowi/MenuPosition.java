@@ -9,7 +9,7 @@ public class MenuPosition {
 
     public MenuPosition(String label) {
         id = counter;
-        this.label = "( ) "+label;
+        this.label = label;
         counter++;
     }
 
@@ -18,11 +18,27 @@ public class MenuPosition {
     }
 
     public void Active(boolean isactive) {
-        this.active = isactive;
+        this.setActive(isactive);
     }
 
     public void show() {
-        System.out.println(label);
+        System.out.println(getId()+") "+getLabel());
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

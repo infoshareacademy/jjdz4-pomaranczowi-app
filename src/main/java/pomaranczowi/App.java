@@ -15,5 +15,12 @@ public class App
         System.out.println("Wartość low dla notowania z dnia "+date+" wynosi: "+aud.getLow(date));
         System.out.println("Wartość close dla notowania z dnia "+date+" wynosi: "+aud.getClose(date));
 
+        Menu menu = new Menu("Analizator Finansowy");
+        menu.add("Notowania giełdowe");
+        menu.add("Notowania walut");
+        menu.add("Wyjście");
+
+        menu.Init();
+
     }
 }
