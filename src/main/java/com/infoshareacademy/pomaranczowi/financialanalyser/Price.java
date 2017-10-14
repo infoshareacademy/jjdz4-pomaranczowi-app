@@ -1,4 +1,4 @@
-package pomaranczowi;
+package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 //Price objects can be stored in and returned by Currency objects
 public class Price {

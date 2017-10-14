@@ -1,4 +1,4 @@
-package pomaranczowi;
+package com.infoshareacademy.pomaranczowi;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
