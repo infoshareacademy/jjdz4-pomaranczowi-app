@@ -29,15 +29,15 @@ public class Menu {
         System.out.println("\nWybierz pozycję (podaj liczbę): ");
 
         Scanner input = new Scanner(System.in);
-        boolean correct = false; //is user choice correct?
-        Integer option = 0; //user choice
+        boolean isUserChoiceCorrect = false;
+        Integer userChoice = 0;
 
-        //checking if chosen option is correct
-        while (!correct) {
+        //checking if choosen option is correct
+        while (!isUserChoiceCorrect) {
             try {
-                option = input.nextInt();
-                if (option < menuPositions.size()) {
-                    correct = true;
+                userChoice = input.nextInt();
+                if (userChoice < menuPositions.size()) {
+                    isUserChoiceCorrect = true;
                 } else {
                     System.out.println("Błędny wybór!");
                 }
@@ -47,7 +47,7 @@ public class Menu {
             }
         }
 
-        return option;
+        return userChoice;
     }
 
     //used with while loop to allow user exit from a menu
