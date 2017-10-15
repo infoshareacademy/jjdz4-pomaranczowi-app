@@ -1,10 +1,14 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 //Price objects can be stored in and returned by Currency objects
 public class Price {
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     private String name;
-    private String date;
+    private LocalDate date;
     private Double open;
     private Double high;
     private Double low;
@@ -12,12 +16,12 @@ public class Price {
     private Double volume;
 
     //setters and getters for private variables
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.date = LocalDate.parse(date,formatter);
     }
 
     public Double getOpen() {

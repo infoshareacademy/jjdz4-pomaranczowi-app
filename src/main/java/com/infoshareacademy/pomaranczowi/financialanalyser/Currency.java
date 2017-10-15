@@ -2,6 +2,8 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -52,8 +54,9 @@ class Currency {
     //returns Price object for demanded date (in String), if no object returns null
     public Price getPrice(String date) {
         int i = 0;
+        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
-            if (date.equals(x.getDate())) {
+            if (localDate.equals(x.getDate())) {
                 return prices.get(i);
             }
             i++;
@@ -63,8 +66,9 @@ class Currency {
 
     public Double getOpen(String date) {
         int i = 0;
+        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
-            if (date.equals(x.getDate())) {
+            if (localDate.equals(x.getDate())) {
                 return x.getOpen();
             }
             i++;
@@ -74,8 +78,9 @@ class Currency {
 
     public Double getHigh(String date) {
         int i = 0;
+        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
-            if (date.equals(x.getDate())) {
+            if (localDate.equals(x.getDate())) {
                 return x.getHigh();
             }
             i++;
@@ -85,8 +90,9 @@ class Currency {
 
     public Double getLow(String date) {
         int i = 0;
+        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
-            if (date.equals(x.getDate())) {
+            if (localDate.equals(x.getDate())) {
                 return x.getLow();
             }
             i++;
@@ -96,8 +102,9 @@ class Currency {
 
     public Double getClose(String date) {
         int i = 0;
+        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
-            if (date.equals(x.getDate())) {
+            if (localDate.equals(x.getDate())) {
                 return x.getClose();
             }
             i++;
@@ -107,7 +114,7 @@ class Currency {
 
     public String firstDate() {
         try {
-            return prices.get(1).getDate();
+            return prices.get(1).getDate().toString();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
@@ -116,7 +123,7 @@ class Currency {
     public String lastDate() {
 
         try {
-            return prices.get(prices.size()-1).getDate();
+            return prices.get(prices.size()-1).getDate().toString();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
