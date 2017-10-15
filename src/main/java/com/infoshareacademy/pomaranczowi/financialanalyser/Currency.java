@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -27,7 +28,7 @@ class Currency {
             System.out.println("Nie znaleziono pliku: "+path);
         }
 
-        Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),0$");
+        Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]+.?[0-9]*)$");
 
         try {
             while (fileScanner.hasNextLine()) {
@@ -42,6 +43,7 @@ class Currency {
                     price.setHigh(Double.valueOf(matcher.group(4)));
                     price.setLow(Double.valueOf(matcher.group(5)));
                     price.setClose(Double.valueOf(matcher.group(6)));
+                    price.setVolume(Double.valueOf(matcher.group(7)));
 
                     prices.add(price);
 
@@ -143,4 +145,199 @@ class Currency {
     public void addPrice(Price price) {
         prices.add(price);
     }
+
+// -- tmk
+/*   public Double getMinOpen() {
+
+        Extemes extemes = new Extemes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getOpen());
+        LocalDate localDate = prices.get(0).getDate();
+
+        extemes.setValue(bigDecimal);
+        extemes.setDate(localDate);
+
+
+
+        for (Price x : prices) {
+            if (x.getOpen() < (extemes.getValue()) {
+                extemes.setValue( x.getOpen());
+            }
+        }
+        return extemes;
+    }
+*/
+
+public Double getMinOpen() {
+
+    Double min = prices.get(0).getOpen();
+
+    for (Price x : prices) {
+        if (x.getOpen() < min) {
+            min = x.getOpen();
+        }
+    }
+    return min;
+}
+
+
+    public Double getMinClose() {
+
+        Double min = prices.get(0).getClose();
+
+        for (Price x : prices) {
+            if (x.getClose() < min) {
+                min = x.getClose();
+            }
+        }
+        return min;
+    }
+
+    public Double getMinHigh() {
+
+        Double min = prices.get(0).getHigh();
+
+        for (Price x : prices) {
+            if (x.getHigh() < min) {
+                min = x.getHigh();
+            }
+        }
+        return min;
+    }
+
+    public Double getMinLow() {
+
+        Double min = prices.get(0).getLow();
+
+        for (Price x : prices) {
+            if (x.getLow() < min) {
+                min = x.getLow();
+            }
+        }
+        return min;
+
+
+    }
+
+    public Double getMinVolume() {
+
+        Double min = prices.get(1).getVolume();
+;
+        for (Price x : prices) {
+            if (x.getVolume() < min) {
+                min = x.getVolume();
+            }
+        }
+        return min;
+
+    }
+
+    public Double getMaxOpen() {
+
+        Double max = prices.get(0).getOpen();
+
+        for (Price x : prices) {
+            if (x.getOpen() > max) {
+                max = x.getOpen();
+            }
+        }
+        return max;
+    }
+
+    public Double getMaxClose() {
+
+        Double max = prices.get(0).getClose();
+
+        for (Price x : prices) {
+            if (x.getClose() > max) {
+                max = x.getClose();
+            }
+        }
+        return max;
+    }
+
+    public Double getMaxHigh() {
+
+        Double max = prices.get(0).getHigh();
+
+        for (Price x : prices) {
+            if (x.getHigh() > max) {
+                max = x.getHigh();
+            }
+        }
+        return max;
+    }
+
+    public Double getMaxLow() {
+
+        Double max = prices.get(0).getLow();
+
+        for (Price x : prices) {
+            if (x.getLow() > max) {
+                max = x.getLow();
+            }
+        }
+        return max;
+    }
+
+    public Double getMaxVolume() {
+
+        Double max = prices.get(0).getVolume();
+
+        for (Price x : prices) {
+            if (x.getVolume() > max) {
+                max = x.getVolume();
+            }
+        }
+        return max;
+    }
+
+
+    public Double getMin(String ochlv) { //Open, Close, High, Low, Volume
+
+        Double min = null;
+
+        switch (ochlv) {
+            case "Open":
+                min = getMinOpen();
+                break;
+            case "Close":
+                min = getMinClose();
+                break;
+            case "High":
+                min=getMinHigh();
+                break;
+            case "Low":
+                min=getMinLow();
+                break;
+            case "Volume":
+                min=getMinVolume();
+                break;
+        }
+
+        return min;
+    }
+
+    public Double getMax(String ochlv) { //Open, Close, High, Low, Volume
+
+        Double max = null;
+
+        switch (ochlv) {
+            case "Open":
+                max = getMinOpen();
+                break;
+            case "Close":
+                max = getMinClose();
+                break;
+            case "High":
+                max=getMinHigh();
+                break;
+            case "Volume":
+                max=getMinVolume();
+                break;
+        }
+
+        return max;
+    }
+
+
 }
