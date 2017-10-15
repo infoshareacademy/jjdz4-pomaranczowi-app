@@ -29,7 +29,6 @@ public class Investment {
     public Investment(String name, List<Quotation> quotations) {
         this.name = name;
         this.quotations = quotations;
-
     }
 
 }
