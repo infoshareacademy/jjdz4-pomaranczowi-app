@@ -33,12 +33,14 @@ class Currency {
                 Matcher matcher = pattern.matcher(fileScanner.nextLine());
                 if (matcher.matches()) {
                     Price price = new Price();
+
                     price.setName(matcher.group(1));
                     price.setDate(matcher.group(2));
                     price.setOpen(Double.valueOf(matcher.group(3)));
                     price.setHigh(Double.valueOf(matcher.group(4)));
                     price.setLow(Double.valueOf(matcher.group(5)));
                     price.setClose(Double.valueOf(matcher.group(6)));
+
                     prices.add(price);
 
                 }
