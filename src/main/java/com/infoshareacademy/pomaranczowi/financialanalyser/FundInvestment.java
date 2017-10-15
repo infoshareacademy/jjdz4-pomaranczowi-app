@@ -1,4 +1,4 @@
-package pomaranczowi;
+package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,25 +7,28 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//Currency class operates on Price objects
-class Currency {
+public class FundInvestment {
+
+    /*public int Id;
+    String name;
+    public List<Quotation> quotations = new ArrayList<>();*/
 
     //ArrayList of Price objects
     private ArrayList<Price> prices = new ArrayList<>();
 
     //File load on Currency creation
-    public Currency(String path) {
+    protected FundInvestment(String path) {
 
         File file = new File(path);
         Scanner fileScanner = null;
         try {
             fileScanner = new Scanner(file);
-            System.out.println("Wczytano plik: "+path);
+            System.out.println("\n\n\nWczytano plik: " + path);
         } catch (FileNotFoundException e) {
-            System.out.println("Nie znaleziono pliku: "+path);
+            System.out.println("\n\n\nNie znaleziono pliku: " + path);
         }
 
-        Pattern pattern = Pattern.compile("^[A-Z]{3},([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),0$");
+        Pattern pattern = Pattern.compile("^[A-Z]{3}[0-9]{3},([0-9]{8}),((?:\\d*\\.)?\\d+),((?:\\d*\\.)?\\d+),((?:\\d*\\.)?\\d+),((?:\\d*\\.)?\\d+),((?:\\d*\\.)?\\d+)");
 
         try {
             while (fileScanner.hasNextLine()) {
@@ -48,58 +51,50 @@ class Currency {
 
     }
 
-    //returns Price object for demanded date (in String), if no object returns null
-    public Price getPrice(String date) {
+    /*//returns Price object for demanded date (in String), if no object returns null
+    public Price getPrice(String datde) {
         int i = 0;
-        for (Price x : prices) {
-            if (date.equals(x.getDate())) {
+        for (Price price : prices) {
+            if (date.equals(price.getDate())) {
                 return prices.get(i);
             }
             i++;
         }
         return null;
-    }
+    }*/
 
     public Double getOpen(String date) {
-        int i = 0;
-        for (Price x : prices) {
-            if (date.equals(x.getDate())) {
-                return x.getOpen();
+        for (Price price : prices) {
+            if (date.equals(price.getDate())) {
+                return price.getOpen();
             }
-            i++;
         }
-        return null;
+       return null;
     }
 
     public Double getHigh(String date) {
-        int i = 0;
         for (Price x : prices) {
             if (date.equals(x.getDate())) {
                 return x.getHigh();
             }
-            i++;
         }
         return null;
     }
 
     public Double getLow(String date) {
-        int i = 0;
         for (Price x : prices) {
             if (date.equals(x.getDate())) {
                 return x.getLow();
             }
-            i++;
         }
         return null;
     }
 
     public Double getClose(String date) {
-        int i = 0;
         for (Price x : prices) {
             if (date.equals(x.getDate())) {
                 return x.getClose();
             }
-            i++;
         }
         return null;
     }
@@ -115,7 +110,7 @@ class Currency {
     public String lastDate() {
 
         try {
-            return prices.get(prices.size()-1).getDate();
+            return prices.get(prices.size() - 1).getDate();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }

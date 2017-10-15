@@ -1,4 +1,4 @@
-package pomaranczowi;
+package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.util.ArrayList;
 import java.util.List;

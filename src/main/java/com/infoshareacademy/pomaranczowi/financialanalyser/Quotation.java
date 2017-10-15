@@ -1,4 +1,4 @@
-package pomaranczowi;
+package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
