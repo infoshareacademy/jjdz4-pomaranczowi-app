@@ -25,7 +25,7 @@ class Currency {
             System.out.println("Nie znaleziono pliku: "+path);
         }
 
-        Pattern pattern = Pattern.compile("^[A-Z]{3},([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),0$");
+        Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),0$");
 
         try {
             while (fileScanner.hasNextLine()) {
@@ -33,11 +33,14 @@ class Currency {
                 Matcher matcher = pattern.matcher(fileScanner.nextLine());
                 if (matcher.matches()) {
                     Price price = new Price();
-                    price.setDate(matcher.group(1));
-                    price.setOpen(Double.valueOf(matcher.group(2)));
-                    price.setHigh(Double.valueOf(matcher.group(3)));
-                    price.setLow(Double.valueOf(matcher.group(4)));
-                    price.setClose(Double.valueOf(matcher.group(5)));
+
+                    price.setName(matcher.group(1));
+                    price.setDate(matcher.group(2));
+                    price.setOpen(Double.valueOf(matcher.group(3)));
+                    price.setHigh(Double.valueOf(matcher.group(4)));
+                    price.setLow(Double.valueOf(matcher.group(5)));
+                    price.setClose(Double.valueOf(matcher.group(6)));
+
                     prices.add(price);
 
                 }
@@ -119,6 +122,10 @@ class Currency {
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
+    }
+
+    public String getName() {
+        return prices.get(1).getName();
     }
 
     public Integer countPrices() {
