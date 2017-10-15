@@ -35,12 +35,14 @@ class Currency {
                 Matcher matcher = pattern.matcher(fileScanner.nextLine());
                 if (matcher.matches()) {
                     Price price = new Price();
+
                     price.setName(matcher.group(1));
                     price.setDate(matcher.group(2));
                     price.setOpen(Double.valueOf(matcher.group(3)));
                     price.setHigh(Double.valueOf(matcher.group(4)));
                     price.setLow(Double.valueOf(matcher.group(5)));
                     price.setClose(Double.valueOf(matcher.group(6)));
+
                     prices.add(price);
 
                 }
@@ -54,6 +56,7 @@ class Currency {
     //returns Price object for demanded date (in String), if no object returns null
     public Price getPrice(String date) {
         int i = 0;
+
         LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
             if (localDate.equals(x.getDate())) {

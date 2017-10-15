@@ -16,6 +16,7 @@ public class Price {
     private Double volume;
 
     //setters and getters for private variables
+  
     public LocalDate getDate() {
         return date;
     }
