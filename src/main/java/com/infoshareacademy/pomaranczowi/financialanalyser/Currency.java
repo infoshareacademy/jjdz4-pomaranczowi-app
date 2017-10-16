@@ -23,9 +23,9 @@ class Currency {
         Scanner fileScanner = null;
         try {
             fileScanner = new Scanner(file);
-            System.out.println("Wczytano plik: "+path);
+            System.out.println("Wczytano plik: " + path);
         } catch (FileNotFoundException e) {
-            System.out.println("Nie znaleziono pliku: "+path);
+            System.out.println("Nie znaleziono pliku: " + path);
         }
 
         Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]+.?[0-9]*)$");
@@ -59,7 +59,7 @@ class Currency {
     public Price getPrice(String date) {
         int i = 0;
 
-        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
             if (localDate.equals(x.getDate())) {
                 return prices.get(i);
@@ -71,7 +71,7 @@ class Currency {
 
     public Double getOpen(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
             if (localDate.equals(x.getDate())) {
                 return x.getOpen();
@@ -83,7 +83,7 @@ class Currency {
 
     public Double getHigh(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
             if (localDate.equals(x.getDate())) {
                 return x.getHigh();
@@ -95,7 +95,7 @@ class Currency {
 
     public Double getLow(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
             if (localDate.equals(x.getDate())) {
                 return x.getLow();
@@ -107,7 +107,7 @@ class Currency {
 
     public Double getClose(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
             if (localDate.equals(x.getDate())) {
                 return x.getClose();
@@ -128,7 +128,7 @@ class Currency {
     public String lastDate() {
 
         try {
-            return prices.get(prices.size()-1).getDate().toString();
+            return prices.get(prices.size() - 1).getDate().toString();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
@@ -146,198 +146,245 @@ class Currency {
         prices.add(price);
     }
 
-// -- tmk
-/*   public Double getMinOpen() {
+    // -- tmk
+    public Extremes getMinOpen() {
 
-        Extemes extemes = new Extemes();
+        Extremes extremes = new Extremes();
         BigDecimal bigDecimal = new BigDecimal(prices.get(0).getOpen());
         LocalDate localDate = prices.get(0).getDate();
 
-        extemes.setValue(bigDecimal);
-        extemes.setDate(localDate);
-
-
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getOpen() < (extemes.getValue()) {
-                extemes.setValue( x.getOpen());
+            if (x.getOpen() < extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getOpen());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
             }
         }
-        return extemes;
+        return extremes;
     }
-*/
+    public Extremes getMinClose() {
 
-public Double getMinOpen() {
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getClose());
+        LocalDate localDate = prices.get(0).getDate();
 
-    Double min = prices.get(0).getOpen();
-
-    for (Price x : prices) {
-        if (x.getOpen() < min) {
-            min = x.getOpen();
-        }
-    }
-    return min;
-}
-
-
-    public Double getMinClose() {
-
-        Double min = prices.get(0).getClose();
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getClose() < min) {
-                min = x.getClose();
+            if (x.getClose() < extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getClose());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
             }
         }
-        return min;
+        return extremes;
     }
+    public Extremes getMinHigh() {
 
-    public Double getMinHigh() {
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getHigh());
+        LocalDate localDate = prices.get(0).getDate();
 
-        Double min = prices.get(0).getHigh();
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getHigh() < min) {
-                min = x.getHigh();
+            if (x.getHigh() < extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getHigh());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
             }
         }
-        return min;
+        return extremes;
     }
+    public Extremes getMinLow() {
 
-    public Double getMinLow() {
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getLow());
+        LocalDate localDate = prices.get(0).getDate();
 
-        Double min = prices.get(0).getLow();
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getLow() < min) {
-                min = x.getLow();
+            if (x.getLow() < extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getLow());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
             }
         }
-        return min;
-
-
+        return extremes;
     }
+    public Extremes getMinVolume() {
 
-    public Double getMinVolume() {
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getVolume());
+        LocalDate localDate = prices.get(0).getDate();
 
-        Double min = prices.get(1).getVolume();
-;
-        for (Price x : prices) {
-            if (x.getVolume() < min) {
-                min = x.getVolume();
-            }
-        }
-        return min;
-
-    }
-
-    public Double getMaxOpen() {
-
-        Double max = prices.get(0).getOpen();
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getOpen() > max) {
-                max = x.getOpen();
+            if (x.getVolume() < extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getVolume());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
             }
         }
-        return max;
+        return extremes;
     }
 
-    public Double getMaxClose() {
+    public Extremes getMin(String ochlv) { //Open, Close, High, Low, Volume
 
-        Double max = prices.get(0).getClose();
-
-        for (Price x : prices) {
-            if (x.getClose() > max) {
-                max = x.getClose();
-            }
-        }
-        return max;
-    }
-
-    public Double getMaxHigh() {
-
-        Double max = prices.get(0).getHigh();
-
-        for (Price x : prices) {
-            if (x.getHigh() > max) {
-                max = x.getHigh();
-            }
-        }
-        return max;
-    }
-
-    public Double getMaxLow() {
-
-        Double max = prices.get(0).getLow();
-
-        for (Price x : prices) {
-            if (x.getLow() > max) {
-                max = x.getLow();
-            }
-        }
-        return max;
-    }
-
-    public Double getMaxVolume() {
-
-        Double max = prices.get(0).getVolume();
-
-        for (Price x : prices) {
-            if (x.getVolume() > max) {
-                max = x.getVolume();
-            }
-        }
-        return max;
-    }
-
-
-    public Double getMin(String ochlv) { //Open, Close, High, Low, Volume
-
-        Double min = null;
+        Extremes extremes = null;
 
         switch (ochlv) {
             case "Open":
-                min = getMinOpen();
+                extremes = getMinOpen();
                 break;
             case "Close":
-                min = getMinClose();
+                extremes = getMinClose();
                 break;
             case "High":
-                min=getMinHigh();
+                extremes=getMinHigh();
                 break;
             case "Low":
-                min=getMinLow();
+                extremes=getMinLow();
                 break;
             case "Volume":
-                min=getMinVolume();
+                extremes=getMinVolume();
                 break;
         }
-
-        return min;
+        return extremes;
     }
 
-    public Double getMax(String ochlv) { //Open, Close, High, Low, Volume
+    public Extremes getMaxOpen() {
 
-        Double max = null;
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getOpen());
+        LocalDate localDate = prices.get(0).getDate();
+
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
+
+        for (Price x : prices) {
+            if (x.getOpen() > extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getOpen());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
+            }
+        }
+        return extremes;
+    }
+    public Extremes getMaxClose() {
+
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getClose());
+        LocalDate localDate = prices.get(0).getDate();
+
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
+
+        for (Price x : prices) {
+            if (x.getClose() > extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getClose());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
+            }
+        }
+        return extremes;
+    }
+    public Extremes getMaxHigh() {
+
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getHigh());
+        LocalDate localDate = prices.get(0).getDate();
+
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
+
+        for (Price x : prices) {
+            if (x.getHigh() > extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getHigh());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
+            }
+        }
+        return extremes;
+    }
+    public Extremes getMaxLow() {
+
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getLow());
+        LocalDate localDate = prices.get(0).getDate();
+
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
+
+        for (Price x : prices) {
+            if (x.getLow() > extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getLow());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
+            }
+        }
+        return extremes;
+    }
+    public Extremes getMaxVolume() {
+
+        Extremes extremes = new Extremes();
+        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getVolume());
+        LocalDate localDate = prices.get(0).getDate();
+
+        extremes.setValue(bigDecimal);
+        extremes.setDate(localDate);
+
+        for (Price x : prices) {
+            if (x.getVolume() > extremes.getValue().doubleValue()) {
+                bigDecimal = BigDecimal.valueOf(x.getVolume());
+                localDate = x.getDate();
+                extremes.setValue(bigDecimal);
+                extremes.setDate(localDate);
+            }
+        }
+        return extremes;
+    }
+
+    public Extremes getMax(String ochlv) { //Open, Close, High, Low, Volume
+
+        Extremes extremes = null;
 
         switch (ochlv) {
             case "Open":
-                max = getMinOpen();
+                extremes = getMaxOpen();
                 break;
             case "Close":
-                max = getMinClose();
+                extremes = getMaxClose();
                 break;
             case "High":
-                max=getMinHigh();
+                extremes=getMaxHigh();
+                break;
+            case "Low":
+                extremes=getMaxLow();
                 break;
             case "Volume":
-                max=getMinVolume();
+                extremes=getMaxVolume();
                 break;
         }
-
-        return max;
+        return extremes;
     }
-
 
 }
