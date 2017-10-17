@@ -39,11 +39,11 @@ class Currency {
 
                     price.setName(matcher.group(1));
                     price.setDate(matcher.group(2));
-                    price.setOpen(Double.valueOf(matcher.group(3)));
-                    price.setHigh(Double.valueOf(matcher.group(4)));
-                    price.setLow(Double.valueOf(matcher.group(5)));
-                    price.setClose(Double.valueOf(matcher.group(6)));
-                    price.setVolume(Double.valueOf(matcher.group(7)));
+                    price.setOpen(BigDecimal.valueOf(Double.valueOf(matcher.group(3))));
+                    price.setHigh(BigDecimal.valueOf(Double.valueOf(matcher.group(4))));
+                    price.setLow(BigDecimal.valueOf(Double.valueOf(matcher.group(5))));
+                    price.setClose(BigDecimal.valueOf(Double.valueOf(matcher.group(6))));
+                    price.setVolume(BigDecimal.valueOf(Double.valueOf(matcher.group(7))));
 
                     prices.add(price);
 
@@ -69,7 +69,7 @@ class Currency {
         return null;
     }
 
-    public Double getOpen(String date) {
+    public BigDecimal getOpen(String date) {
         int i = 0;
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
@@ -81,7 +81,7 @@ class Currency {
         return null;
     }
 
-    public Double getHigh(String date) {
+    public BigDecimal getHigh(String date) {
         int i = 0;
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
@@ -93,7 +93,7 @@ class Currency {
         return null;
     }
 
-    public Double getLow(String date) {
+    public BigDecimal getLow(String date) {
         int i = 0;
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
@@ -105,7 +105,7 @@ class Currency {
         return null;
     }
 
-    public Double getClose(String date) {
+    public BigDecimal getClose(String date) {
         int i = 0;
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
@@ -150,15 +150,15 @@ class Currency {
     public Extremes getMinOpen() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getOpen());
+        BigDecimal bigDecimal = prices.get(0).getOpen();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getOpen() < extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getOpen());
+            if (x.getOpen().doubleValue() < extremes.getValue().doubleValue()) {
+                bigDecimal = x.getOpen();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -169,15 +169,15 @@ class Currency {
     public Extremes getMinClose() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getClose());
+        BigDecimal bigDecimal = prices.get(0).getClose();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getClose() < extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getClose());
+            if (x.getClose().doubleValue() < extremes.getValue().doubleValue()) {
+                bigDecimal = x.getClose();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -188,15 +188,15 @@ class Currency {
     public Extremes getMinHigh() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getHigh());
+        BigDecimal bigDecimal = prices.get(0).getHigh();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getHigh() < extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getHigh());
+            if (x.getHigh().doubleValue() < extremes.getValue().doubleValue()) {
+                bigDecimal = x.getHigh();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -207,15 +207,15 @@ class Currency {
     public Extremes getMinLow() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getLow());
+        BigDecimal bigDecimal = prices.get(0).getLow();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getLow() < extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getLow());
+            if (x.getLow().doubleValue() < extremes.getValue().doubleValue()) {
+                bigDecimal = x.getLow();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -226,15 +226,15 @@ class Currency {
     public Extremes getMinVolume() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getVolume());
+        BigDecimal bigDecimal = prices.get(0).getVolume();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getVolume() < extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getVolume());
+            if (x.getVolume().doubleValue() < extremes.getValue().doubleValue()) {
+                bigDecimal = x.getVolume();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -270,15 +270,15 @@ class Currency {
     public Extremes getMaxOpen() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getOpen());
+        BigDecimal bigDecimal = prices.get(0).getOpen();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getOpen() > extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getOpen());
+            if (x.getOpen().doubleValue() > extremes.getValue().doubleValue()) {
+                bigDecimal = x.getOpen();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -289,15 +289,15 @@ class Currency {
     public Extremes getMaxClose() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getClose());
+        BigDecimal bigDecimal = prices.get(0).getClose();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getClose() > extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getClose());
+            if (x.getClose().doubleValue() > extremes.getValue().doubleValue()) {
+                bigDecimal = x.getClose();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -308,15 +308,15 @@ class Currency {
     public Extremes getMaxHigh() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getHigh());
+        BigDecimal bigDecimal = prices.get(0).getHigh();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getHigh() > extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getHigh());
+            if (x.getHigh().doubleValue() > extremes.getValue().doubleValue()) {
+                bigDecimal = x.getHigh();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -327,15 +327,15 @@ class Currency {
     public Extremes getMaxLow() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getLow());
+        BigDecimal bigDecimal = prices.get(0).getLow();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getLow() > extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getLow());
+            if (x.getLow().doubleValue() > extremes.getValue().doubleValue()) {
+                bigDecimal = x.getLow();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
@@ -346,15 +346,15 @@ class Currency {
     public Extremes getMaxVolume() {
 
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal = new BigDecimal(prices.get(0).getVolume());
+        BigDecimal bigDecimal = prices.get(0).getVolume();
         LocalDate localDate = prices.get(0).getDate();
 
         extremes.setValue(bigDecimal);
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getVolume() > extremes.getValue().doubleValue()) {
-                bigDecimal = BigDecimal.valueOf(x.getVolume());
+            if (x.getVolume().doubleValue() > extremes.getValue().doubleValue()) {
+                bigDecimal = x.getVolume();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
                 extremes.setDate(localDate);
