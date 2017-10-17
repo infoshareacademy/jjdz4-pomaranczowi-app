@@ -2,7 +2,6 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Quotation {
 
@@ -14,13 +13,14 @@ public class Quotation {
     private BigDecimal close;
     private BigDecimal volume;
 
-    public Quotation(String name, LocalDate date, BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close, BigDecimal volume){
+    Quotation(String name, LocalDate date, BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close, BigDecimal volume){
         this.name = name;
         this.date = date;
         this.open = open;
         this.high = high;
         this.low = low;
         this.close = close;
+        this.volume = volume;
     }
 
     public String getName() {
@@ -38,7 +38,6 @@ public class Quotation {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
 
     public BigDecimal getClose() {
         return close;
@@ -79,6 +78,5 @@ public class Quotation {
     public void setVolume(BigDecimal volume) {
         this.volume = volume;
     }
-
 
 }

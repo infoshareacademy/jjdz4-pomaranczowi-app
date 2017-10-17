@@ -7,47 +7,43 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class InvestmentName {
+class InvestmentName {
 
-    public String filename;
-    public String investmentName;
-    public Menu menu;
+    Menu chooseInvestmentName = new Menu("Fundusze inwestycyjne");
+    private ArrayList<String> investmentName = new ArrayList<>();
+    private ArrayList<String> investvestmentFileName = new ArrayList<>();
 
+    ArrayList<String> loadInvestmentNameFromFile(String filepath) {
 
-    //public void loadInvestmentNameFromFile(String filepath) {
-    public ArrayList<String> loadInvestmentNameFromFile(String filepath) {
-
-        ArrayList<String> investmentName = new ArrayList<>();
         File file = new File(filepath);
         Scanner fileScanner = null;
         try {
             fileScanner = new Scanner(file);
-            System.out.println("\n\n\nWczytano plik: " + filepath);
         } catch (FileNotFoundException e) {
-            System.out.println("\n\n\nNie znaleziono pliku: " + filepath);
+            System.out.println("\n\n\nNie znaleziono pliku: " + filepath + " zawierającego listę funduszy inwestycyjnych.");
         }
 
         Pattern pattern = Pattern.compile("([0-9]{4}-[0-9]{2}-[0-9]{2}) *([0-9]{2}:[0-9]{2}) *(\\d*) (\\w*) *(\\S*) *(.*)");
-        menu = new Menu("Fundusze inwestycyjne");
+        chooseInvestmentName = new Menu("Fundusze inwestycyjne");
 
         try {
-            while (fileScanner.hasNextLine()) {
+            while (fileScanner != null && fileScanner.hasNextLine()) {
                 Matcher matcher = pattern.matcher(fileScanner.nextLine());
                 if (matcher.matches()) {
-                    String filename = matcher.group(5);
-                    String investName = matcher.group(6);
-                    //System.out.println("file name: " + filename + " InvestName: " + investName);
-                    investmentName.add(investName);
-                    menu.add(investName);
+                    investvestmentFileName.add(matcher.group(5));
+                    chooseInvestmentName.add(matcher.group(6));
+                    investmentName.add(matcher.group(6));
                 }
             }
         } catch (NullPointerException exception) {
-
+            System.out.println("Wystąpił problem z wczytaniem listy funduszy inwestycyjnych.");
         }
 
-    return investmentName;
+    return investvestmentFileName;
     }
 
-
+    String getInvestmentName(int i) {
+        return investmentName.get(i);
+    }
 
 }
