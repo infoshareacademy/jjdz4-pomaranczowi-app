@@ -60,7 +60,7 @@ public class App
         /* End of the example */
 
         /* Here is an example of using a Currency class */
-      
+
         Currency aud = new Currency("data/currency/AUD.txt");
         String date = "20160414";
         System.out.println("Wczytano notowania dla "+aud.countPrices()+" dni.");
@@ -71,7 +71,7 @@ public class App
         System.out.println("Wartość high dla notowania z dnia "+date+" wynosi: "+aud.getHigh(date));
         System.out.println("Wartość low dla notowania z dnia "+date+" wynosi: "+aud.getLow(date));
         System.out.println("Wartość close dla notowania z dnia "+date+" wynosi: "+aud.getClose(date));
-      
+
         /* End of the example */
 
         //ImportCurrentData.downloadFileFromURL();
