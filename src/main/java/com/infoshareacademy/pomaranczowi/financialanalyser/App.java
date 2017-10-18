@@ -1,8 +1,12 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import java.io.IOException;
+
 public class App
 {
     public static void main( String[] args ) {
+
+        //ImportCurrentData.downloadFileFromURL();
 
         Menu menu = new Menu("Analizator Finansowy");
         menu.add("Notowania giełdowe");
