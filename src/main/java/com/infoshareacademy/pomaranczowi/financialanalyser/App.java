@@ -1,11 +1,15 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+
 public class App
 {
     public static void main( String[] args ) {
+        InvestmentName investmentName = new InvestmentName();
+        //ArrayList<String> investmentFilePath = investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
+        investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
 
         Menu menu = new Menu("Analizator Finansowy");
-        menu.add("Notowania giełdowe");
+        menu.add("Fundusze inwestycyjne");
         menu.add("Notowania walut");
         menu.add("Wyjście");
 
@@ -14,6 +18,7 @@ public class App
         menu2.add("WIG20");
         menu2.add("WIG30");
         menu2.add("WIG-ENERG");
+        //for (String description : investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst"));
         menu2.add("Powrót");
 
         /* Here is an example of using my menu.
@@ -25,29 +30,49 @@ public class App
         while (!menu.wantExit()) { //exits menu when .exit() is used
             switch (menu.Init()) { //menu initialization
                 case 0: //menu returns user choice as an int so you can use switch case
-                    while(!menu2.wantExit()) { //exits sub-menu when .exit() is used
-                        switch (menu2.Init()) { //sub-menu initialization
-                            case 0 : //case for a sub-menu
-                                System.out.println("Wybrano opcję 0");
-                                menu.exit(); //exits menu
-                                menu2.exit(); //exits sub-menu
-                                break;
-                            case 1: //case for a sub-menu
-                                System.out.println("Wybrano opcję 1");
-                                menu.exit(); //exits menu
-                                menu2.exit(); //exits sub-menu
-                                //here you can create another sub-menu...
-                                break;
-                            case 2: //case for a sub-menu
-                                System.out.println("Wybrano opcję 2");
-                                //no exiting from menu... menu will just appear once again
-                                break;
-                            default:
-                                menu2.exit(); //exits sub-menu
-                                //no exiting from menu -> back level up to main menu
+                    int userChoice;
+                    while (!investmentName.investmentNameMenu.wantExit()) {
+                        userChoice = investmentName.investmentNameMenu.Init();
+                        //System.out.println("Wybrano fundusz " + investmentName.getInvestmentName(userChoice));
+                        //Investment investment = new Investment(investmentName.getInvestmentName(userChoice), Loader.getQuotationsList("data/fund/"+ investmentFilePath.get(userChoice)));
+                        System.out.println("Wybrano fundusz " + investmentName.filePaths.get(userChoice).name);
+                        Investment investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/"+ investmentName.filePaths.get(userChoice).path));
+
+                        /* Here is an example of using a Investment class */
+                        System.out.println("Nazwa wczytanego funduszu inwestycyjnego " + investment.getName());
+                        System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() +".");
+                        String exampleDate = "2017-04-13";
+                        System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getOpen(exampleDate));
+                        System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getHigh(exampleDate));
+                        System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getLow(exampleDate));
+                        System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getClose(exampleDate));
+                        /* End of example */
+
+                        Menu menuFuduszyInwestycyjnych = new Menu("Menu funduszy");
+                        menuFuduszyInwestycyjnych.add("Ekstrema");
+                        menuFuduszyInwestycyjnych.add("Średnie");
+                        menuFuduszyInwestycyjnych.add("Powrót");
+
+                        while (!menuFuduszyInwestycyjnych.wantExit()) {
+                            switch (menuFuduszyInwestycyjnych.Init()) {
+                                case 0:
+                                    System.out.println("Wybrano ekstrema.");
+                                    menuFuduszyInwestycyjnych.exit();
+                                    break;
+                                case 1:
+                                    System.out.println("Wybrano średnie.");
+                                    menuFuduszyInwestycyjnych.exit();
+                                    break;
+                                case 2:
+                                    menuFuduszyInwestycyjnych.exit();
+                                    break;
+                                default:
+                                    investmentName.investmentNameMenu.exit();
+                            }
+                            break;
                         }
+                        investmentName.investmentNameMenu.wantExit();
                     }
-                    break;
                 case 1: //case for a menu
                     System.out.println("Wybrano opcję 1");
                     menu.exit(); //exits menu
@@ -78,5 +103,6 @@ public class App
         System.out.println("Maksymalna wartość Open to: "+aud.getMax("Open").getValue()+ " z dnia: "+aud.getMax("Open").getDate());
         System.out.println("Minimalna wartość High to: "+aud.getMin("High").getValue()+ " z dnia: "+aud.getMin("High").getDate());
         /* End of the example */
+
     }
 }

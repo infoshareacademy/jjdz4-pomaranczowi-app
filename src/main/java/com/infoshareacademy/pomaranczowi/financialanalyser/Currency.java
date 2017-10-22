@@ -2,6 +2,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.math.BigDecimal;
