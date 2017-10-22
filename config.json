@@ -1,4 +1,5 @@
 {
-  "url" 			: "http://bossa.pl/pub/fundinwest/omega/omegafun.zip",
-  "destination" 	: "data/stock_data.zip"
+  "url": "http://bossa.pl/pub/fundinwest/omega/omegafun.zip",
+  "zipDestination": "data/stock_data.zip",
+  "dataDirectoryDestination": "data/stock_data"
 }

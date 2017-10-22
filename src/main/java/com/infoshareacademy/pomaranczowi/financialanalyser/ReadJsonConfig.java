@@ -2,19 +2,27 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 public class ReadJsonConfig {
 
-        String url;
-        String destination;
+    private String url;
+    private String zipDestination;
+    private String dataDirectoryDestination;
 
-    public ReadJsonConfig(String url, String destination) {
+
+    public ReadJsonConfig(String url, String zipDestination, String dataDirectoryDestination) {
         this.url = url;
-        this.destination = destination;
+        this.zipDestination = zipDestination;
+        this.dataDirectoryDestination = dataDirectoryDestination;
     }
 
-    public String getUrl() {
+
+    String getDataDirectoryDestination() {
+        return dataDirectoryDestination;
+    }
+
+    String getUrl() {
         return url;
     }
 
-    public String getDestination() {
-        return destination;
+    String getZipDestination() {
+        return zipDestination;
     }
 }
