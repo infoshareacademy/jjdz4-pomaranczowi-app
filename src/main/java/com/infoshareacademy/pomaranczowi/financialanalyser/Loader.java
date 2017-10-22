@@ -5,12 +5,12 @@ import java.util.List;
 
 class Loader {
 
-    static  List<Quotation> getQuotationsList(String filePath) {
+    static  List<Price> getQuotationsList(String filePath) {
 
         QuotationCreate quotationData = new QuotationCreate();
         quotationData.loadDataFromFile("" + filePath);
 
-        List<Quotation> quotations = new ArrayList<>();
+        List<Price> quotations = new ArrayList<>();
         for (int i = 0; i < quotationData.getNumberOfQuotations(); i++) {
             quotations.add(quotationData.getQuotation(i));
         }

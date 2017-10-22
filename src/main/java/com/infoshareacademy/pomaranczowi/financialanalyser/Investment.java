@@ -9,7 +9,7 @@ public class Investment {
 
 
     public String name;
-    private List<Quotation> quotations = new ArrayList<>();
+    private List<Price> prices = new ArrayList<>();
 
 
     public String getName() {
@@ -20,43 +20,43 @@ public class Investment {
         this.name = name;
     }
 
-    public Investment(String name, List<Quotation> quotations) {
+    public Investment(String name, List<Price> prices) {
         this.name = name;
-        this.quotations = quotations;
+        this.prices = prices;
     }
 
     BigDecimal getOpen(String date) {
-        for (Quotation quotation : quotations) if (quotation.getDate().toString().equals(date)) return quotation.getOpen();
+        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getOpen();
         return null;
     }
 
     BigDecimal getHigh(String date) {
-        for (Quotation quotation : quotations) if (quotation.getDate().toString().equals(date)) return quotation.getHigh();
+        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getHigh();
         return null;
     }
 
 
     BigDecimal getLow(String date) {
-        for (Quotation quotation : quotations) if (quotation.getDate().toString().equals(date)) return quotation.getLow();
+        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getLow();
         return null;
     }
 
 
     BigDecimal getClose(String date){
-        for (Quotation quotation : quotations) if (quotation.getDate().toString().equals(date)) return quotation.getClose();
+        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getClose();
         return null;
         }
 
     LocalDate getFirstDate(){
-        return quotations.get(0).getDate();
+        return prices.get(0).getDate();
         }
 
     LocalDate getLastDate(){
-        return quotations.get(quotations.size()-1).getDate();
+        return prices.get(prices.size()-1).getDate();
         }
 
     Integer getNumberOfQuotation(){
-        return quotations.size();
+        return prices.size();
         }
 
 }
