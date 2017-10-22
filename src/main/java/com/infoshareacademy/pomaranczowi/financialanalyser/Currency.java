@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //Currency class operates on Price objects
-class Currency implements Quotation{
+class Currency implements Quotation {
 
     //ArrayList of Price objects
     private ArrayList<Price> prices = new ArrayList<>();
@@ -50,16 +50,14 @@ class Currency implements Quotation{
                 }
             }
         } catch (NullPointerException exception) {
-
         }
-
     }
 
     //returns Price object for demanded date (in String), if no object returns null
     public Price getPrice(String date) {
         int i = 0;
 
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
         for (Price x : getPrices()) {
             if (localDate.equals(x.getDate())) {
                 return getPrices().get(i);
@@ -72,7 +70,7 @@ class Currency implements Quotation{
     @Override
     public BigDecimal getOpen(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
         for (Price x : getPrices()) {
             if (localDate.equals(x.getDate())) {
                 return x.getOpen();
@@ -85,7 +83,7 @@ class Currency implements Quotation{
     @Override
     public BigDecimal getHigh(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
         for (Price x : getPrices()) {
             if (localDate.equals(x.getDate())) {
                 return x.getHigh();
@@ -98,7 +96,7 @@ class Currency implements Quotation{
     @Override
     public BigDecimal getLow(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
         for (Price x : getPrices()) {
             if (localDate.equals(x.getDate())) {
                 return x.getLow();
@@ -111,7 +109,7 @@ class Currency implements Quotation{
     @Override
     public BigDecimal getClose(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
         for (Price x : getPrices()) {
             if (localDate.equals(x.getDate())) {
                 return x.getClose();
@@ -124,7 +122,7 @@ class Currency implements Quotation{
     @Override
     public BigDecimal getVolume(String date) {
         int i = 0;
-        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
         for (Price x : getPrices()) {
             if (localDate.equals(x.getDate())) {
                 return x.getVolume();
