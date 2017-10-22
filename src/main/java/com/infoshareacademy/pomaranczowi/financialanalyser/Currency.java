@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //Currency class operates on Price objects
-class Currency {
+class Currency implements Quotation{
 
     //ArrayList of Price objects
     private ArrayList<Price> prices = new ArrayList<>();
@@ -117,6 +117,18 @@ class Currency {
         return null;
     }
 
+    public BigDecimal getVolume(String date) {
+        int i = 0;
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
+        for (Price x : prices) {
+            if (localDate.equals(x.getDate())) {
+                return x.getVolume();
+            }
+            i++;
+        }
+        return null;
+    }
+
     public String firstDate() {
         try {
             return prices.get(1).getDate().toString();
@@ -157,7 +169,7 @@ class Currency {
         extremes.setDate(localDate);
 
         for (Price x : prices) {
-            if (x.getOpen().doubleValue() < extremes.getValue().doubleValue()) {
+            if (x.getOpen().doubleValue() < 0) {
                 bigDecimal = x.getOpen();
                 localDate = x.getDate();
                 extremes.setValue(bigDecimal);
