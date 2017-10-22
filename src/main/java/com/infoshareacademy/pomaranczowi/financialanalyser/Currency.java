@@ -2,6 +2,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -38,10 +39,10 @@ class Currency {
 
                     price.setName(matcher.group(1));
                     price.setDate(matcher.group(2));
-                    price.setOpen(Double.valueOf(matcher.group(3)));
-                    price.setHigh(Double.valueOf(matcher.group(4)));
-                    price.setLow(Double.valueOf(matcher.group(5)));
-                    price.setClose(Double.valueOf(matcher.group(6)));
+                    price.setOpen(new BigDecimal(matcher.group(3)));
+                    price.setHigh(new BigDecimal(matcher.group(4)));
+                    price.setLow(new BigDecimal(matcher.group(5)));
+                    price.setClose(new BigDecimal(matcher.group(6)));
 
                     prices.add(price);
 
@@ -67,7 +68,7 @@ class Currency {
         return null;
     }
 
-    public Double getOpen(String date) {
+    public BigDecimal getOpen(String date) {
         int i = 0;
         LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
@@ -79,7 +80,7 @@ class Currency {
         return null;
     }
 
-    public Double getHigh(String date) {
+    public BigDecimal getHigh(String date) {
         int i = 0;
         LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
@@ -91,7 +92,7 @@ class Currency {
         return null;
     }
 
-    public Double getLow(String date) {
+    public BigDecimal getLow(String date) {
         int i = 0;
         LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
@@ -103,7 +104,7 @@ class Currency {
         return null;
     }
 
-    public Double getClose(String date) {
+    public BigDecimal getClose(String date) {
         int i = 0;
         LocalDate localDate = LocalDate.parse(date,DateTimeFormatter.ofPattern("yyyMMdd"));
         for (Price x : prices) {
