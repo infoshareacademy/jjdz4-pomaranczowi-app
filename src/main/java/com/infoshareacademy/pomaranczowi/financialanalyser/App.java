@@ -100,8 +100,8 @@ public class App
         /* End of the example */
 
         /* Here is an example of using a Global Extremes */
-        System.out.println("Maksymalna wartość Open to: "+aud.getMax("Open").getValue()+ " z dnia: "+aud.getMax("Open").getDate());
-        System.out.println("Minimalna wartość High to: "+aud.getMin("High").getValue()+ " z dnia: "+aud.getMin("High").getDate());
+        System.out.println("Maksymalna wartość Open to: "+ GetGlobalExt.getMax(aud, "Open").getValue()+ " z dnia: "+ GetGlobalExt.getMax(aud, "Open").getDate());
+        System.out.println("Minimalna wartość High to: "+ GetGlobalExt.getMin(aud, "High").getValue()+ " z dnia: "+ GetGlobalExt.getMin(aud, "High").getDate());
         /* End of the example */
 
     }
