@@ -2,9 +2,9 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -26,9 +26,16 @@ public class ImportCurrentData {
             fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
             fileOutputStream.close();
             readableByteChannel.close();
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
+            //e.printStackTrace();
+            System.out.println("Nie znaleziono prawidlowego pliku konfiguracyjnego \"config.json\"");
+        } catch (MalformedURLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Nie mozna polaczyc sie z serwerem");
         }
+
+
     }
 
 }

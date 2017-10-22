@@ -6,7 +6,7 @@ public class App
 {
     public static void main( String[] args ) {
 
-        //ImportCurrentData.downloadFileFromURL();
+        ImportCurrentData.downloadFileFromURL();
 
         Menu menu = new Menu("Analizator Finansowy");
         menu.add("Notowania giełdowe");
