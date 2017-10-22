@@ -99,5 +99,10 @@ public class App
 
         /* End of the example */
 
+        /* Here is an example of using a Global Extremes */
+        System.out.println("Maksymalna wartość Open to: "+aud.getMax("Open").getValue()+ " z dnia: "+aud.getMax("Open").getDate());
+        System.out.println("Minimalna wartość High to: "+aud.getMin("High").getValue()+ " z dnia: "+aud.getMin("High").getDate());
+        /* End of the example */
+
     }
 }
