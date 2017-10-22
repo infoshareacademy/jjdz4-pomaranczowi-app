@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //Currency class operates on Price objects
-class Currency {
+class Currency implements Quotation{
 
     //ArrayList of Price objects
     private ArrayList<Price> prices = new ArrayList<>();
@@ -39,11 +39,11 @@ class Currency {
 
                     price.setName(matcher.group(1));
                     price.setDate(matcher.group(2));
-                    price.setOpen(BigDecimal.valueOf(Double.valueOf(matcher.group(3))));
-                    price.setHigh(BigDecimal.valueOf(Double.valueOf(matcher.group(4))));
-                    price.setLow(BigDecimal.valueOf(Double.valueOf(matcher.group(5))));
-                    price.setClose(BigDecimal.valueOf(Double.valueOf(matcher.group(6))));
-                    price.setVolume(BigDecimal.valueOf(Double.valueOf(matcher.group(7))));
+                    price.setOpen(new BigDecimal(matcher.group(3)));
+                    price.setHigh(new BigDecimal(matcher.group(4)));
+                    price.setLow(new BigDecimal(matcher.group(5)));
+                    price.setClose(new BigDecimal(matcher.group(6)));
+                    price.setVolume(new BigDecimal(matcher.group(7)));
 
                     prices.add(price);
 
@@ -117,6 +117,18 @@ class Currency {
         return null;
     }
 
+    public BigDecimal getVolume(String date) {
+        int i = 0;
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyMMdd"));
+        for (Price x : prices) {
+            if (localDate.equals(x.getDate())) {
+                return x.getVolume();
+            }
+            i++;
+        }
+        return null;
+    }
+
     public String firstDate() {
         try {
             return prices.get(1).getDate().toString();
@@ -147,7 +159,7 @@ class Currency {
     }
 
     // -- tmk
-    public Extremes getMinOpen() { //popr
+    public Extremes getMinOpen() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getOpen();
@@ -166,7 +178,7 @@ class Currency {
         }
         return extremes;
     }
-    public Extremes getMinClose() { //popr
+    public Extremes getMinClose() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getClose();
@@ -185,7 +197,7 @@ class Currency {
         }
         return extremes;
     }
-    public Extremes getMinHigh() { //popr
+    public Extremes getMinHigh() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getHigh();
@@ -204,7 +216,7 @@ class Currency {
         }
         return extremes;
     }
-    public Extremes getMinLow() { //popr
+    public Extremes getMinLow() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getLow();
@@ -223,7 +235,7 @@ class Currency {
         }
         return extremes;
     }
-    public Extremes getMinVolume() { //popr
+    public Extremes getMinVolume() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getVolume();
@@ -267,7 +279,7 @@ class Currency {
         return extremes;
     }
 
-    public Extremes getMaxOpen() { //popr
+    public Extremes getMaxOpen() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getOpen();
@@ -286,8 +298,7 @@ class Currency {
         }
         return extremes;
     }
-
-    public Extremes getMaxClose() { //popr
+    public Extremes getMaxClose() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getClose();
@@ -306,7 +317,7 @@ class Currency {
         }
         return extremes;
     }
-    public Extremes getMaxHigh() { //popr
+    public Extremes getMaxHigh() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getHigh();
@@ -325,8 +336,7 @@ class Currency {
         }
         return extremes;
     }
-
-    public Extremes getMaxLow() { //popr
+    public Extremes getMaxLow() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getLow();
@@ -345,7 +355,7 @@ class Currency {
         }
         return extremes;
     }
-    public Extremes getMaxVolume() { //popr
+    public Extremes getMaxVolume() {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = prices.get(0).getVolume();
@@ -388,4 +398,5 @@ class Currency {
         }
         return extremes;
     }
+
 }
