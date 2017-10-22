@@ -39,11 +39,11 @@ class Currency {
 
                     price.setName(matcher.group(1));
                     price.setDate(matcher.group(2));
-                    price.setOpen(BigDecimal.valueOf(Double.valueOf(matcher.group(3))));
-                    price.setHigh(BigDecimal.valueOf(Double.valueOf(matcher.group(4))));
-                    price.setLow(BigDecimal.valueOf(Double.valueOf(matcher.group(5))));
-                    price.setClose(BigDecimal.valueOf(Double.valueOf(matcher.group(6))));
-                    price.setVolume(BigDecimal.valueOf(Double.valueOf(matcher.group(7))));
+                    price.setOpen(new BigDecimal(matcher.group(3)));
+                    price.setHigh(new BigDecimal(matcher.group(4)));
+                    price.setLow(new BigDecimal(matcher.group(5)));
+                    price.setClose(new BigDecimal(matcher.group(6)));
+                    price.setVolume(new BigDecimal(matcher.group(7)));
 
                     prices.add(price);
 
