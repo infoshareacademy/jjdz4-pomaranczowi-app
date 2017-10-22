@@ -36,7 +36,14 @@ class QuotationCreate {
                 BigDecimal close = new BigDecimal(data[5]);
                 BigDecimal volume = new BigDecimal(data[6]);
 
-                Quotation quotation = new Quotation(name, date, open, high, low, close, volume);
+                Quotation quotation = new Quotation();
+                quotation.setName(name);
+                quotation.setDate(date);
+                quotation.setOpen(open);
+                quotation.setHigh(high);
+                quotation.setLow(low);
+                quotation.setClose(close);
+                quotation.setVolume(volume);
                 quotations.add(quotation);
             }
             scanner.close();

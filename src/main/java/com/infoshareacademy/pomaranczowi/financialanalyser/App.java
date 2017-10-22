@@ -1,13 +1,12 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
-import java.util.ArrayList;
-
 
 public class App
 {
     public static void main( String[] args ) {
         InvestmentName investmentName = new InvestmentName();
-        ArrayList<String> investmentFilePath = investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
+        //ArrayList<String> investmentFilePath = investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
+        investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
 
         Menu menu = new Menu("Analizator Finansowy");
         menu.add("Fundusze inwestycyjne");
@@ -32,10 +31,12 @@ public class App
             switch (menu.Init()) { //menu initialization
                 case 0: //menu returns user choice as an int so you can use switch case
                     int userChoice;
-                    while (!investmentName.chooseInvestmentName.wantExit()) {
-                        userChoice = investmentName.chooseInvestmentName.Init();
-                        System.out.println("Wybrano fundusz " + investmentName.getInvestmentName(userChoice));
-                        Investment investment = new Investment(investmentName.getInvestmentName(userChoice), Loader.getQuotationsList("data/fund/"+ investmentFilePath.get(userChoice)));
+                    while (!investmentName.investmentNameMenu.wantExit()) {
+                        userChoice = investmentName.investmentNameMenu.Init();
+                        //System.out.println("Wybrano fundusz " + investmentName.getInvestmentName(userChoice));
+                        //Investment investment = new Investment(investmentName.getInvestmentName(userChoice), Loader.getQuotationsList("data/fund/"+ investmentFilePath.get(userChoice)));
+                        System.out.println("Wybrano fundusz " + investmentName.filePaths.get(userChoice).name);
+                        Investment investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/"+ investmentName.filePaths.get(userChoice).path));
 
                         /* Here is an example of using a Investment class */
                         System.out.println("Nazwa wczytanego funduszu inwestycyjnego " + investment.getName());
@@ -66,11 +67,11 @@ public class App
                                     menuFuduszyInwestycyjnych.exit();
                                     break;
                                 default:
-                                    investmentName.chooseInvestmentName.exit();
+                                    investmentName.investmentNameMenu.exit();
                             }
                             break;
                         }
-                        investmentName.chooseInvestmentName.wantExit();
+                        investmentName.investmentNameMenu.wantExit();
                     }
                 case 1: //case for a menu
                     System.out.println("Wybrano opcję 1");

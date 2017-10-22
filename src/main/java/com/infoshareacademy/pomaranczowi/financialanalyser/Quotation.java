@@ -13,16 +13,6 @@ public class Quotation {
     private BigDecimal close;
     private BigDecimal volume;
 
-    Quotation(String name, LocalDate date, BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close, BigDecimal volume){
-        this.name = name;
-        this.date = date;
-        this.open = open;
-        this.high = high;
-        this.low = low;
-        this.close = close;
-        this.volume = volume;
-    }
-
     public String getName() {
         return name;
     }

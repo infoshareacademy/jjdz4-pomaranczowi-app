@@ -9,11 +9,11 @@ import java.util.regex.Pattern;
 
 class InvestmentName {
 
-    Menu chooseInvestmentName = new Menu("Fundusze inwestycyjne");
-    private ArrayList<String> investmentName = new ArrayList<>();
-    private ArrayList<String> investvestmentFileName = new ArrayList<>();
+    Menu investmentNameMenu = new Menu("Fundusze inwestycyjne");
+    ArrayList<FilePath> filePaths = new ArrayList<>();
 
-    ArrayList<String> loadInvestmentNameFromFile(String filepath) {
+    ArrayList<FilePath> loadInvestmentNameFromFile(String filepath) {
+        int id = 0;
 
         File file = new File(filepath);
         Scanner fileScanner = null;
@@ -24,26 +24,21 @@ class InvestmentName {
         }
 
         Pattern pattern = Pattern.compile("([0-9]{4}-[0-9]{2}-[0-9]{2}) *([0-9]{2}:[0-9]{2}) *(\\d*) (\\w*) *(\\S*) *(.*)");
-        chooseInvestmentName = new Menu("Fundusze inwestycyjne");
+        investmentNameMenu = new Menu("Fundusze inwestycyjne");
 
         try {
             while (fileScanner != null && fileScanner.hasNextLine()) {
                 Matcher matcher = pattern.matcher(fileScanner.nextLine());
                 if (matcher.matches()) {
-                    investvestmentFileName.add(matcher.group(5));
-                    chooseInvestmentName.add(matcher.group(6));
-                    investmentName.add(matcher.group(6));
+                    FilePath filePath = new FilePath(id,matcher.group(5),matcher.group(6));
+                    id++;
+                    filePaths.add(filePath);
+                    investmentNameMenu.add(matcher.group(6));
                 }
             }
         } catch (NullPointerException exception) {
             System.out.println("Wystąpił problem z wczytaniem listy funduszy inwestycyjnych.");
         }
-
-    return investvestmentFileName;
+        return filePaths;
     }
-
-    String getInvestmentName(int i) {
-        return investmentName.get(i);
-    }
-
 }
