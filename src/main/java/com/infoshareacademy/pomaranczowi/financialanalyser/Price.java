@@ -1,5 +1,6 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,11 +10,11 @@ public class Price {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     private String name;
     private LocalDate date;
-    private Double open;
-    private Double high;
-    private Double low;
-    private Double close;
-    private Double volume;
+    private BigDecimal open;
+    private BigDecimal high;
+    private BigDecimal low;
+    private BigDecimal close;
+    private BigDecimal volume;
 
     //setters and getters for private variables
   
@@ -25,43 +26,43 @@ public class Price {
         this.date = LocalDate.parse(date,formatter);
     }
 
-    public Double getOpen() {
+    public BigDecimal getOpen() {
         return open;
     }
 
-    public void setOpen(Double open) {
+    public void setOpen(BigDecimal open) {
         this.open = open;
     }
 
-    public Double getHigh() {
+    public BigDecimal getHigh() {
         return high;
     }
 
-    public void setHigh(Double high) {
+    public void setHigh(BigDecimal high) {
         this.high = high;
     }
 
-    public Double getLow() {
+    public BigDecimal getLow() {
         return low;
     }
 
-    public void setLow(Double low) {
+    public void setLow(BigDecimal low) {
         this.low = low;
     }
 
-    public Double getClose() {
+    public BigDecimal getClose() {
         return close;
     }
 
-    public void setClose(Double close) {
+    public void setClose(BigDecimal close) {
         this.close = close;
     }
 
-    public Double getVolume() {
+    public BigDecimal getVolume() {
         return volume;
     }
 
-    public void setVolume(Double volume) {
+    public void setVolume(BigDecimal volume) {
         this.volume = volume;
     }
 
