@@ -23,12 +23,15 @@ class ImportCurrentData {
             ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
             URL website = new URL(readJsonConfig.getUrl());
             ReadableByteChannel readableByteChannel;
+            System.out.println("Rozpoczęto pobieranie aktualnych danych, proszę czekać.");
             readableByteChannel = Channels.newChannel(website.openStream());
             FileOutputStream fileOutputStream = new FileOutputStream(readJsonConfig.getZipDestination());
             fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
             fileOutputStream.close();
             readableByteChannel.close();
+            System.out.println("Rozpakowuję plik \"zip\"");
             extractAllFromZipFile(readJsonConfig.getZipDestination(), readJsonConfig.getDataDirectoryDestination());
+            System.out.println("Pobieranie i rozpakowanie danych zakończone");
         } catch (FileNotFoundException e) {
             //e.printStackTrace();
             System.out.println("Nie znaleziono prawidlowego pliku konfiguracyjnego \"config.json\"");
