@@ -8,7 +8,7 @@ public class App
         //ArrayList<String> investmentFilePath = investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
         investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
 
-        Menu mainMenu = new Menu("Analizator Finansowy");
+        Menu mainMenu = new Menu("$$$$ ANALIZATOR FINANSOWY $$$$");
         mainMenu.add("Notowania funduszy inwestycyjnych");
         mainMenu.add("Notowania kursów walut");
         mainMenu.add("Wyjście");
