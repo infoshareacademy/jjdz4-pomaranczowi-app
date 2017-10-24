@@ -1,5 +1,6 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import java.io.FileNotFoundException;
 
 public class App
 {
@@ -84,10 +85,19 @@ public class App
                     }
                     break;
                 case 1:
-                    System.out.println("\nWybrano notowania kursów walut\n");
+                    System.out.println("\nNotowania kursów walut\n");
 
                     /* Here is an example of using a Currency class */
-                    Currency aud = new Currency("data/currency/AUD.txt");
+                    Currency aud = null;
+
+                    try {
+                        aud = new Currency("data/currency/AUD.txt");
+                        System.out.println("Plik wczzytano pomyślnie.");
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Nie znaleziono pkiku!");
+                        currenciesMenu.waitAndContinue();
+                        break;
+                    }
                     String date = "20160414";
                     System.out.println("Wczytano notowania dla "+aud.countPrices()+" dni.");
                     System.out.println("Wczytana waluta: "+aud.getName());
