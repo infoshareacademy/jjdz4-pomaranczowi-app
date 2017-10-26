@@ -8,9 +8,13 @@ public class
 
 Extremes {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     private BigDecimal value;
     private LocalDate date;
+
+    public Extremes (){
+        this.value = BigDecimal.valueOf(0); //ustawione aby w GetLocalExt można było porównywac
+                                            //x.getVolume().compareTo(extremes.getValue()) w pierwszej iteracji
+    }
 
     //setters and getters for private variables
     public BigDecimal getValue() {
