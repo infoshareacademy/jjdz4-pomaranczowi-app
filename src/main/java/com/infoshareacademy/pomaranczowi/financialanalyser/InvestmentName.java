@@ -39,6 +39,7 @@ class InvestmentName {
         } catch (NullPointerException exception) {
             System.out.println("Wystąpił problem z wczytaniem listy funduszy inwestycyjnych.");
         }
+        investmentNameMenu.add("Powrót");
         return filePaths;
     }
 }
