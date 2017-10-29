@@ -1,10 +1,8 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
-
 import com.google.gson.Gson;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
-
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,7 +11,7 @@ import java.nio.channels.ReadableByteChannel;
 
 class ImportCurrentData {
 
-    static void downloadFilesFromURL() {
+    static void downloadFileFromURL() {
         try {
             FileReader fileReader = new FileReader("config.json");
             Gson gson = new Gson();
@@ -25,14 +23,12 @@ class ImportCurrentData {
             extractAllFromZipFile(readJsonConfig.getZipDestination(), readJsonConfig.getDataDirectoryDestination());
             System.out.println("Pobieranie i rozpakowanie danych zakończone");
         } catch (FileNotFoundException e) {
-            //e.printStackTrace();
             System.out.println("Nie znaleziono prawidłowego pliku konfiguracyjnego \"config.json\"");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Nie można połączyć się z serwerem");
         }
-
     }
 
     private static void downloadData(String url, String destination) throws IOException {
@@ -50,10 +46,8 @@ class ImportCurrentData {
             ZipFile zipFile = new ZipFile(source);
             zipFile.extractAll(destination);
         } catch (ZipException e) {
-            //e.printStackTrace();
             System.out.println("Nie można rozpakować pliku " + source);
         }
-
     }
 }
 

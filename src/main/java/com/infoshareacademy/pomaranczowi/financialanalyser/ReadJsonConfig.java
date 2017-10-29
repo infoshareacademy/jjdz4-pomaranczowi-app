@@ -8,7 +8,6 @@ public class ReadJsonConfig {
     private String fundListURL;
     private String fundListDestination;
 
-
     public ReadJsonConfig(String url, String zipDestination, String dataDirectoryDestination, String fundListURL,
                           String fundListDestination) {
         this.url = url;
@@ -17,7 +16,6 @@ public class ReadJsonConfig {
         this.fundListURL = fundListURL;
         this.fundListDestination = fundListDestination;
     }
-
 
     String getDataDirectoryDestination() {
         return dataDirectoryDestination;
