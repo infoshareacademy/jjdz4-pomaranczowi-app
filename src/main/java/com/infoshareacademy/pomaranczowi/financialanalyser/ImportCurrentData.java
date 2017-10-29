@@ -11,11 +11,16 @@ import java.nio.channels.ReadableByteChannel;
 
 class ImportCurrentData {
 
+    private static String dataDirectoryDestination = "";
+    private static String fundListDestination = "";
+
     static void downloadFileFromURL() {
         try {
             FileReader fileReader = new FileReader("config.json");
             Gson gson = new Gson();
             ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
+            dataDirectoryDestination = readJsonConfig.getDataDirectoryDestination();
+            fundListDestination = readJsonConfig.getFundListDestination();
             System.out.println("Rozpoczęto pobieranie aktualnych danych, proszę czekać.");
             downloadData(readJsonConfig.getUrl(), readJsonConfig.getZipDestination());
             downloadData(readJsonConfig.getFundListURL(), readJsonConfig.getFundListDestination());
@@ -48,6 +53,14 @@ class ImportCurrentData {
         } catch (ZipException e) {
             System.out.println("Nie można rozpakować pliku " + source);
         }
+    }
+
+    public static String getDataDirectoryDestination() {
+        return dataDirectoryDestination;
+    }
+
+    public static String getFundListDestination() {
+        return fundListDestination;
     }
 }
 
