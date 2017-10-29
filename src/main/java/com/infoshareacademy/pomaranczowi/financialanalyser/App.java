@@ -82,6 +82,7 @@ public class App
             }
         }
 
+
         /* End of the example */
 
         /* Here is an example of using a Currency class */
