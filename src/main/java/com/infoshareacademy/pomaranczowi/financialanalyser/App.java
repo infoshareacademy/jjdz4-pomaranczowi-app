@@ -1,6 +1,11 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 
+import java.time.LocalDate;
+
+import static com.infoshareacademy.pomaranczowi.financialanalyser.GetLocalExt.getDatesFromUser;
+import static com.infoshareacademy.pomaranczowi.financialanalyser.GetLocalExt.getMax;
+
 public class App
 {
     public static void main( String[] args ) {
@@ -61,6 +66,8 @@ public class App
                                     break;
                                 case 1:
                                     System.out.println("Wybrano średnie.");
+                                    //GetLocalExt.getDatesFromUser();
+                                    //getMax(aud,GetLocalExt.getStartDate(),GetLocalExt.getEndDate(),);
                                     menuFuduszyInwestycyjnych.exit();
                                     break;
                                 case 2:
@@ -105,5 +112,10 @@ public class App
         System.out.println("Minimalna wartość High to: "+ GetGlobalExt.getMin(aud, "High").getValue()+ " z dnia: "+ GetGlobalExt.getMin(aud, "High").getDate());
         /* End of the example */
 
+        /* Here is an example of using a Local Extremes */
+        LocalDate from = LocalDate.parse("2010-01-01");
+        LocalDate to = LocalDate.parse("2010-01-01");
+        System.out.println("Maksymalna wartość Open to: "+ GetLocalExt.getMax(aud,from,to, GetLocalExt.ExtremesParams.Open).getValue()+" z dnia: "+GetLocalExt.getMax(aud,from,to, GetLocalExt.ExtremesParams.Open).getDate());
+        getDatesFromUser();
     }
 }
