@@ -12,7 +12,7 @@ class QuotationCreate {
 
     private static final String DATE_FORMAT = "yyyyMMdd";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-    private List<Price> quotations = new ArrayList<>();
+    private ArrayList<Price> quotations = new ArrayList<>();
 
     int getNumberOfQuotations() {
         return quotations.size();

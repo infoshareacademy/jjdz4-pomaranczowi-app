@@ -3,13 +3,12 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Investment {
+public class Investment implements Quotation{
 
 
     public String name;
-    private List<Price> prices = new ArrayList<>();
+    private ArrayList<Price> prices = new ArrayList<>();
 
 
     public String getName() {
@@ -20,32 +19,45 @@ public class Investment {
         this.name = name;
     }
 
-    public Investment(String name, List<Price> prices) {
+    public Investment(String name, ArrayList<Price> prices) {
         this.name = name;
         this.prices = prices;
     }
 
-    BigDecimal getOpen(String date) {
+    @Override
+    public BigDecimal getOpen(String date) {
         for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getOpen();
         return null;
     }
 
-    BigDecimal getHigh(String date) {
+    @Override
+    public BigDecimal getHigh(String date) {
         for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getHigh();
         return null;
     }
 
-
-    BigDecimal getLow(String date) {
+    @Override
+    public BigDecimal getLow(String date) {
         for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getLow();
         return null;
     }
 
-
-    BigDecimal getClose(String date){
+    @Override
+    public BigDecimal getClose(String date){
         for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getClose();
         return null;
         }
+
+    @Override
+    public BigDecimal getVolume(String date){
+        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getVolume();
+        return null;
+    }
+
+    @Override
+    public ArrayList<Price> getPrices() {
+        return prices;
+    }
 
     LocalDate getFirstDate(){
         return prices.get(0).getDate();
@@ -58,5 +70,4 @@ public class Investment {
     Integer getNumberOfQuotation(){
         return prices.size();
         }
-
 }

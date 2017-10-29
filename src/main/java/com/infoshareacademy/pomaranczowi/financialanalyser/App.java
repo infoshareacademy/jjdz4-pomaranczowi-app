@@ -45,7 +45,9 @@ public class App
                                         investmentName.investmentNameMenu.exit();
                                     } else {
 
-                                        Investment investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/" + investmentName.filePaths.get(userChoice).path));
+                                        Investment investment = new Investment(investmentName.filePaths.get(userChoice).name,
+                                                Loader.getQuotationsList("data/fund/" +
+                                                        investmentName.filePaths.get(userChoice).path));
 
                                         /* Here is an example of using a Investment class */
                                         System.out.println("\nWybrano fundusz " + investment.getName());
