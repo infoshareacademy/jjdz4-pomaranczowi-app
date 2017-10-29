@@ -58,12 +58,16 @@ public class Menu {
         }  else return exit;
     }
 
+    public boolean isExitSet() {
+        return exit;
+    }
+
     //gives an information that user wants to exit a menu
     public void exit() {
         exit = true;
     }
 
-    public void waitAndContinue() {
+    public static void waitAndContinue() {
         System.out.println("\nNaciśnij klawisz ENTER aby kontynować...");
 
         try

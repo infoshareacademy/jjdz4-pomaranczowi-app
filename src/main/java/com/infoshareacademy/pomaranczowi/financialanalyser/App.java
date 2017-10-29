@@ -33,6 +33,9 @@ public class App
             switch (mainMenu.Init()) { //menu initialization
                 case 0: //menu returns user choice as an int so you can use switch case
                     while (!investmentChoiceMenu.wantExit()) {
+
+                        Investment investment = null;
+
                         switch (investmentChoiceMenu.Init()) {
                             case 0:
                                 while (!investmentName.investmentNameMenu.wantExit()) {
@@ -43,9 +46,10 @@ public class App
 
                                     if (userChoice == investmentName.filePaths.size()) {
                                         investmentName.investmentNameMenu.exit();
+                                        investmentChoiceMenu.exit();
                                     } else {
 
-                                        Investment investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/" + investmentName.filePaths.get(userChoice).path));
+                                        investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/" + investmentName.filePaths.get(userChoice).path));
 
                                         /* Here is an example of using a Investment class */
                                         System.out.println("\nWybrano fundusz " + investment.getName());
@@ -57,30 +61,36 @@ public class App
                                         //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getClose(exampleDate));
                                         /* End of example */
 
-                                        while (!investmentMenu.wantExit()) {
-                                            switch (investmentMenu.Init()) {
-                                                case 0:
-                                                    System.out.println("\nWybrano ekstrema dla " +investment.getName());
-                                                    investmentMenu.waitAndContinue();
-                                                    break;
-                                                case 1:
-                                                    System.out.println("\nWybrano średnie dla " + investment.getName());
-                                                    investmentMenu.waitAndContinue();
-                                                    break;
-                                                default:
-                                                    investmentMenu.exit();
-                                                    break;
-                                            }
-                                        }
+                                        Menu.waitAndContinue();
+                                        investmentName.investmentNameMenu.exit();
                                     }
                                 }
                                 break;
                             case 1:
                                 System.out.println("\nWybrano wczytywanie z internetu");
-                                investmentChoiceMenu.waitAndContinue();
+                                Menu.waitAndContinue();
                                 break;
                             default:
                                 investmentChoiceMenu.exit();
+                                break;
+                        }
+
+                        if (!investmentChoiceMenu.isExitSet()) {
+                            while (!investmentMenu.wantExit()) {
+                                switch (investmentMenu.Init()) {
+                                    case 0:
+                                        System.out.println("\nWybrano ekstrema dla " + investment.getName());
+                                        Menu.waitAndContinue();
+                                        break;
+                                    case 1:
+                                        System.out.println("\nWybrano średnie dla " + investment.getName());
+                                        Menu.waitAndContinue();
+                                        break;
+                                    default:
+                                        investmentMenu.exit();
+                                        break;
+                                }
+                            }
                         }
                     }
                     break;
@@ -95,7 +105,7 @@ public class App
                         System.out.println("Plik wczzytano pomyślnie.");
                     } catch (FileNotFoundException e) {
                         System.out.println("Nie znaleziono pkiku!");
-                        currenciesMenu.waitAndContinue();
+                        Menu.waitAndContinue();
                         break;
                     }
                     String date = "20160414";
@@ -114,7 +124,7 @@ public class App
                     System.out.println("Minimalna wartość High to: "+ GetGlobalExt.getMin(aud, "High").getValue()+ " z dnia: "+ GetGlobalExt.getMin(aud, "High").getDate());
                     /* End of the example */
 
-                    mainMenu.waitAndContinue();
+                    Menu.waitAndContinue();
                     break;
                 default:
                     mainMenu.exit();
