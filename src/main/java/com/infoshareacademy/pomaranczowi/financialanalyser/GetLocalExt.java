@@ -23,9 +23,40 @@ public class GetLocalExt {
         return endDate;
     }
 
-
     enum ExtremesParams {
         Open, Close, High, Low, Volume
+    }
+
+    static void getDatesFromUser() {
+
+        boolean dataOk = false;
+        DateTimeFormatter ft1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        System.out.println("Podaj początkową datę w formacie YYYY-MM-DD");
+        while (!dataOk) {
+            Scanner odczytScanner = new Scanner(System.in);
+            try {
+                startDate = LocalDate.parse(odczytScanner.nextLine(), ft1);
+                dataOk = true;
+            } catch (DateTimeParseException exc) {
+                System.out.println("Podaj datę w formacie YYYY-MM-DD\nSpróbuj ponownie");
+            }
+        }
+
+        dataOk = false;
+        System.out.println("Podaj końcową datę w formacie YYYY-MM-DD");
+        while (!dataOk) {
+            Scanner odczytScanner = new Scanner(System.in);
+            try {
+                endDate = LocalDate.parse(odczytScanner.nextLine(), ft1);
+                if(endDate.isAfter(startDate)||endDate.isEqual(startDate))
+                    dataOk = true;
+                else System.out.println("Data końcowa musi być większa lub równa dacie początku ("+startDate+")\n" +
+                        "Spróbuj ponownie - Podaj końcową datę w formacie YYYY-MM-DD");
+            } catch (DateTimeParseException exc) {
+                System.out.println("Podaj datę w formacie YYYY-MM-DD\nSpróbuj ponownie");
+            }
+        }
     }
 
     public static Extremes getMaxOpen(Quotation quotation, LocalDate from, LocalDate to) {
@@ -45,38 +76,6 @@ public class GetLocalExt {
         }
         return extremes;
     }
-
-    static void getDatesFromUser() {
-//TODO: SPRAWDZENIE CZY DATA POCZ JEST < DATA KONCA
-        boolean dataOk = false;
-        DateTimeFormatter ft1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        System.out.println("Podaj początkową datę");
-        while (!dataOk) {
-            Scanner odczytScanner = new Scanner(System.in);
-
-            try {
-                startDate = LocalDate.parse(odczytScanner.nextLine(), ft1);
-                dataOk = true;
-            } catch (DateTimeParseException exc) {
-                System.out.println("Podaj datę w formacie 'YYYY-MM-DD\nSpróbuj ponownie");
-            }
-        }
-
-        dataOk = false;
-        System.out.println("Podaj końcową datę");
-        while (!dataOk) {
-            Scanner odczytScanner = new Scanner(System.in);
-
-            try {
-                endDate = LocalDate.parse(odczytScanner.nextLine(), ft1);
-                dataOk = true;
-            } catch (DateTimeParseException exc) {
-                System.out.println("Podaj datę w formacie 'YYYY-MM-DD\nSpróbuj ponownie");
-            }
-        }
-    }
-
 
     public static Extremes getMaxClose(Quotation quotation, LocalDate from, LocalDate to) {
         Extremes extremes = new Extremes();
