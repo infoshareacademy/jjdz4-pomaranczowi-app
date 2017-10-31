@@ -1,12 +1,62 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Scanner;
 
 public class GetLocalExt {
 
-    enum ExtremesParams{
-        Open,Close,High,Low,Volume
+    private static LocalDate startDate;
+    private static LocalDate endDate;
+
+    public static LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public static LocalDate getEndDate() {
+        return endDate;
+    }
+
+    enum ExtremesParams {
+        OPEN, CLOSE, HIGH, LOW, VOLUME
+    }
+
+    static void getDatesFromUser() {
+
+        boolean dataOk = false;
+        DateTimeFormatter ft1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        System.out.println("Podaj początkową datę w formacie YYYY-MM-DD");
+        while (!dataOk) {
+            Scanner odczytScanner = new Scanner(System.in);
+            try {
+                startDate = LocalDate.parse(odczytScanner.nextLine(), ft1);
+                dataOk = true;
+            } catch (DateTimeParseException exc) {
+                System.out.println("Podaj datę w formacie YYYY-MM-DD\nSpróbuj ponownie");
+            }
+        }
+
+        dataOk = false;
+        System.out.println("Podaj końcową datę w formacie YYYY-MM-DD");
+        while (!dataOk) {
+            Scanner odczytScanner = new Scanner(System.in);
+            try {
+                endDate = LocalDate.parse(odczytScanner.nextLine(), ft1);
+                if(endDate.isAfter(startDate)||endDate.isEqual(startDate))
+                    dataOk = true;
+                else System.out.println("Data końcowa musi być większa lub równa dacie początku ("+startDate+")\n" +
+                        "Spróbuj ponownie - Podaj końcową datę w formacie YYYY-MM-DD");
+            } catch (DateTimeParseException exc) {
+                System.out.println("Podaj datę w formacie YYYY-MM-DD\nSpróbuj ponownie");
+            }
+        }
     }
 
     public static Extremes getMaxOpen(Quotation quotation, LocalDate from, LocalDate to) {

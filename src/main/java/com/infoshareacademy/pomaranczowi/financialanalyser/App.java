@@ -2,6 +2,11 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.FileNotFoundException;
 
+import java.time.LocalDate;
+
+import static com.infoshareacademy.pomaranczowi.financialanalyser.GetLocalExt.getDatesFromUser;
+import static com.infoshareacademy.pomaranczowi.financialanalyser.GetLocalExt.getMax;
+
 public class App
 {
     public static void main( String[] args ) {
