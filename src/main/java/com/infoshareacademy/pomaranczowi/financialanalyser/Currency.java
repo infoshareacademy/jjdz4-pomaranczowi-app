@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -18,16 +17,10 @@ class Currency implements Quotation {
     private ArrayList<Price> prices = new ArrayList<>();
 
     //File load on Currency creation
-    public Currency(String path) {
+    Currency(String path) throws FileNotFoundException {
 
         File file = new File(path);
-        Scanner fileScanner = null;
-        try {
-            fileScanner = new Scanner(file);
-            System.out.println("Wczytano plik: " + path);
-        } catch (FileNotFoundException e) {
-            System.out.println("Nie znaleziono pliku: " + path);
-        }
+        Scanner fileScanner = new Scanner(file);
 
         Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]+.?[0-9]*)$");
 
@@ -50,8 +43,7 @@ class Currency implements Quotation {
 
                 }
             }
-        } catch (NullPointerException exception) {
-        }
+        } catch (NullPointerException e) {}
     }
 
     //returns Price object for demanded date (in String), if no object returns null
@@ -133,7 +125,7 @@ class Currency implements Quotation {
         return null;
     }
 
-    public String firstDate() {
+    String firstDate() {
         try {
             return getPrices().get(1).getDate().toString();
         } catch (IndexOutOfBoundsException exception) {
@@ -141,7 +133,7 @@ class Currency implements Quotation {
         }
     }
 
-    public String lastDate() {
+    String lastDate() {
 
         try {
             return getPrices().get(getPrices().size() - 1).getDate().toString();
@@ -150,15 +142,15 @@ class Currency implements Quotation {
         }
     }
 
-    public String getName() {
+    String getName() {
         return getPrices().get(1).getName();
     }
 
-    public Integer countPrices() {
+    Integer countPrices() {
         return getPrices().size();
     }
 
-    public void addPrice(Price price) {
+    void addPrice(Price price) {
         getPrices().add(price);
     }
 

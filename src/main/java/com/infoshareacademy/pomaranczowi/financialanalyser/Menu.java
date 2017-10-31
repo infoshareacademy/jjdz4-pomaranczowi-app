@@ -62,4 +62,16 @@ public class Menu {
     public void exit() {
         exit = true;
     }
+
+    public void waitAndContinue() {
+        System.out.println("\nNaciśnij klawisz ENTER aby kontynować...");
+
+        try
+        {
+            System.in.read();
+        }
+        catch(Exception e)
+        { }
+
+    }
 }
