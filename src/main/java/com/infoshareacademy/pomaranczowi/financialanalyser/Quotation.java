@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
-public interface Quotation {
+interface Quotation {
 
     BigDecimal getOpen(String date);
     BigDecimal getHigh(String date);

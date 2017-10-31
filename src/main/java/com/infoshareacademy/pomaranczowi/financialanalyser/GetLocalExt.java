@@ -24,7 +24,7 @@ public class GetLocalExt {
     }
 
     enum ExtremesParams {
-        Open, Close, High, Low, Volume
+        OPEN, CLOSE, HIGH, LOW, VOLUME
     }
 
     static void getDatesFromUser() {
@@ -154,19 +154,19 @@ public class GetLocalExt {
         Extremes extremes = null;
 
         switch (p) {
-            case Open:
+            case OPEN:
                 extremes = getMaxOpen(quotation, from, to);
                 break;
-            case Close:
+            case CLOSE:
                 extremes = getMaxClose(quotation, from, to);
                 break;
-            case High:
+            case HIGH:
                 extremes = getMaxHigh(quotation, from, to);
                 break;
-            case Low:
+            case LOW:
                 extremes = getMaxLow(quotation, from, to);
                 break;
-            case Volume:
+            case VOLUME:
                 extremes = getMaxVolume(quotation, from, to);
                 break;
         }
@@ -175,7 +175,7 @@ public class GetLocalExt {
 
     public static Extremes getMinOpen(Quotation quotation, LocalDate from, LocalDate to) {
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal=BigDecimal.valueOf(0);;
+        BigDecimal bigDecimal=BigDecimal.valueOf(0);
         LocalDate localDate;
         extremes.setValue(bigDecimal);
 
@@ -198,7 +198,7 @@ public class GetLocalExt {
 
     public static Extremes getMinClose(Quotation quotation, LocalDate from, LocalDate to) {
         Extremes extremes = new Extremes();
-        BigDecimal bigDecimal=BigDecimal.valueOf(0);;
+        BigDecimal bigDecimal=BigDecimal.valueOf(0);
         LocalDate localDate;
         extremes.setValue(bigDecimal);
 
@@ -293,19 +293,19 @@ public class GetLocalExt {
         Extremes extremes = null;
 
         switch (p) {
-            case Open:
+            case OPEN:
                 extremes = getMinOpen(quotation, from, to);
                 break;
-            case Close:
+            case CLOSE:
                 extremes = getMinClose(quotation, from, to);
                 break;
-            case High:
+            case HIGH:
                 extremes = getMinHigh(quotation, from, to);
                 break;
-            case Low:
+            case LOW:
                 extremes = getMinLow(quotation, from, to);
                 break;
-            case Volume:
+            case VOLUME:
                 extremes = getMinVolume(quotation, from, to);
                 break;
         }
