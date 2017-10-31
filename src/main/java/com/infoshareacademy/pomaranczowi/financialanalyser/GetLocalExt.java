@@ -24,7 +24,7 @@ public class GetLocalExt {
     }
 
     enum ExtremesParams {
-        Open, Close, High, Low, Volume
+        OPEN, CLOSE, HIGH, LOW, VOLUME
     }
 
     static void getDatesFromUser() {
