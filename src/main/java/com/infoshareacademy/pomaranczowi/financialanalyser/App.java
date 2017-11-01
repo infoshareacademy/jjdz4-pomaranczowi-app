@@ -2,17 +2,8 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.FileNotFoundException;
 
-import java.time.LocalDate;
-
-import static com.infoshareacademy.pomaranczowi.financialanalyser.GetLocalExt.getDatesFromUser;
-import static com.infoshareacademy.pomaranczowi.financialanalyser.GetLocalExt.getMax;
-
-public class App
-{
-    public static void main( String[] args ) {
-        InvestmentName investmentName = new InvestmentName();
-        //ArrayList<String> investmentFilePath = investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
-        investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
+public class App {
+    public static void main(String[] args) {
 
         Menu mainMenu = new Menu("$$$$ ANALIZATOR FINANSOWY $$$$");
         mainMenu.add("Notowania funduszy inwestycyjnych");
@@ -25,8 +16,9 @@ public class App
         investmentChoiceMenu.add("Powrót");
 
         Menu investmentMenu = new Menu("Co chcesz zrobić?");
-        investmentMenu.add("Ekstrema");
-        investmentMenu.add("Średnie");
+        investmentMenu.add("Ekstrema globalne");
+        investmentMenu.add("Ekstrema lokalne");
+        investmentMenu.add("Wartości z danego dnia");
         investmentMenu.add("Powrót");
 
         Menu currenciesMenu = new Menu("Notowania kursów walut");
@@ -34,94 +26,111 @@ public class App
         currenciesMenu.add("Wczytaj dane z adresu internetowego");
         currenciesMenu.add("Powrót");
 
-        while (!mainMenu.wantExit()) { //exits menu when .exit() is used
-            switch (mainMenu.Init()) { //menu initialization
-                case 0: //menu returns user choice as an int so you can use switch case
+        while (!mainMenu.wantExit()) {
+            switch (mainMenu.Init()) {
+                case 0:
                     while (!investmentChoiceMenu.wantExit()) {
+
+                        InvestmentName investmentName = new InvestmentName();
+                        investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
+                        Investment investment = null;
+
                         switch (investmentChoiceMenu.Init()) {
                             case 0:
-                                while (!investmentName.investmentNameMenu.wantExit()) {
+                                System.out.println("\nWybrano wczytywanie z pliku");
 
-                                    int userChoice;
-
-                                    userChoice = investmentName.investmentNameMenu.Init();
-
-                                    if (userChoice == investmentName.filePaths.size()) {
-                                        investmentName.investmentNameMenu.exit();
-                                    } else {
-
-                                        Investment investment = new Investment(investmentName.filePaths.get(userChoice).name,
-                                                Loader.getQuotationsList("data/fund/" +
-                                                        investmentName.filePaths.get(userChoice).path));
-
-                                        /* Here is an example of using a Investment class */
-                                        System.out.println("\nWybrano fundusz " + investment.getName());
-                                        System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
-                                        String exampleDate = "2017-04-13";
-                                        //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getOpen(exampleDate));
-                                        //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getHigh(exampleDate));
-                                        //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getLow(exampleDate));
-                                        //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getClose(exampleDate));
-                                        /* End of example */
-
-                                        while (!investmentMenu.wantExit()) {
-                                            switch (investmentMenu.Init()) {
-                                                case 0:
-                                                    System.out.println("\nWybrano ekstrema dla " +investment.getName());
-                                                    investmentMenu.waitAndContinue();
-                                                    break;
-                                                case 1:
-                                                    System.out.println("\nWybrano średnie dla " + investment.getName());
-                                                    investmentMenu.waitAndContinue();
-                                                    break;
-                                                default:
-                                                    investmentMenu.exit();
-                                                    break;
-                                            }
-                                        }
-                                    }
-                                }
+                                Menu.waitAndContinue();
                                 break;
                             case 1:
                                 System.out.println("\nWybrano wczytywanie z internetu");
-                                investmentChoiceMenu.waitAndContinue();
+
+                                ImportCurrentData.downloadFileFromURL();
+
+                                Menu.waitAndContinue();
                                 break;
                             default:
                                 investmentChoiceMenu.exit();
+                                break;
+                        }
+
+                        if(!investmentMenu.isExitSet()) {
+                            while (!investmentName.investmentNameMenu.wantExit()) {
+
+                                int userChoice;
+
+                                userChoice = investmentName.investmentNameMenu.Init();
+
+                                if (userChoice == investmentName.filePaths.size()) {
+                                    investmentName.investmentNameMenu.exit();
+                                    investmentChoiceMenu.exit();
+                                } else {
+
+                                    investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/" + investmentName.filePaths.get(userChoice).path));
+
+                                    System.out.println("\nWybrano fundusz " + investment.getName());
+                                    System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
+
+                                    Menu.waitAndContinue();
+                                    investmentName.investmentNameMenu.exit();
+                                }
+                            }
+                        }
+
+                        if (!investmentChoiceMenu.isExitSet()) {
+                            while (!investmentMenu.wantExit()) {
+                                switch (investmentMenu.Init()) {
+                                    case 0:
+                                        System.out.println("\nWybrano ekstrema globalne dla " + investment.getName());
+                                        GetGlobalExt.ShowAll(investment);
+
+                                        Menu.waitAndContinue();
+                                        break;
+                                    case 1:
+                                        System.out.println("\nWybrano ekstrema lokalne dla " + investment.getName());
+
+                                        GetDateFromUser.AskForStartDate();
+                                        GetDateFromUser.AskForEndDate();
+                                        GetLocalExt.setStartDate(GetDateFromUser.getStartDate());
+                                        GetLocalExt.setEndDate(GetDateFromUser.getEndDate());
+
+                                        System.out.println("\nEkstrema dla przedziału " + GetLocalExt.getStartDate() +
+                                                " - " + GetLocalExt.getEndDate());
+
+                                        GetLocalExt.ShowAll(investment);
+
+                                        Menu.waitAndContinue();
+                                        break;
+                                    case 2:
+                                        System.out.println("\nWartości z danego dnia dla " + investment.getName());
+
+                                        GetDateFromUser.AskForStartDate();
+                                        Quotation.ShowAll(investment, GetDateFromUser.getStartDate());
+
+                                        Menu.waitAndContinue();
+                                        break;
+                                    default:
+                                        investmentMenu.exit();
+                                        break;
+                                }
+                            }
                         }
                     }
                     break;
                 case 1:
                     System.out.println("\nNotowania kursów walut\n");
 
-                    /* Here is an example of using a Currency class */
-                    Currency aud = null;
+                    Currency aud;
 
                     try {
                         aud = new Currency("data/currency/AUD.txt");
                         System.out.println("Plik wczzytano pomyślnie.");
                     } catch (FileNotFoundException e) {
                         System.out.println("Nie znaleziono pkiku!");
-                        currenciesMenu.waitAndContinue();
+                        Menu.waitAndContinue();
                         break;
                     }
-                    String date = "20160414";
-                    System.out.println("Wczytano notowania dla "+aud.countPrices()+" dni.");
-                    System.out.println("Wczytana waluta: "+aud.getName());
-                    System.out.println("Data pierwszego wczytanego notowania to: "+aud.firstDate());
-                    System.out.println("Data ostatniego wczytanego notowania to: "+aud.lastDate()+"\n");
-                    System.out.println("Wartość open dla notowania z dnia "+date+" wynosi: "+aud.getOpen(date));
-                    System.out.println("Wartość high dla notowania z dnia "+date+" wynosi: "+aud.getHigh(date));
-                    System.out.println("Wartość low dla notowania z dnia "+date+" wynosi: "+aud.getLow(date));
-                    System.out.println("Wartość close dla notowania z dnia "+date+" wynosi: "+aud.getClose(date));
-                    /* End of the example */
 
-                    /* Here is an example of using a Global Extremes */
-                    System.out.println("Maksymalna wartość Open to: "+ GetGlobalExt.getMax(aud, "Open").getValue()+ " z dnia: "+ GetGlobalExt.getMax(aud, "Open").getDate());
-                    System.out.println("Minimalna wartość High to: "+ GetGlobalExt.getMin(aud, "High").getValue()+ " z dnia: "+ GetGlobalExt.getMin(aud, "High").getDate());
-                    /* End of the example */
-
-                    mainMenu.waitAndContinue();
+                    Menu.waitAndContinue();
                     break;
                 default:
                     mainMenu.exit();
