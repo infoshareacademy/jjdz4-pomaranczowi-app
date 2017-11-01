@@ -25,32 +25,32 @@ public class Investment implements Quotation{
     }
 
     @Override
-    public BigDecimal getOpen(String date) {
-        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getOpen();
+    public BigDecimal getOpen(LocalDate date) {
+        for (Price price : prices) if (price.getDate().equals(date)) return price.getOpen();
         return null;
     }
 
     @Override
-    public BigDecimal getHigh(String date) {
-        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getHigh();
+    public BigDecimal getHigh(LocalDate date) {
+        for (Price price : prices) if (price.getDate().equals(date)) return price.getHigh();
         return null;
     }
 
     @Override
-    public BigDecimal getLow(String date) {
-        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getLow();
+    public BigDecimal getLow(LocalDate date) {
+        for (Price price : prices) if (price.getDate().equals(date)) return price.getLow();
         return null;
     }
 
     @Override
-    public BigDecimal getClose(String date){
-        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getClose();
+    public BigDecimal getClose(LocalDate date){
+        for (Price price : prices) if (price.getDate().equals(date)) return price.getClose();
         return null;
         }
 
     @Override
-    public BigDecimal getVolume(String date){
-        for (Price price : prices) if (price.getDate().toString().equals(date)) return price.getVolume();
+    public BigDecimal getVolume(LocalDate date){
+        for (Price price : prices) if (price.getDate().equals(date)) return price.getVolume();
         return null;
     }
 

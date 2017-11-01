@@ -22,7 +22,7 @@ public class App
         Menu investmentMenu = new Menu("Co chcesz zrobić?");
         investmentMenu.add("Ekstrema globalne");
         investmentMenu.add("Ekstrema lokalne");
-        investmentMenu.add("Średnie");
+        investmentMenu.add("Wartości z danego dnia");
         investmentMenu.add("Powrót");
 
         Menu currenciesMenu = new Menu("Notowania kursów walut");
@@ -80,8 +80,11 @@ public class App
                                         break;
                                     case 1:
                                         System.out.println("\nWybrano ekstrema lokalne dla " + investment.getName());
-                                        GetLocalExt.getStartDateFromUser();
-                                        GetLocalExt.getEndDateFromUser();
+
+                                        GetDateFromUser.AskForStartDate();
+                                        GetDateFromUser.AskForEndDate();
+                                        GetLocalExt.setStartDate(GetDateFromUser.getStartDate());
+                                        GetLocalExt.setEndDate(GetDateFromUser.getEndDate());
 
                                         System.out.println("\nEkstrema dla przedziału "+GetLocalExt.getStartDate()+
                                                 " - "+GetLocalExt.getEndDate());
@@ -91,9 +94,10 @@ public class App
                                         Menu.waitAndContinue();
                                         break;
                                     case 2:
-                                        System.out.println("\nWybrano średnie dla " + investment.getName());
-                                        GetLocalExt.getStartDateFromUser();
-                                        GetLocalExt.getEndDateFromUser();
+                                        System.out.println("\nWartości z danego dnia dla " + investment.getName());
+
+                                        GetDateFromUser.AskForStartDate();
+                                        Quotation.ShowAll(investment,GetDateFromUser.getStartDate());
 
                                         Menu.waitAndContinue();
                                         break;
@@ -108,8 +112,7 @@ public class App
                 case 1:
                     System.out.println("\nNotowania kursów walut\n");
 
-                    /* Here is an example of using a Currency class */
-                    Currency aud = null;
+                    Currency aud;
 
                     try {
                         aud = new Currency("data/currency/AUD.txt");
@@ -119,21 +122,6 @@ public class App
                         Menu.waitAndContinue();
                         break;
                     }
-                    String date = "20160414";
-                    System.out.println("Wczytano notowania dla "+aud.countPrices()+" dni.");
-                    System.out.println("Wczytana waluta: "+aud.getName());
-                    System.out.println("Data pierwszego wczytanego notowania to: "+aud.firstDate());
-                    System.out.println("Data ostatniego wczytanego notowania to: "+aud.lastDate()+"\n");
-                    System.out.println("Wartość open dla notowania z dnia "+date+" wynosi: "+aud.getOpen(date));
-                    System.out.println("Wartość high dla notowania z dnia "+date+" wynosi: "+aud.getHigh(date));
-                    System.out.println("Wartość low dla notowania z dnia "+date+" wynosi: "+aud.getLow(date));
-                    System.out.println("Wartość close dla notowania z dnia "+date+" wynosi: "+aud.getClose(date));
-                    /* End of the example */
-
-                    /* Here is an example of using a Global Extremes */
-                    System.out.println("Maksymalna wartość Open to: "+ GetGlobalExt.getMax(aud, "Open").getValue()+ " z dnia: "+ GetGlobalExt.getMax(aud, "Open").getDate());
-                    System.out.println("Minimalna wartość High to: "+ GetGlobalExt.getMin(aud, "High").getValue()+ " z dnia: "+ GetGlobalExt.getMin(aud, "High").getDate());
-                    /* End of the example */
 
                     Menu.waitAndContinue();
                     break;
