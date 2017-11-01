@@ -2,9 +2,8 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.FileNotFoundException;
 
-public class App
-{
-    public static void main( String[] args ) {
+public class App {
+    public static void main(String[] args) {
 
         Menu mainMenu = new Menu("$$$$ ANALIZATOR FINANSOWY $$$$");
         mainMenu.add("Notowania funduszy inwestycyjnych");
@@ -38,34 +37,43 @@ public class App
 
                         switch (investmentChoiceMenu.Init()) {
                             case 0:
-                                while (!investmentName.investmentNameMenu.wantExit()) {
+                                System.out.println("\nWybrano wczytywanie z pliku");
 
-                                    int userChoice;
-
-                                    userChoice = investmentName.investmentNameMenu.Init();
-
-                                    if (userChoice == investmentName.filePaths.size()) {
-                                        investmentName.investmentNameMenu.exit();
-                                        investmentChoiceMenu.exit();
-                                    } else {
-
-                                        investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/" + investmentName.filePaths.get(userChoice).path));
-
-                                        System.out.println("\nWybrano fundusz " + investment.getName());
-                                        System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
-
-                                        Menu.waitAndContinue();
-                                        investmentName.investmentNameMenu.exit();
-                                    }
-                                }
+                                Menu.waitAndContinue();
                                 break;
                             case 1:
                                 System.out.println("\nWybrano wczytywanie z internetu");
+
+                                ImportCurrentData.downloadFileFromURL();
+
                                 Menu.waitAndContinue();
                                 break;
                             default:
                                 investmentChoiceMenu.exit();
                                 break;
+                        }
+
+                        if(!investmentMenu.isExitSet()) {
+                            while (!investmentName.investmentNameMenu.wantExit()) {
+
+                                int userChoice;
+
+                                userChoice = investmentName.investmentNameMenu.Init();
+
+                                if (userChoice == investmentName.filePaths.size()) {
+                                    investmentName.investmentNameMenu.exit();
+                                    investmentChoiceMenu.exit();
+                                } else {
+
+                                    investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/" + investmentName.filePaths.get(userChoice).path));
+
+                                    System.out.println("\nWybrano fundusz " + investment.getName());
+                                    System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
+
+                                    Menu.waitAndContinue();
+                                    investmentName.investmentNameMenu.exit();
+                                }
+                            }
                         }
 
                         if (!investmentChoiceMenu.isExitSet()) {
@@ -85,8 +93,8 @@ public class App
                                         GetLocalExt.setStartDate(GetDateFromUser.getStartDate());
                                         GetLocalExt.setEndDate(GetDateFromUser.getEndDate());
 
-                                        System.out.println("\nEkstrema dla przedziału "+GetLocalExt.getStartDate()+
-                                                " - "+GetLocalExt.getEndDate());
+                                        System.out.println("\nEkstrema dla przedziału " + GetLocalExt.getStartDate() +
+                                                " - " + GetLocalExt.getEndDate());
 
                                         GetLocalExt.ShowAll(investment);
 
@@ -96,7 +104,7 @@ public class App
                                         System.out.println("\nWartości z danego dnia dla " + investment.getName());
 
                                         GetDateFromUser.AskForStartDate();
-                                        Quotation.ShowAll(investment,GetDateFromUser.getStartDate());
+                                        Quotation.ShowAll(investment, GetDateFromUser.getStartDate());
 
                                         Menu.waitAndContinue();
                                         break;
