@@ -2,11 +2,6 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.FileNotFoundException;
 
-import java.time.LocalDate;
-
-import static com.infoshareacademy.pomaranczowi.financialanalyser.GetLocalExt.getDatesFromUser;
-import static com.infoshareacademy.pomaranczowi.financialanalyser.GetLocalExt.getMax;
-
 public class App
 {
     public static void main( String[] args ) {
@@ -57,21 +52,20 @@ public class App
                                         /* Here is an example of using a Investment class */
                                         System.out.println("\nWybrano fundusz " + investment.getName());
                                         System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
-                                        String exampleDate = "2017-04-13";
-                                        //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getOpen(exampleDate));
-                                        //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getHigh(exampleDate));
-                                        //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getLow(exampleDate));
-                                        //System.out.println("Wartość open dla notowania z dnia " + exampleDate + " wynosi " + investment.getClose(exampleDate));
-                                        /* End of example */
 
                                         while (!investmentMenu.wantExit()) {
                                             switch (investmentMenu.Init()) {
                                                 case 0:
                                                     System.out.println("\nWybrano ekstrema dla " +investment.getName());
+                                                    GetLocalExt.getStartDateFromUser();
+
                                                     investmentMenu.waitAndContinue();
                                                     break;
                                                 case 1:
                                                     System.out.println("\nWybrano średnie dla " + investment.getName());
+                                                    GetLocalExt.getStartDateFromUser();
+                                                    GetLocalExt.getEndDateFromUser();
+
                                                     investmentMenu.waitAndContinue();
                                                     break;
                                                 default:

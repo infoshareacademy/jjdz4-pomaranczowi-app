@@ -27,12 +27,12 @@ public class GetLocalExt {
         OPEN, CLOSE, HIGH, LOW, VOLUME
     }
 
-    static void getDatesFromUser() {
+    static void getStartDateFromUser() {
 
         boolean dataOk = false;
         DateTimeFormatter ft1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        System.out.println("Podaj początkową datę w formacie YYYY-MM-DD");
+        System.out.println("Podaj datę w formacie YYYY-MM-DD");
         while (!dataOk) {
             Scanner odczytScanner = new Scanner(System.in);
             try {
@@ -42,8 +42,13 @@ public class GetLocalExt {
                 System.out.println("Podaj datę w formacie YYYY-MM-DD\nSpróbuj ponownie");
             }
         }
+    }
 
-        dataOk = false;
+    static void getEndDateFromUser() {
+
+        boolean dataOk = false;
+        DateTimeFormatter ft1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         System.out.println("Podaj końcową datę w formacie YYYY-MM-DD");
         while (!dataOk) {
             Scanner odczytScanner = new Scanner(System.in);
