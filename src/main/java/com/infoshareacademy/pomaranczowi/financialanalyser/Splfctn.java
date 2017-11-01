@@ -1,32 +1,27 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
-
 public class Splfctn {
 
     static HashSet<Integer> year = new HashSet<>();
     static HashSet<Integer> month = new HashSet<>();
-    static HashSet<Integer> week = new HashSet<>();
+
     static Integer yearSelected;
     static Integer monthSelected;
-    static LocalDate date;
+    static ArrayList<Weeks> week = new ArrayList<>();
 
     public static void periodYear(Quotation quotation) {
         System.out.println("Upraszczanie danych finansowych. Dostępne są notowania z poniższych lat.\n" +
                 "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
-        for (Price x : quotation.getPrices()) {
-            year.add(x.getDate().getYear());
-        }
+        getYear(quotation);
         System.out.println(year);
 
         boolean dataOk = false;
-
 //--CHOICE YEAR
         while (!dataOk) {
             try {
@@ -44,183 +39,143 @@ public class Splfctn {
                 System.out.println(year);
             }
         }
-        System.out.println("Czy chcesz otrzymać dane uproszczone dla roku " + yearSelected + " ?\n" +
-                "Jeżeli tak -> wciśnij 'T', jeżeli chcesz otrzymać dane uproszczone dla miesiąca -> wcisnij 'N'");
-        dataOk = false;
+        LocalDate date = LocalDate.of(yearSelected, 1, 1);
+        System.out.println("Dla roku " + yearSelected + ":");
+        result(quotation, date.with(TemporalAdjusters.firstDayOfYear()), date.with(TemporalAdjusters.lastDayOfYear()));
 
+        System.out.println("\nCzy chcesz otrzymać dane uproszczone (dla miesięcy) z roku " + yearSelected + " ?\n" +
+                "Jeżeli tak -> wciśnij 'T', jeżeli chcesz wyjść -> wcisnij 'N'");
+        dataOk = false;
         while (!dataOk) {
             Scanner scanner = new Scanner(System.in);
             String answer = scanner.nextLine();
-
-            //DISPLAY DATA FOR YEAR AND MONTHS
             if (answer.equals("T") || answer.equals("t")) {
-                date = LocalDate.of(yearSelected, 1, 1);
-                System.out.println("Dla roku " + yearSelected + " :\n" +
-                        " maksymalna wartość Open to: " +
-                        GetLocalExt.getMax(quotation, date.with(TemporalAdjusters.firstDayOfYear()), date.with(TemporalAdjusters.lastDayOfYear()), GetLocalExt.ExtremesParams.OPEN).getValue() +
-                        " z dnia: " + GetLocalExt.getMax(quotation, date.with(TemporalAdjusters.firstDayOfYear()), date.with(TemporalAdjusters.lastDayOfYear()), GetLocalExt.ExtremesParams.OPEN).getDate() +
-                        "\n minimalna wartość Open to: " +
-                        GetLocalExt.getMin(quotation, date.with(TemporalAdjusters.firstDayOfYear()), date.with(TemporalAdjusters.lastDayOfYear()), GetLocalExt.ExtremesParams.OPEN).getValue() +
-                        " z dnia: " + GetLocalExt.getMin(quotation, date.with(TemporalAdjusters.firstDayOfYear()), date.with(TemporalAdjusters.lastDayOfYear()), GetLocalExt.ExtremesParams.OPEN).getDate());
-                System.out.println("Miesiące w roku " + yearSelected + " :");
-
-                getMonthsForYear(quotation);
-
-                for (int i : month) {
-                    System.out.println(date.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.forLanguageTag("pl-PL")) + "\n" +
-                            " Max Open: " +
-                            GetLocalExt.getMax(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()), GetLocalExt.ExtremesParams.OPEN).getValue() +
-                            " z dnia: " + GetLocalExt.getMax(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()), GetLocalExt.ExtremesParams.OPEN).getDate() +
-                            "\n Min Open: " +
-                            GetLocalExt.getMin(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()), GetLocalExt.ExtremesParams.OPEN).getValue() +
-                            " z dnia: " + GetLocalExt.getMin(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()), GetLocalExt.ExtremesParams.OPEN).getDate());
-                    date = date.plusMonths(1);
-                }
+                periodMonth(quotation,yearSelected);
                 dataOk = true;
             } else if (answer.equals("N") || answer.equals("n")) {
-                //call month choice function
-                periodMonth(quotation);
                 dataOk = true;
             } else System.out.println("Wprowadź odpowiedź T lub N");
         }
     }
 
-    public static void getMonthsForYear(Quotation quotation) {
+    public static void periodMonth(Quotation quotation,Integer yearSelected) {
+        boolean dataOk = false;
+        getMonthsForYear(quotation,yearSelected);
+        for (int i : month) {
+            LocalDate date = LocalDate.of(yearSelected,i,1);
+            System.out.println(date.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.forLanguageTag("pl-PL")));
+            result(quotation,date.with(TemporalAdjusters.firstDayOfMonth()),date.with(TemporalAdjusters.lastDayOfMonth()));
+        }
+
+        System.out.println("\nCzy chcesz otrzymać dane uproszczone  (dla tygodni) w ramach jednego z miesięcy w roku " + yearSelected + " ?\n" +
+                "Jeżeli tak -> wciśnij 'T', jeżeli chcesz wyjść -> wcisnij 'N'");
+        dataOk = false;
+        boolean data1Ok= false;
+        while (!dataOk) {
+            Scanner scanner = new Scanner(System.in);
+            String answer = scanner.nextLine();
+            if (answer.equals("T") || answer.equals("t")) {
+                System.out.println("Wybierz jeden z poniższych miesięcy dostępnych w ramach roku "+yearSelected );
+                System.out.println(month);
+                while (!data1Ok) {
+                    try {
+                        Scanner scanner1 = new Scanner(System.in);
+                        monthSelected = scanner1.nextInt();
+                        if (month.contains(monthSelected)) {
+                            data1Ok = true;
+                            periodWeek(quotation,yearSelected,monthSelected);
+                        } else {
+                            System.out.println("Wprowadzony mc nie jest jednym z listy\n" +
+                                    "Wybierz jeden z poniższych miesięcy dla którego chcesz otrzymać dane:");
+                            System.out.println(month);
+                        }
+                    } catch (InputMismatchException exception) {
+                        System.out.println("Wprowadź proszę miesiąc w formacie cyfry z poniższej listy");
+                        System.out.println(month);
+                    }
+                }
+               dataOk = true;
+            } else if (answer.equals("N") || answer.equals("n")) {
+                dataOk = true;
+            } else System.out.println("Wprowadź odpowiedź T lub N");
+        }
+    }
+
+    public static void periodWeek(Quotation quotation,Integer yearSelected,Integer monthSelected){
+        LocalDate date = LocalDate.of(yearSelected,monthSelected,1);
+        getWeeksForMonth(date);
+        for(Weeks x :week){
+            System.out.println("Tydzień "+x.getWeek()+" (od:"+x.getFrom()+" do:"+x.getTo()+")");
+            result(quotation,x.getFrom(),x.getTo());
+        }
+    }
+
+//--- supporting methods - can be exported to external class
+    public static void getYear(Quotation quotation) {
+        year.clear();
+        for (Price x : quotation.getPrices()) {
+            year.add(x.getDate().getYear());
+        }
+    }
+    public static void getMonthsForYear(Quotation quotation,Integer yearSelected ) {
         month.clear();
         for (Price x : quotation.getPrices()) {
             if (x.getDate().getYear() == yearSelected)
                 month.add(x.getDate().getMonthValue());
         }
     }
-
-    public static void periodMonth(Quotation quotation) {
-        System.out.println("Dla roku " + yearSelected + " dostępne są dane z poniższych miesięcy.\n" +
-                "Wybierz jeden z poniższych miesięcy:");
-        getMonthsForYear(quotation);
-        System.out.println(month);
-
-        boolean dataOk = false;
-
-//--CHOICE MONTH
-        while (!dataOk) {
-            try {
-                Scanner scanner = new Scanner(System.in);
-                monthSelected = scanner.nextInt();
-                if (month.contains(monthSelected)) {
-                    dataOk = true;
-                } else {
-                    System.out.println("Wprowadzony rok nie jest jednym z listy\n" +
-                            "Wybierz jeden z poniższych miesięcy dla którego chcesz otrzymać dane:");
-                    System.out.println(month);
-                }
-            } catch (InputMismatchException exception) {
-                System.out.println("Wprowadź proszę miesiąc w formacie cyfry z poniższej listy");
-                System.out.println(month);
-            }
-        }
-        System.out.println("Czy chcesz otrzymać dane uproszczone dla miesiąca " + monthSelected + " ?\n" +
-                "Jeżeli tak -> wciśnij 'T', jeżeli chcesz otrzymać dane uproszczone dla tygodni -> wcisnij 'N'");
-        dataOk = false;
-
-        while (!dataOk) {
-            Scanner scanner = new Scanner(System.in);
-            String answer = scanner.nextLine();
-
-            //DISPLAY DATA FOR MONTHS AND ...
-            if (answer.equals("T") || answer.equals("t")) {
-                date = LocalDate.of(yearSelected, monthSelected, 1);
-                System.out.println("Dla miesiąca " + date.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.forLanguageTag("pl-PL"))
-                        + " " + yearSelected + " roku:\n" +
-                        " maksymalna wartość Open to: " +
-                        GetLocalExt.getMax(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()), GetLocalExt.ExtremesParams.OPEN).getValue() +
-                        " z dnia: " + GetLocalExt.getMax(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()), GetLocalExt.ExtremesParams.OPEN).getDate() +
-                        "\n minimalna wartość Open to: " +
-                        GetLocalExt.getMin(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()), GetLocalExt.ExtremesParams.OPEN).getValue() +
-                        " z dnia: " + GetLocalExt.getMin(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()), GetLocalExt.ExtremesParams.OPEN).getDate());
-                System.out.println("Tygodnie w miesiącu: " + date.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.forLanguageTag("pl-PL")) + " " + yearSelected + " roku :");
-                getWeeksForMonth(date);
-
-
-            }
+    public static void result(Quotation quotation, LocalDate from, LocalDate to) {
+        if (GetLocalExt.getMax(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getDate()==null){
+            System.out.println("brak danych dla okresu");
+        }else {
+            System.out.println("Max Open to: " +
+                    GetLocalExt.getMax(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getValue() +
+                    " z dnia: " + GetLocalExt.getMax(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getDate() +
+                    "\nMin Open to: " +
+                    GetLocalExt.getMin(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getValue() +
+                    " z dnia: " + GetLocalExt.getMin(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getDate());
         }
     }
-
-
-
     public static void  getWeeksForMonth(LocalDate date) {
 
-        ArrayList<Weeks> weeks = new ArrayList<>();
+        LocalDate lastDateOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
+        boolean dataOk = false;
+        LocalDate firstMonday = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
 
+        Calendar calendar = Calendar.getInstance(); //set calendar to first day of week
+        calendar.set(Calendar.YEAR,firstMonday.getYear());
+        calendar.set(Calendar.MONTH,firstMonday.getMonthValue()-1);
+        calendar.set(Calendar.DATE,firstMonday.getDayOfMonth());
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR,date.getYear());
-        calendar.set(Calendar.MONTH,date.getMonthValue()-1);
-        calendar.set(Calendar.DATE,date.getDayOfMonth());
-        System.out.println(calendar.getWeeksInWeekYear());
-        System.out.println("mnthFromWeek "+ calendar.get(Calendar.WEEK_OF_YEAR));
+        int countWeeksInYear = calendar.getActualMaximum(Calendar.WEEK_OF_YEAR); //quantity of weeks in Year can be between 52-53
 
+        int currWeek = calendar.get(Calendar.WEEK_OF_YEAR); //set first nr of week in selected month to variable
 
+        LocalDate lastDayOfWeek=firstMonday.plusDays(6);
 
+        while (!dataOk) {
+            Weeks weeks = new Weeks();
+            weeks.setWeek(currWeek);
+            weeks.setFrom(date);
+            weeks.setTo(lastDayOfWeek);
+            week.add(weeks);
 
-/*
-        int mnthFromWeek;
-        int mnthToWeek;
+            currWeek=currWeek==countWeeksInYear? 1:currWeek+1;
 
-        week.clear();
-
-        Calendar c = Calendar.getInstance();
-        c.set(date.getYear(),date.getMonthValue());
-
-        int start = c.get(Calendar.WEEK_OF_YEAR);
-        System.out.println(start);
-        String x = date.getYear();
-
-        Calendar calendar = Calendar.getInstance();
-//        calendar.set(Calendar.YEAR,date.getYear());
-        //calendar.set(Calendar.DATE,date.getMonthValue(),4);
-        calendar.set(Calendar.YEAR,date.getYear());
-        calendar.set(Calendar.MONTH,date.getMonthValue()-1);
-        calendar.set(Calendar.DATE,date.getDayOfMonth());
-//        calendar.set(date.getYear(),date.getMonthValue()+1,4);
-        System.out.println(calendar.getWeeksInWeekYear());
-        System.out.println("mnthFromWeek "+ calendar.get(Calendar.WEEK_OF_YEAR));
-*/
-        //int week = calendar.get(Calendar.WEEK_OF_YEAR);
-        //System.out.println(week);
-
- /*
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(date.getYear(),date.getMonthValue());
-    calendar.setMinimalDaysInFirstWeek(1);
-    int week = calendar.get(Calendar.WEEK_OF_MONTH);
-    for (int i = 0;i<week;i++){
-     }
-*/
- /*
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
-
-        String date1 = date.getYear()+"-"+date.getMonth();
-
-
-        Date date2 = null;
-        try {
-            date2 = format.parse(date1);
-        } catch (ParseException e) {
-            e.printStackTrace();
+            if(lastDayOfWeek.plusDays(1).isAfter(lastDateOfMonth)){
+                dataOk=true;
+                break;
+            }else {
+                date=lastDayOfWeek.plusDays(1);
+                if (date.plusDays(6).isAfter(lastDateOfMonth)){
+                    lastDayOfWeek=lastDateOfMonth;
+                }else lastDayOfWeek=date.plusDays(6);
+            }
         }
-
-        Calendar c = Calendar.getInstance();
-        c.setTime(date2);
-        int start = c.get(Calendar.WEEK_OF_MONTH);
-        System.out.println(start);
-*/
     }
+//--- end of supporting menthods
 }
 
-                    /* Here is an example of using a Local Extremes */
-//LocalDate from = LocalDate.parse("2017-01-01");
-//LocalDate to = LocalDate.parse("2017-12-31");
-//System.out.println("Max Open to: "+ GetLocalExt.getMax(aud,from,to, GetLocalExt.ExtremesParams.OPEN).getValue()+" z dnia: "+GetLocalExt.getMax(aud,from,to, GetLocalExt.ExtremesParams.OPEN).getDate());
-//System.out.println("Min Open to: "+ GetLocalExt.getMin(aud,from,to, GetLocalExt.ExtremesParams.OPEN).getValue()+" z dnia: "+GetLocalExt.getMin(aud,from,to, GetLocalExt.ExtremesParams.OPEN).getDate());
-//getDatesFromUser();
-//                    Splfctn.periodYear(aud);
+//example of use:
+//Splfctn.periodYear(aud);
+
