@@ -29,7 +29,7 @@ class QuotationCreate {
             while (scanner.hasNextLine()) {
                 String data[] = scanner.nextLine().split(",");
                 String name = data[0];
-                String date = data[1];
+                LocalDate date = LocalDate.parse(data[1],formatter);
                 BigDecimal open = new BigDecimal(data[2]);
                 BigDecimal high = new BigDecimal(data[3]);
                 BigDecimal low = new BigDecimal(data[4]);

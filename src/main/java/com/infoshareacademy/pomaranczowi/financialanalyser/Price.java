@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 //Price objects can be stored in and returned by Currency objects
 public class Price {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     private String name;
     private LocalDate date;
     private BigDecimal open;
@@ -22,8 +21,8 @@ public class Price {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = LocalDate.parse(date,formatter);
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public BigDecimal getOpen() {
