@@ -5,9 +5,6 @@ import java.io.FileNotFoundException;
 public class App
 {
     public static void main( String[] args ) {
-        InvestmentName investmentName = new InvestmentName();
-        //ArrayList<String> investmentFilePath = investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
-        investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
 
         Menu mainMenu = new Menu("$$$$ ANALIZATOR FINANSOWY $$$$");
         mainMenu.add("Notowania funduszy inwestycyjnych");
@@ -35,6 +32,8 @@ public class App
                 case 0:
                     while (!investmentChoiceMenu.wantExit()) {
 
+                        InvestmentName investmentName = new InvestmentName();
+                        investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
                         Investment investment = null;
 
                         switch (investmentChoiceMenu.Init()) {
