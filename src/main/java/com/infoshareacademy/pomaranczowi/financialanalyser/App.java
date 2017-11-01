@@ -20,7 +20,8 @@ public class App
         investmentChoiceMenu.add("Powrót");
 
         Menu investmentMenu = new Menu("Co chcesz zrobić?");
-        investmentMenu.add("Ekstrema");
+        investmentMenu.add("Ekstrema globalne");
+        investmentMenu.add("Ekstrema lokalne");
         investmentMenu.add("Średnie");
         investmentMenu.add("Powrót");
 
@@ -29,9 +30,9 @@ public class App
         currenciesMenu.add("Wczytaj dane z adresu internetowego");
         currenciesMenu.add("Powrót");
 
-        while (!mainMenu.wantExit()) { //exits menu when .exit() is used
-            switch (mainMenu.Init()) { //menu initialization
-                case 0: //menu returns user choice as an int so you can use switch case
+        while (!mainMenu.wantExit()) {
+            switch (mainMenu.Init()) {
+                case 0:
                     while (!investmentChoiceMenu.wantExit()) {
 
                         Investment investment = null;
@@ -51,7 +52,6 @@ public class App
 
                                         investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/" + investmentName.filePaths.get(userChoice).path));
 
-                                        /* Here is an example of using a Investment class */
                                         System.out.println("\nWybrano fundusz " + investment.getName());
                                         System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
 
@@ -73,12 +73,24 @@ public class App
                             while (!investmentMenu.wantExit()) {
                                 switch (investmentMenu.Init()) {
                                     case 0:
-                                        System.out.println("\nWybrano ekstrema dla " + investment.getName());
-                                        GetLocalExt.getStartDateFromUser();
+                                        System.out.println("\nWybrano ekstrema globalne dla " + investment.getName());
+                                        GetGlobalExt.ShowAll(investment);
 
                                         Menu.waitAndContinue();
                                         break;
                                     case 1:
+                                        System.out.println("\nWybrano ekstrema lokalne dla " + investment.getName());
+                                        GetLocalExt.getStartDateFromUser();
+                                        GetLocalExt.getEndDateFromUser();
+
+                                        System.out.println("\nEkstrema dla przedziału "+GetLocalExt.getStartDate()+
+                                                " - "+GetLocalExt.getEndDate());
+
+                                        GetLocalExt.ShowAll(investment);
+
+                                        Menu.waitAndContinue();
+                                        break;
+                                    case 2:
                                         System.out.println("\nWybrano średnie dla " + investment.getName());
                                         GetLocalExt.getStartDateFromUser();
                                         GetLocalExt.getEndDateFromUser();

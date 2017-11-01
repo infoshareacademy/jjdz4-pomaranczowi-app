@@ -6,6 +6,44 @@ import java.util.ArrayList;
 
 public class GetGlobalExt {
 
+    
+    public static void ShowAll(Quotation quotation) {
+        System.out.println("\nMaksymalna wartość OPEN to: "+
+                GetGlobalExt.getMaxOpen(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMaxOpen(quotation).getDate());
+        System.out.println("Minimalna wartość OPEN to: "+
+                GetGlobalExt.getMaxOpen(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMaxOpen(quotation).getDate());
+
+        System.out.println("\nMaksymalna wartość LOW to: "+
+                GetGlobalExt.getMaxLow(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMaxLow(quotation).getDate());
+        System.out.println("Minimalna wartość LOW to: "+
+                GetGlobalExt.getMinLow(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMinLow(quotation).getDate());
+
+        System.out.println("\nMaksymalna wartość HIGH to: "+
+                GetGlobalExt.getMaxHigh(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMaxHigh(quotation).getDate());
+        System.out.println("Minimalna wartość HIGH to: "+
+                GetGlobalExt.getMinHigh(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMinHigh(quotation).getDate());
+
+        System.out.println("\nMaksymalna wartość CLOSE to: "+
+                GetGlobalExt.getMaxClose(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMaxClose(quotation).getDate());
+        System.out.println("Minimalna wartość CLOSE to: "+
+                GetGlobalExt.getMinClose(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMinClose(quotation).getDate());
+
+        System.out.println("\nMaksymalna wartość VOLUME to: "+
+                GetGlobalExt.getMaxVolume(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMaxVolume(quotation).getDate());
+        System.out.println("Minimalna wartość VOLUME to: "+
+                GetGlobalExt.getMinVolume(quotation).getValue()+" z dnia "+
+                GetGlobalExt.getMinVolume(quotation).getDate());
+    }
+    
     public static Extremes getMaxOpen(Quotation quotation) {
 
         Extremes extremes = new Extremes();
