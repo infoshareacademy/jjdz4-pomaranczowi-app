@@ -6,7 +6,7 @@ import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
-public class Splfctn {
+public class Simplify {
 
     static HashSet<Integer> year = new HashSet<>();
     static HashSet<Integer> month = new HashSet<>();
@@ -48,11 +48,11 @@ public class Splfctn {
         dataOk = false;
         while (!dataOk) {
             Scanner scanner = new Scanner(System.in);
-            String answer = scanner.nextLine();
-            if (answer.equals("T") || answer.equals("t")) {
+            String answer = scanner.nextLine().toUpperCase();
+            if (answer.equals("T")) {
                 periodMonth(quotation,yearSelected);
                 dataOk = true;
-            } else if (answer.equals("N") || answer.equals("n")) {
+            } else if (answer.equals("N")) {
                 dataOk = true;
             } else System.out.println("Wprowadź odpowiedź T lub N");
         }
@@ -73,8 +73,8 @@ public class Splfctn {
         boolean data1Ok= false;
         while (!dataOk) {
             Scanner scanner = new Scanner(System.in);
-            String answer = scanner.nextLine();
-            if (answer.equals("T") || answer.equals("t")) {
+            String answer = scanner.nextLine().toUpperCase();
+            if (answer.equals("T")) {
                 System.out.println("Wybierz jeden z poniższych miesięcy dostępnych w ramach roku "+yearSelected );
                 System.out.println(month);
                 while (!data1Ok) {
@@ -95,7 +95,7 @@ public class Splfctn {
                     }
                 }
                dataOk = true;
-            } else if (answer.equals("N") || answer.equals("n")) {
+            } else if (answer.equals("N")) {
                 dataOk = true;
             } else System.out.println("Wprowadź odpowiedź T lub N");
         }
@@ -125,6 +125,11 @@ public class Splfctn {
         }
     }
     public static void result(Quotation quotation, LocalDate from, LocalDate to) {
+
+        GetLocalExt.setStartDate(from);
+        GetLocalExt.setEndDate(to);
+        GetLocalExt.ShowAll(quotation);
+        /*
         if (GetLocalExt.getMax(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getDate()==null){
             System.out.println("brak danych dla okresu");
         }else {
@@ -135,6 +140,7 @@ public class Splfctn {
                     GetLocalExt.getMin(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getValue() +
                     " z dnia: " + GetLocalExt.getMin(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getDate());
         }
+        */
     }
     public static void  getWeeksForMonth(LocalDate date) {
 
@@ -177,5 +183,5 @@ public class Splfctn {
 }
 
 //example of use:
-//Splfctn.periodYear(aud);
+//Simplify.periodYear(aud);
 
