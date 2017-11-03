@@ -8,7 +8,6 @@ import java.util.Date;
 interface Quotation {
 
     static void ShowAll(Quotation quotation, LocalDate date) {
-
         System.out.println("\nDla dnia "+date+" wartość OPEN wynosi: "+quotation.getOpen(date));
         System.out.println("Dla dnia "+date+" wartość LOW wynosi: "+quotation.getLow(date));
         System.out.println("Dla dnia "+date+" wartość HIGH wynosi: "+quotation.getHigh(date));

@@ -125,10 +125,10 @@ public class Simplify {
         }
     }
     public static void result(Quotation quotation, LocalDate from, LocalDate to) {
-
-        GetLocalExt.setStartDate(from);
-        GetLocalExt.setEndDate(to);
-        GetLocalExt.ShowAll(quotation);
+        GetLocalExt getLocalExt = new GetLocalExt();
+        getLocalExt.setStartDate(from);
+        getLocalExt.setEndDate(to);
+        getLocalExt.ShowAll(quotation);
         /*
         if (GetLocalExt.getMax(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getDate()==null){
             System.out.println("brak danych dla okresu");

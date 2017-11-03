@@ -1,17 +1,19 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import sun.util.resources.LocaleData;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-public class GetDateFromUser {
+class GetDateFromUser {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static LocalDate startDate;
-    private static LocalDate endDate;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    static void AskForStartDate() {
+    LocalDate AskForStartDate() {
 
         boolean dataOk = false;
 
@@ -25,9 +27,10 @@ public class GetDateFromUser {
                 System.out.println("Podaj datę w formacie YYYY-MM-DD\nSpróbuj ponownie");
             }
         }
+        return startDate;
     }
 
-    static void AskForEndDate() {
+    LocalDate AskForEndDate() {
 
         boolean dataOk = false;
 
@@ -44,13 +47,22 @@ public class GetDateFromUser {
                 System.out.println("Podaj datę w formacie YYYY-MM-DD\nSpróbuj ponownie");
             }
         }
+        return endDate;
     }
 
-    static LocalDate getStartDate() {
+    LocalDate getStartDate() {
         return startDate;
     }
 
-    static LocalDate getEndDate() {
+    LocalDate getEndDate() {
         return endDate;
+    }
+
+    void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }
