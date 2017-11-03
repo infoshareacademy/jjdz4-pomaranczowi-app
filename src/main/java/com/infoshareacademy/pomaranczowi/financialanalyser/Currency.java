@@ -11,9 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //Currency class operates on Price objects
-class Currency implements Quotation {
+class Currency implements QuotationInterface {
 
-    static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     //ArrayList of Price objects
     private ArrayList<Price> prices = new ArrayList<>();
@@ -154,5 +154,15 @@ class Currency implements Quotation {
     @Override
     public ArrayList<Price> getPrices() {
         return prices;
+    }
+
+    @Override
+    public boolean containsDate(LocalDate date){
+        for (Price price : prices) {
+            if (price.getDate() == date) {
+                return true;
+            }
+        }
+        return false;
     }
 }

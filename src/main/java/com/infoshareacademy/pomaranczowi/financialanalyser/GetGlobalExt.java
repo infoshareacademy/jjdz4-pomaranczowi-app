@@ -2,49 +2,58 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class GetGlobalExt {
 
     
-    public static void ShowAll(Quotation quotation) {
+    public static void ShowAll(QuotationInterface quotation) {
+        Extremes maxOpen = GetGlobalExt.getMaxOpen(quotation);
         System.out.println("\nMaksymalna wartość OPEN to: "+
-                GetGlobalExt.getMaxOpen(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMaxOpen(quotation).getDate());
+                maxOpen.getValue()+" z dnia "+
+                maxOpen.getDate());
+        Extremes minOpen = GetGlobalExt.getMinOpen(quotation);
         System.out.println("Minimalna wartość OPEN to: "+
-                GetGlobalExt.getMaxOpen(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMaxOpen(quotation).getDate());
+                minOpen.getValue()+" z dnia "+
+                minOpen.getDate());
 
+        Extremes maxLow = GetGlobalExt.getMaxLow(quotation);
         System.out.println("\nMaksymalna wartość LOW to: "+
-                GetGlobalExt.getMaxLow(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMaxLow(quotation).getDate());
+                maxLow.getValue()+" z dnia "+
+                maxLow.getDate());
+        Extremes minLow = GetGlobalExt.getMinLow(quotation);
         System.out.println("Minimalna wartość LOW to: "+
-                GetGlobalExt.getMinLow(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMinLow(quotation).getDate());
+                minLow.getValue()+" z dnia "+
+                minLow.getDate());
 
+        Extremes maxHigh = GetGlobalExt.getMaxHigh(quotation);
         System.out.println("\nMaksymalna wartość HIGH to: "+
-                GetGlobalExt.getMaxHigh(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMaxHigh(quotation).getDate());
+                maxHigh.getValue()+" z dnia "+
+                maxHigh.getDate());
+        Extremes minHigh = GetGlobalExt.getMinHigh(quotation);
         System.out.println("Minimalna wartość HIGH to: "+
-                GetGlobalExt.getMinHigh(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMinHigh(quotation).getDate());
+                minHigh.getValue()+" z dnia "+
+                minHigh.getDate());
 
+        Extremes maxClose = GetGlobalExt.getMaxClose(quotation);
         System.out.println("\nMaksymalna wartość CLOSE to: "+
-                GetGlobalExt.getMaxClose(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMaxClose(quotation).getDate());
+                maxClose.getValue()+" z dnia "+
+                maxClose.getDate());
+        Extremes minClose = GetGlobalExt.getMinClose(quotation);
         System.out.println("Minimalna wartość CLOSE to: "+
-                GetGlobalExt.getMinClose(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMinClose(quotation).getDate());
+                minClose.getValue()+" z dnia "+
+                minClose.getDate());
 
+        Extremes maxVolume = GetGlobalExt.getMaxVolume(quotation);
         System.out.println("\nMaksymalna wartość VOLUME to: "+
-                GetGlobalExt.getMaxVolume(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMaxVolume(quotation).getDate());
+                maxVolume.getValue()+" z dnia "+
+                maxVolume.getDate());
+        Extremes minVolume = GetGlobalExt.getMinVolume(quotation);
         System.out.println("Minimalna wartość VOLUME to: "+
-                GetGlobalExt.getMinVolume(quotation).getValue()+" z dnia "+
-                GetGlobalExt.getMinVolume(quotation).getDate());
+                minVolume.getValue()+" z dnia "+
+                minVolume.getDate());
     }
     
-    public static Extremes getMaxOpen(Quotation quotation) {
+    public static Extremes getMaxOpen(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getOpen();
@@ -64,7 +73,7 @@ public class GetGlobalExt {
         return extremes;
     }
 
-    public static Extremes getMaxClose(Quotation quotation) {
+    public static Extremes getMaxClose(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getClose();
@@ -84,7 +93,7 @@ public class GetGlobalExt {
         return extremes;
     }
 
-    public static Extremes getMaxHigh(Quotation quotation) {
+    public static Extremes getMaxHigh(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getHigh();
@@ -104,7 +113,7 @@ public class GetGlobalExt {
         return extremes;
     }
 
-    public static Extremes getMaxLow(Quotation quotation) {
+    public static Extremes getMaxLow(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getLow();
@@ -124,7 +133,7 @@ public class GetGlobalExt {
         return extremes;
     }
 
-    public static Extremes getMaxVolume(Quotation quotation) {
+    public static Extremes getMaxVolume(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getVolume();
@@ -135,16 +144,14 @@ public class GetGlobalExt {
 
         for (Price x : quotation.getPrices()) {
             if (x.getVolume().compareTo(extremes.getValue()) > 0){
-                bigDecimal = x.getVolume();
-                localDate = x.getDate();
-                extremes.setValue(bigDecimal);
-                extremes.setDate(localDate);
+                extremes.setValue(x.getVolume());
+                extremes.setDate(x.getDate());
             }
         }
         return extremes;
     }
 
-    public static Extremes getMax(Quotation quotation, String ochlv) { //Open, Close, High, Low, Volume
+    public Extremes getMax(QuotationInterface quotation, String ochlv) { //Open, Close, High, Low, Volume
 
         Extremes extremes = null;
 
@@ -169,7 +176,7 @@ public class GetGlobalExt {
     }
 
 
-    public static Extremes getMinOpen(Quotation quotation) {
+    public static Extremes getMinOpen(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getOpen();
@@ -189,7 +196,7 @@ public class GetGlobalExt {
         return extremes;
     }
 
-    public static Extremes getMinClose(Quotation quotation) {
+    public static Extremes getMinClose(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getClose();
@@ -209,7 +216,7 @@ public class GetGlobalExt {
         return extremes;
     }
 
-    public static Extremes getMinHigh(Quotation quotation) {
+    public static Extremes getMinHigh(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getHigh();
@@ -220,16 +227,14 @@ public class GetGlobalExt {
 
         for (Price x : quotation.getPrices()) {
             if (x.getHigh().compareTo(extremes.getValue()) < 0){
-                bigDecimal = x.getHigh();
-                localDate = x.getDate();
-                extremes.setValue(bigDecimal);
-                extremes.setDate(localDate);
+                extremes.setValue(x.getHigh());
+                extremes.setDate(x.getDate());
             }
         }
         return extremes;
     }
 
-    public static Extremes getMinLow(Quotation quotation) {
+    public static Extremes getMinLow(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getLow();
@@ -240,16 +245,14 @@ public class GetGlobalExt {
 
         for (Price x : quotation.getPrices()) {
             if (x.getLow().compareTo(extremes.getValue()) < 0){
-                bigDecimal = x.getLow();
-                localDate = x.getDate();
-                extremes.setValue(bigDecimal);
-                extremes.setDate(localDate);
+                extremes.setValue(x.getLow());
+                extremes.setDate(x.getDate());
             }
         }
         return extremes;
     }
 
-    public static Extremes getMinVolume(Quotation quotation) {
+    public static Extremes getMinVolume(QuotationInterface quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getVolume();
@@ -260,16 +263,14 @@ public class GetGlobalExt {
 
         for (Price x : quotation.getPrices()) {
             if (x.getVolume().compareTo(extremes.getValue()) < 0){
-                bigDecimal = x.getVolume();
-                localDate = x.getDate();
-                extremes.setValue(bigDecimal);
-                extremes.setDate(localDate);
+                extremes.setValue(x.getVolume());
+                extremes.setDate(x.getDate());
             }
         }
         return extremes;
     }
 
-    public static Extremes getMin(Quotation quotation, String ochlv) { //Open, Close, High, Low, Volume
+    public Extremes getMin(QuotationInterface quotation, String ochlv) { //Open, Close, High, Low, Volume
 
         Extremes extremes = null;
 

@@ -15,7 +15,7 @@ public class Simplify {
     static Integer monthSelected;
     static ArrayList<Weeks> week = new ArrayList<>();
 
-    public static void periodYear(Quotation quotation) {
+    public static void periodYear(QuotationInterface quotation) {
         System.out.println("Upraszczanie danych finansowych. Dostępne są notowania z poniższych lat.\n" +
                 "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
         getYear(quotation);
@@ -58,7 +58,7 @@ public class Simplify {
         }
     }
 
-    public static void periodMonth(Quotation quotation,Integer yearSelected) {
+    public static void periodMonth(QuotationInterface quotation, Integer yearSelected) {
         boolean dataOk = false;
         getMonthsForYear(quotation,yearSelected);
         for (int i : month) {
@@ -101,7 +101,7 @@ public class Simplify {
         }
     }
 
-    public static void periodWeek(Quotation quotation,Integer yearSelected,Integer monthSelected){
+    public static void periodWeek(QuotationInterface quotation, Integer yearSelected, Integer monthSelected){
         LocalDate date = LocalDate.of(yearSelected,monthSelected,1);
         getWeeksForMonth(date);
         for(Weeks x :week){
@@ -111,24 +111,24 @@ public class Simplify {
     }
 
 //--- supporting methods - can be exported to external class
-    public static void getYear(Quotation quotation) {
+    public static void getYear(QuotationInterface quotation) {
         year.clear();
         for (Price x : quotation.getPrices()) {
             year.add(x.getDate().getYear());
         }
     }
-    public static void getMonthsForYear(Quotation quotation,Integer yearSelected ) {
+    public static void getMonthsForYear(QuotationInterface quotation, Integer yearSelected ) {
         month.clear();
         for (Price x : quotation.getPrices()) {
             if (x.getDate().getYear() == yearSelected)
                 month.add(x.getDate().getMonthValue());
         }
     }
-    public static void result(Quotation quotation, LocalDate from, LocalDate to) {
-
-        GetLocalExt.setStartDate(from);
-        GetLocalExt.setEndDate(to);
-        GetLocalExt.ShowAll(quotation);
+    public static void result(QuotationInterface quotation, LocalDate from, LocalDate to) {
+        GetLocalExt getLocalExt = new GetLocalExt();
+        getLocalExt.setStartDate(from);
+        getLocalExt.setEndDate(to);
+        getLocalExt.ShowAll(quotation);
         /*
         if (GetLocalExt.getMax(quotation, from, to, GetLocalExt.ExtremesParams.OPEN).getDate()==null){
             System.out.println("brak danych dla okresu");

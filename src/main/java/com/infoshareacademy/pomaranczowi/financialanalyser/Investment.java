@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Investment implements Quotation{
+public class Investment implements QuotationInterface {
 
 
     public String name;
@@ -70,4 +70,14 @@ public class Investment implements Quotation{
     Integer getNumberOfQuotation(){
         return prices.size();
         }
+
+    @Override
+    public boolean containsDate(LocalDate date){
+        for (Price price : prices) {
+            if (price.getDate().equals(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

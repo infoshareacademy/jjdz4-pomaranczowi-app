@@ -1,6 +1,7 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 
 public class App {
     public static void main(String[] args) {
@@ -25,6 +26,9 @@ public class App {
         currenciesMenu.add("Wczytaj dane z pliku");
         currenciesMenu.add("Wczytaj dane z adresu internetowego");
         currenciesMenu.add("Powrót");
+
+        GetDateFromUser getDateFromUser = new GetDateFromUser();
+        GetLocalExt getLocalExt = new GetLocalExt();
 
         while (!mainMenu.wantExit()) {
             switch (mainMenu.Init()) {
@@ -87,25 +91,26 @@ public class App {
                                         break;
                                     case 1:
                                         System.out.println("\nWybrano ekstrema lokalne dla " + investment.getName());
+                                        getLocalExt.setStartDate(getDateFromUser.askForStartDate());
+                                        getLocalExt.setEndDate(getDateFromUser.askForEndDate());
+                                        getDateFromUser.setStartDate(getDateFromUser.getStartDate());
+                                        getDateFromUser.setEndDate(getDateFromUser.getEndDate());
 
-                                        GetDateFromUser.AskForStartDate();
-                                        GetDateFromUser.AskForEndDate();
-                                        GetLocalExt.setStartDate(GetDateFromUser.getStartDate());
-                                        GetLocalExt.setEndDate(GetDateFromUser.getEndDate());
+                                        System.out.println("\nEkstrema dla przedziału " +getLocalExt.getStartDate() +
+                                                " - " + getLocalExt.getEndDate());
 
-                                        System.out.println("\nEkstrema dla przedziału " + GetLocalExt.getStartDate() +
-                                                " - " + GetLocalExt.getEndDate());
-
-                                        GetLocalExt.ShowAll(investment);
+                                        getLocalExt.ShowAll(investment);
 
                                         Menu.waitAndContinue();
                                         break;
                                     case 2:
                                         System.out.println("\nWartości z danego dnia dla " + investment.getName());
 
-                                        GetDateFromUser.AskForStartDate();
-                                        Quotation.ShowAll(investment, GetDateFromUser.getStartDate());
-
+                                        LocalDate date;
+                                        do {
+                                            date = getDateFromUser.askForStartDate();
+                                        }while (!investment.containsDate(date));
+                                        QuotationInterface.showAll(investment, getDateFromUser.getStartDate());
                                         Menu.waitAndContinue();
                                         break;
                                     default:
