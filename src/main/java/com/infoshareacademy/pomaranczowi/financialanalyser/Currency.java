@@ -155,4 +155,14 @@ class Currency implements Quotation {
     public ArrayList<Price> getPrices() {
         return prices;
     }
+
+    @Override
+    public boolean containsDate(LocalDate date){
+        for (Price price : prices) {
+            if (price.getDate() == date) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

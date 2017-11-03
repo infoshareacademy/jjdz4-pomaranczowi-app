@@ -1,6 +1,7 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 
 public class App {
     public static void main(String[] args) {
@@ -105,9 +106,11 @@ public class App {
                                     case 2:
                                         System.out.println("\nWartości z danego dnia dla " + investment.getName());
 
-                                        getDateFromUser.AskForStartDate();
+                                        LocalDate date;
+                                        do {
+                                            date = getDateFromUser.AskForStartDate();
+                                        }while (!investment.containsDate(date));
                                         Quotation.ShowAll(investment, getDateFromUser.getStartDate());
-
                                         Menu.waitAndContinue();
                                         break;
                                     default:

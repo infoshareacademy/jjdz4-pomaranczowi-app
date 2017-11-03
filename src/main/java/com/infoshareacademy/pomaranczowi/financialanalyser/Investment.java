@@ -70,4 +70,14 @@ public class Investment implements Quotation{
     Integer getNumberOfQuotation(){
         return prices.size();
         }
+
+    @Override
+    public boolean containsDate(LocalDate date){
+        for (Price price : prices) {
+            if (price.getDate().equals(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

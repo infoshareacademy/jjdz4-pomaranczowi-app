@@ -22,4 +22,5 @@ interface Quotation {
     BigDecimal getVolume(LocalDate date);
     ArrayList<Price> getPrices();
 
+    boolean containsDate(LocalDate date);
 }
