@@ -1,7 +1,5 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
-import sun.util.resources.LocaleData;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,16 +11,16 @@ class GetDateFromUser {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    LocalDate AskForStartDate() {
+    LocalDate askForStartDate() {
 
-        boolean dataOk = false;
+        boolean isDataOk = false;
 
         System.out.println("\nPodaj datę w formacie YYYY-MM-DD");
-        while (!dataOk) {
+        while (!isDataOk) {
             Scanner scanner = new Scanner(System.in);
             try {
                 startDate = LocalDate.parse(scanner.nextLine(), formatter);
-                dataOk = true;
+                isDataOk = true;
             } catch (DateTimeParseException exc) {
                 System.out.println("Podaj datę w formacie YYYY-MM-DD\nSpróbuj ponownie");
             }
@@ -30,17 +28,17 @@ class GetDateFromUser {
         return startDate;
     }
 
-    LocalDate AskForEndDate() {
+    LocalDate askForEndDate() {
 
-        boolean dataOk = false;
+        boolean isDataOk = false;
 
         System.out.println("\nPodaj końcową datę w formacie YYYY-MM-DD");
-        while (!dataOk) {
+        while (!isDataOk) {
             Scanner scanner = new Scanner(System.in);
             try {
                 endDate = LocalDate.parse(scanner.nextLine(), formatter);
                 if(endDate.isAfter(startDate)|| endDate.isEqual(startDate))
-                    dataOk = true;
+                    isDataOk = true;
                 else System.out.println("Data końcowa musi być większa lub równa dacie początku ("+ startDate +")\n" +
                         "Spróbuj ponownie - Podaj końcową datę w formacie YYYY-MM-DD");
             } catch (DateTimeParseException exc) {

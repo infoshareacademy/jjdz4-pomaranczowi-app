@@ -3,11 +3,10 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
-interface Quotation {
+interface QuotationInterface {
 
-    static void ShowAll(Quotation quotation, LocalDate date) {
+    static void showAll(QuotationInterface quotation, LocalDate date) {
         System.out.println("\nDla dnia "+date+" wartość OPEN wynosi: "+quotation.getOpen(date));
         System.out.println("Dla dnia "+date+" wartość LOW wynosi: "+quotation.getLow(date));
         System.out.println("Dla dnia "+date+" wartość HIGH wynosi: "+quotation.getHigh(date));

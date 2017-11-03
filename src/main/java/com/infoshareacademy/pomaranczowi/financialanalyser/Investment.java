@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Investment implements Quotation{
+public class Investment implements QuotationInterface {
 
 
     public String name;

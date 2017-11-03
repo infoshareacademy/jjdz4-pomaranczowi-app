@@ -8,7 +8,7 @@ public class GetLocalExt {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    void ShowAll(Quotation quotation) {
+    void ShowAll(QuotationInterface quotation) {
 
         System.out.println("\nMaksymalna wartość OPEN to: " +
                 getMaxOpen(quotation).getValue() +
@@ -46,7 +46,7 @@ public class GetLocalExt {
                 " z dnia " + getMinVolume(quotation).getDate());
     }
 
-    private Extremes getMaxOpen(Quotation quotation) {
+    private Extremes getMaxOpen(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -60,7 +60,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMaxClose(Quotation quotation) {
+    private Extremes getMaxClose(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -74,7 +74,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMaxHigh(Quotation quotation) {
+    private Extremes getMaxHigh(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -88,7 +88,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMaxLow(Quotation quotation) {
+    private Extremes getMaxLow(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -102,7 +102,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMaxVolume(Quotation quotation) {
+    private Extremes getMaxVolume(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -119,7 +119,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    public Extremes getMax(Quotation quotation, ExtremesParams p) { //ochlv - Open, Close, High, Low, Volume
+    public Extremes getMax(QuotationInterface quotation, ExtremesParams p) { //ochlv - Open, Close, High, Low, Volume
 
         Extremes extremes = null;
 
@@ -143,7 +143,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMinOpen(Quotation quotation) {
+    private Extremes getMinOpen(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -163,7 +163,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMinClose(Quotation quotation) {
+    private Extremes getMinClose(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -183,7 +183,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMinHigh(Quotation quotation) {
+    private Extremes getMinHigh(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -203,7 +203,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMinLow(Quotation quotation) {
+    private Extremes getMinLow(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -223,7 +223,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMinVolume(Quotation quotation) {
+    private Extremes getMinVolume(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -243,7 +243,7 @@ public class GetLocalExt {
         return extremes;
     }
 
-    private Extremes getMin(Quotation quotation, ExtremesParams p) { //Open, Close, High, Low, Volume
+    private Extremes getMin(QuotationInterface quotation, ExtremesParams p) { //Open, Close, High, Low, Volume
 
         Extremes extremes = null;
 

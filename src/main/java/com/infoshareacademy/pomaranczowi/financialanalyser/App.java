@@ -91,8 +91,8 @@ public class App {
                                         break;
                                     case 1:
                                         System.out.println("\nWybrano ekstrema lokalne dla " + investment.getName());
-                                        getLocalExt.setStartDate(getDateFromUser.AskForStartDate());
-                                        getLocalExt.setEndDate(getDateFromUser.AskForEndDate());
+                                        getLocalExt.setStartDate(getDateFromUser.askForStartDate());
+                                        getLocalExt.setEndDate(getDateFromUser.askForEndDate());
                                         getDateFromUser.setStartDate(getDateFromUser.getStartDate());
                                         getDateFromUser.setEndDate(getDateFromUser.getEndDate());
 
@@ -108,9 +108,9 @@ public class App {
 
                                         LocalDate date;
                                         do {
-                                            date = getDateFromUser.AskForStartDate();
+                                            date = getDateFromUser.askForStartDate();
                                         }while (!investment.containsDate(date));
-                                        Quotation.ShowAll(investment, getDateFromUser.getStartDate());
+                                        QuotationInterface.showAll(investment, getDateFromUser.getStartDate());
                                         Menu.waitAndContinue();
                                         break;
                                     default:
