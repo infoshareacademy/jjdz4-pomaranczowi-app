@@ -62,7 +62,7 @@ class Simplify {
         getMonthsForYear(quotation, yearSelected);
         for (int i : month) {
             LocalDate date = LocalDate.of(yearSelected, i, 1);
-            System.out.println(date.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.forLanguageTag("pl-PL")));
+            System.out.println("\n### " + date.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.forLanguageTag("pl-PL")).toUpperCase()+" ###");
             result(quotation, date.with(TemporalAdjusters.firstDayOfMonth()), date.with(TemporalAdjusters.lastDayOfMonth()));
         }
 
@@ -104,7 +104,7 @@ class Simplify {
         LocalDate date = LocalDate.of(yearSelected, monthSelected, 1);
         getWeeksForMonth(date);
         for (Weeks x : week) {
-            System.out.println("Tydzień " + x.getWeek() + " (od:" + x.getFrom() + " do:" + x.getTo() + ")");
+            System.out.println("\n### TYDZIEŃ " + x.getWeek() + " (od:" + x.getFrom() + " do:" + x.getTo() + ") ###");
             result(quotation, x.getFrom(), x.getTo());
         }
     }
