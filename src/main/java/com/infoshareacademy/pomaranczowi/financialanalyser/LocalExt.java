@@ -17,7 +17,7 @@ class LocalExt {
                 getMaxOpen(quotation).getValue() +
                 " z dnia " + getMaxOpen(quotation).getDate());
         System.out.println("Minimalna wartość OPEN to: " +
-                getMaxOpen(quotation).getValue() +
+                getMinOpen(quotation).getValue() +
                 " z dnia " + getMinOpen(quotation).getDate());
 
         System.out.println("\nMaksymalna wartość LOW to: " +
