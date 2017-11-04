@@ -1,12 +1,15 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class GetLocalExt {
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    @Setter @Getter private LocalDate startDate;
+    @Setter @Getter private LocalDate endDate;
 
     void ShowAll(QuotationInterface quotation) {
 
@@ -265,22 +268,6 @@ public class GetLocalExt {
                 break;
         }
         return extremes;
-    }
-
-    LocalDate getStartDate() {
-        return startDate;
-    }
-
-    void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    LocalDate getEndDate() {
-        return endDate;
-    }
-
-    void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 
     enum ExtremesParams {

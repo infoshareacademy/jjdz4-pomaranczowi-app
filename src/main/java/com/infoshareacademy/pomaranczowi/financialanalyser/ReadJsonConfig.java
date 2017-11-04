@@ -1,12 +1,14 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import lombok.Getter;
+
 public class ReadJsonConfig {
 
-    private String url;
-    private String zipDestination;
-    private String dataDirectoryDestination;
-    private String fundListURL;
-    private String fundListDestination;
+    @Getter private String url;
+    @Getter private String zipDestination;
+    @Getter private String dataDirectoryDestination;
+    @Getter private String fundListURL;
+    @Getter private String fundListDestination;
 
     public ReadJsonConfig(String url, String zipDestination, String dataDirectoryDestination, String fundListURL,
                           String fundListDestination) {
@@ -15,25 +17,5 @@ public class ReadJsonConfig {
         this.dataDirectoryDestination = dataDirectoryDestination;
         this.fundListURL = fundListURL;
         this.fundListDestination = fundListDestination;
-    }
-
-    String getDataDirectoryDestination() {
-        return dataDirectoryDestination;
-    }
-
-    String getUrl() {
-        return url;
-    }
-
-    String getZipDestination() {
-        return zipDestination;
-    }
-
-    String getFundListURL() {
-        return fundListURL;
-    }
-
-    String getFundListDestination() {
-        return fundListDestination;
     }
 }

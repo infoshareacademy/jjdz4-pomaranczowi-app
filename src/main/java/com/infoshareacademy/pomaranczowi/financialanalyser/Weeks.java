@@ -1,35 +1,14 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
 class Weeks {
 
-    private int week;
-    private LocalDate from;
-    private LocalDate to;
-
-    int getWeek() {
-        return week;
-    }
-
-    void setWeek(int week) {
-        this.week = week;
-    }
-
-    LocalDate getFrom() {
-        return from;
-    }
-
-    void setFrom(LocalDate from) {
-        this.from = from;
-    }
-
-    LocalDate getTo() {
-        return to;
-    }
-
-    void setTo(LocalDate to) {
-        this.to = to;
-    }
+    @Setter @Getter private int week;
+    @Setter @Getter private LocalDate from;
+    @Setter @Getter private LocalDate to;
 }
 

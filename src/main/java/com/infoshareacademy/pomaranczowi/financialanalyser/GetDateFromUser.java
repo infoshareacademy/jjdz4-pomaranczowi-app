@@ -1,5 +1,8 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -8,8 +11,8 @@ import java.util.Scanner;
 class GetDateFromUser {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private LocalDate startDate;
-    private LocalDate endDate;
+    @Setter @Getter private LocalDate startDate;
+    @Setter @Getter private LocalDate endDate;
 
     LocalDate askForStartDate() {
 
@@ -46,21 +49,5 @@ class GetDateFromUser {
             }
         }
         return endDate;
-    }
-
-    LocalDate getStartDate() {
-        return startDate;
-    }
-
-    LocalDate getEndDate() {
-        return endDate;
-    }
-
-    void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 }

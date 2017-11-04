@@ -1,23 +1,16 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Investment implements QuotationInterface {
 
-
-    public String name;
+    @Setter @Getter public String name;
     private ArrayList<Price> prices = new ArrayList<>();
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Investment(String name, ArrayList<Price> prices) {
         this.name = name;

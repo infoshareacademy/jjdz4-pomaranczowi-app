@@ -1,6 +1,8 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import com.google.gson.Gson;
+import lombok.Getter;
+import lombok.Setter;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import java.io.*;
@@ -11,8 +13,8 @@ import java.nio.channels.ReadableByteChannel;
 
 class ImportCurrentData {
 
-    private static String dataDirectoryDestination = "";
-    private static String fundListDestination = "";
+    @Setter @Getter private static String dataDirectoryDestination = "";
+    @Setter @Getter private static String fundListDestination = "";
 
     static void downloadFileFromURL() {
         try {
@@ -53,14 +55,6 @@ class ImportCurrentData {
         } catch (ZipException e) {
             System.out.println("Nie można rozpakować pliku " + source);
         }
-    }
-
-    public static String getDataDirectoryDestination() {
-        return dataDirectoryDestination;
-    }
-
-    public static String getFundListDestination() {
-        return fundListDestination;
     }
 }
 
