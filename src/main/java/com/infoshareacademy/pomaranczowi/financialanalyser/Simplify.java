@@ -16,7 +16,7 @@ public class Simplify {
     static ArrayList<Weeks> week = new ArrayList<>();
 
     public static void periodYear(QuotationInterface quotation) {
-        System.out.println("Upraszczanie danych finansowych. Dostępne są notowania z poniższych lat.\n" +
+        System.out.println("\nDostępne są notowania z poniższych lat.\n" +
                 "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
         getYear(quotation);
         System.out.println(year);
