@@ -61,7 +61,7 @@ public class App {
                                 break;
                         }
 
-                        if(!investmentMenu.isExitSet()) {
+                        if(!investmentChoiceMenu.isExitSet()) {
                             while (!investmentName.investmentNameMenu.wantExit()) {
 
                                 int userChoice;
@@ -120,7 +120,7 @@ public class App {
                                         break;
                                     case 3:
                                         System.out.println("\nUpraszczanie danych dla " + investment.getName());
-                                        Simplify.getYear(investment);
+                                        Simplify.periodYear(investment);
 
                                         Menu.waitAndContinue();
                                         break;
