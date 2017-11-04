@@ -11,4 +11,7 @@ class Extremes {
     @Setter @Getter private BigDecimal value;
     @Setter @Getter private LocalDate date;
 
+    Extremes (){
+        this.value = BigDecimal.valueOf(0);
+    }
 }

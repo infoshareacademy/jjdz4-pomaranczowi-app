@@ -25,9 +25,29 @@ class Actions {
                     break;
                 case 1:
                     System.out.println("\nWybrano ekstrema lokalne dla " + quotationInterface.getName());
-                    localExt.setStartDate(dateFromUser.askForStartDate());
-                    localExt.setEndDate(dateFromUser.askForEndDate());
-                    dateFromUser.setStartDate(dateFromUser.getStartDate());
+
+                    boolean areChoosenDatesCorrect = false;
+
+                    while (!areChoosenDatesCorrect) {
+
+                        localExt.setStartDate(dateFromUser.askForStartDate());
+                        localExt.setEndDate(dateFromUser.askForEndDate());
+
+                        for (Price price : quotationInterface.getPrices()) {
+                            if ((price.getDate().isAfter(localExt.getStartDate()) ||
+                                    price.getDate().isEqual(localExt.getStartDate())) &&
+                                    (price.getDate().isBefore(localExt.getEndDate()) ||
+                                    price.getDate().isEqual(localExt.getEndDate()))) {
+                                
+                                areChoosenDatesCorrect = true;
+                                break;
+                            }
+                        }
+
+                        if (!areChoosenDatesCorrect) System.out.println("Brak notowań pomiędzy podanymi datami!");
+
+                    }
+
                     dateFromUser.setEndDate(dateFromUser.getEndDate());
 
                     System.out.println("\nEkstrema dla przedziału " + localExt.getStartDate() +
@@ -43,7 +63,7 @@ class Actions {
                     LocalDate date;
                     do {
                         date = dateFromUser.askForStartDate();
-                    }while (!quotationInterface.containsDate(date));
+                    } while (!quotationInterface.containsDate(date));
                     QuotationInterface.showAll(quotationInterface, dateFromUser.getStartDate());
 
                     Menu.waitAndContinue();
