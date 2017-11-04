@@ -19,6 +19,7 @@ interface QuotationInterface {
     BigDecimal getLow(LocalDate date);
     BigDecimal getClose(LocalDate date);
     BigDecimal getVolume(LocalDate date);
+    String getName();
     ArrayList<Price> getPrices();
 
     boolean containsDate(LocalDate date);

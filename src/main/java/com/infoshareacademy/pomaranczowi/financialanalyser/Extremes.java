@@ -14,7 +14,7 @@ Extremes {
     @Setter @Getter private LocalDate date;
 
     Extremes (){
-        this.value = BigDecimal.valueOf(0); //ustawione aby w GetLocalExt można było porównywac
+        this.value = BigDecimal.valueOf(0); //ustawione aby w LocalExt można było porównywac
                                             //x.getVolume().compareTo(extremes.getValue()) w pierwszej iteracji
     }
 }

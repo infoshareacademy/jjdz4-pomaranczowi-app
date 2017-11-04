@@ -1,7 +1,6 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 
 public class App {
     public static void main(String[] args) {
@@ -15,16 +14,6 @@ public class App {
         investmentChoiceMenu.add("Wczytaj dane z pliku");
         investmentChoiceMenu.add("Wczytaj dane z adresu internetowego");
         investmentChoiceMenu.add("Powrót");
-
-        Menu actionsMenu = new Menu("Co chcesz zrobić?");
-        actionsMenu.add("Ekstrema globalne");
-        actionsMenu.add("Ekstrema lokalne");
-        actionsMenu.add("Wartości z danego dnia");
-        actionsMenu.add("Upraszczanie danych");
-        actionsMenu.add("Powrót");
-
-        GetDateFromUser getDateFromUser = new GetDateFromUser();
-        GetLocalExt getLocalExt = new GetLocalExt();
 
         while (!mainMenu.wantExit()) {
             switch (mainMenu.Init()) {
@@ -80,50 +69,7 @@ public class App {
                         }
 
                         if (!investmentChoiceMenu.isExitSet()) {
-                            while (!actionsMenu.wantExit()) {
-                                switch (actionsMenu.Init()) {
-                                    case 0:
-                                        System.out.println("\nWybrano ekstrema globalne dla " + investment.getName());
-                                        GetGlobalExt.ShowAll(investment);
-
-                                        Menu.waitAndContinue();
-                                        break;
-                                    case 1:
-                                        System.out.println("\nWybrano ekstrema lokalne dla " + investment.getName());
-                                        getLocalExt.setStartDate(getDateFromUser.askForStartDate());
-                                        getLocalExt.setEndDate(getDateFromUser.askForEndDate());
-                                        getDateFromUser.setStartDate(getDateFromUser.getStartDate());
-                                        getDateFromUser.setEndDate(getDateFromUser.getEndDate());
-
-                                        System.out.println("\nEkstrema dla przedziału " +getLocalExt.getStartDate() +
-                                                " - " + getLocalExt.getEndDate());
-
-                                        getLocalExt.ShowAll(investment);
-
-                                        Menu.waitAndContinue();
-                                        break;
-                                    case 2:
-                                        System.out.println("\nWartości z danego dnia dla " + investment.getName());
-
-                                        LocalDate date;
-                                        do {
-                                            date = getDateFromUser.askForStartDate();
-                                        }while (!investment.containsDate(date));
-                                        QuotationInterface.showAll(investment, getDateFromUser.getStartDate());
-
-                                        Menu.waitAndContinue();
-                                        break;
-                                    case 3:
-                                        System.out.println("\nUpraszczanie danych dla " + investment.getName());
-                                        Simplify.periodYear(investment);
-
-                                        Menu.waitAndContinue();
-                                        break;
-                                    default:
-                                        actionsMenu.exit();
-                                        break;
-                                }
-                            }
+                            Actions.init(investment);
                         }
                     }
                     break;
@@ -149,50 +95,7 @@ public class App {
                     }
 
                     if(isCurrencyFileLoaded) {
-                        while (!actionsMenu.wantExit()) {
-                            switch (actionsMenu.Init()) {
-                                case 0:
-                                    System.out.println("\nWybrano ekstrema globalne dla " + currency.getName());
-                                    GetGlobalExt.ShowAll(currency);
-
-                                    Menu.waitAndContinue();
-                                    break;
-                                case 1:
-                                    System.out.println("\nWybrano ekstrema lokalne dla " + currency.getName());
-                                    getLocalExt.setStartDate(getDateFromUser.askForStartDate());
-                                    getLocalExt.setEndDate(getDateFromUser.askForEndDate());
-                                    getDateFromUser.setStartDate(getDateFromUser.getStartDate());
-                                    getDateFromUser.setEndDate(getDateFromUser.getEndDate());
-
-                                    System.out.println("\nEkstrema dla przedziału " +getLocalExt.getStartDate() +
-                                            " - " + getLocalExt.getEndDate());
-
-                                    getLocalExt.ShowAll(currency);
-
-                                    Menu.waitAndContinue();
-                                    break;
-                                case 2:
-                                    System.out.println("\nWartości z danego dnia dla " + currency.getName());
-
-                                    LocalDate date;
-                                    do {
-                                        date = getDateFromUser.askForStartDate();
-                                    }while (!currency.containsDate(date));
-                                    QuotationInterface.showAll(currency, getDateFromUser.getStartDate());
-
-                                    Menu.waitAndContinue();
-                                    break;
-                                case 3:
-                                    System.out.println("\nUpraszczanie danych dla " + currency.getName());
-                                    Simplify.periodYear(currency);
-
-                                    Menu.waitAndContinue();
-                                    break;
-                                default:
-                                    actionsMenu.exit();
-                                    break;
-                            }
-                        }
+                        Actions.init(currency);
                     }
                     break;
                 default:

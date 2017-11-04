@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class GetLocalExt {
+public class LocalExt {
 
     @Setter @Getter private LocalDate startDate;
     @Setter @Getter private LocalDate endDate;

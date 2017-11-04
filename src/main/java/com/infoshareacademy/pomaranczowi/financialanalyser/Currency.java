@@ -145,7 +145,8 @@ class Currency implements QuotationInterface {
         }
     }
 
-    String getName() {
+    @Override
+    public String getName() {
         return getPrices().get(1).getName();
     }
 
@@ -166,7 +167,7 @@ class Currency implements QuotationInterface {
     @Override
     public boolean containsDate(LocalDate date){
         for (Price price : prices) {
-            if (price.getDate() == date) {
+            if (price.getDate().equals(date)) {
                 return true;
             }
         }
