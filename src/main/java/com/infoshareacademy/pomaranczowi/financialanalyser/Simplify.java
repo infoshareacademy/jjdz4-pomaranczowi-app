@@ -6,16 +6,15 @@ import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
-public class Simplify {
+class Simplify {
 
-    static HashSet<Integer> year = new HashSet<>();
-    static HashSet<Integer> month = new HashSet<>();
+    private static HashSet<Integer> year = new HashSet<>();
+    private static HashSet<Integer> month = new HashSet<>();
 
-    static Integer yearSelected;
-    static Integer monthSelected;
-    static ArrayList<Weeks> week = new ArrayList<>();
+    private static Integer yearSelected;
+    private static ArrayList<Weeks> week = new ArrayList<>();
 
-    public static void periodYear(QuotationInterface quotation) {
+    static void periodYear(QuotationInterface quotation) {
         System.out.println("\nDostępne są notowania z poniższych lat.\n" +
                 "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
         getYear(quotation);
@@ -58,7 +57,7 @@ public class Simplify {
         }
     }
 
-    public static void periodMonth(QuotationInterface quotation, Integer yearSelected) {
+    private static void periodMonth(QuotationInterface quotation, Integer yearSelected) {
         boolean dataOk = false;
         getMonthsForYear(quotation, yearSelected);
         for (int i : month) {
@@ -80,7 +79,7 @@ public class Simplify {
                 while (!data1Ok) {
                     try {
                         Scanner scanner1 = new Scanner(System.in);
-                        monthSelected = scanner1.nextInt();
+                        Integer monthSelected = scanner1.nextInt();
                         if (month.contains(monthSelected)) {
                             data1Ok = true;
                             periodWeek(quotation, yearSelected, monthSelected);
@@ -101,7 +100,7 @@ public class Simplify {
         }
     }
 
-    public static void periodWeek(QuotationInterface quotation, Integer yearSelected, Integer monthSelected) {
+    private static void periodWeek(QuotationInterface quotation, Integer yearSelected, Integer monthSelected) {
         LocalDate date = LocalDate.of(yearSelected, monthSelected, 1);
         getWeeksForMonth(date);
         for (Weeks x : week) {
@@ -110,14 +109,14 @@ public class Simplify {
         }
     }
 
-    public static void getYear(QuotationInterface quotation) {
+    private static void getYear(QuotationInterface quotation) {
         year.clear();
         for (Price x : quotation.getPrices()) {
             year.add(x.getDate().getYear());
         }
     }
 
-    public static void getMonthsForYear(QuotationInterface quotation, Integer yearSelected) {
+    private static void getMonthsForYear(QuotationInterface quotation, Integer yearSelected) {
         month.clear();
         for (Price x : quotation.getPrices()) {
             if (x.getDate().getYear() == yearSelected)
@@ -125,14 +124,14 @@ public class Simplify {
         }
     }
 
-    public static void result(QuotationInterface quotation, LocalDate from, LocalDate to) {
+    private static void result(QuotationInterface quotation, LocalDate from, LocalDate to) {
         LocalExt localExt = new LocalExt();
         localExt.setStartDate(from);
         localExt.setEndDate(to);
         localExt.ShowAll(quotation);
     }
 
-    public static void getWeeksForMonth(LocalDate date) {
+    private static void getWeeksForMonth(LocalDate date) {
 
         LocalDate lastDateOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
         boolean dataOk = false;

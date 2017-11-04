@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class LocalExt {
+class LocalExt {
 
     @Setter @Getter private LocalDate startDate;
     @Setter @Getter private LocalDate endDate;
@@ -122,30 +122,6 @@ public class LocalExt {
         return extremes;
     }
 
-    public Extremes getMax(QuotationInterface quotation, ExtremesParams p) { //ochlv - Open, Close, High, Low, Volume
-
-        Extremes extremes = null;
-
-        switch (p) {
-            case OPEN:
-                extremes = getMaxOpen(quotation);
-                break;
-            case CLOSE:
-                extremes = getMaxClose(quotation);
-                break;
-            case HIGH:
-                extremes = getMaxHigh(quotation);
-                break;
-            case LOW:
-                extremes = getMaxLow(quotation);
-                break;
-            case VOLUME:
-                extremes = getMaxVolume(quotation);
-                break;
-        }
-        return extremes;
-    }
-
     private Extremes getMinOpen(QuotationInterface quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
@@ -244,33 +220,5 @@ public class LocalExt {
             }
         }
         return extremes;
-    }
-
-    private Extremes getMin(QuotationInterface quotation, ExtremesParams p) { //Open, Close, High, Low, Volume
-
-        Extremes extremes = null;
-
-        switch (p) {
-            case OPEN:
-                extremes = getMinOpen(quotation);
-                break;
-            case CLOSE:
-                extremes = getMinClose(quotation);
-                break;
-            case HIGH:
-                extremes = getMinHigh(quotation);
-                break;
-            case LOW:
-                extremes = getMinLow(quotation);
-                break;
-            case VOLUME:
-                extremes = getMinVolume(quotation);
-                break;
-        }
-        return extremes;
-    }
-
-    enum ExtremesParams {
-        OPEN, CLOSE, HIGH, LOW, VOLUME
     }
 }

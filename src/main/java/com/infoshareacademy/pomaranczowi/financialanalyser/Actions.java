@@ -2,7 +2,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.time.LocalDate;
 
-public class Actions {
+class Actions {
     static void init(QuotationInterface quotationInterface) {
 
         Menu actionsMenu = new Menu("Co chcesz zrobić?");

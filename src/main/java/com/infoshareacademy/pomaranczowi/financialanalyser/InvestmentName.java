@@ -12,7 +12,7 @@ class InvestmentName {
     Menu investmentNameMenu = new Menu("Fundusze inwestycyjne");
     ArrayList<FilePath> filePaths = new ArrayList<>();
 
-    ArrayList<FilePath> loadInvestmentNameFromFile(String filepath) {
+    void loadInvestmentNameFromFile(String filepath) {
         int id = 0;
 
         File file = new File(filepath);
@@ -40,6 +40,5 @@ class InvestmentName {
             System.out.println("Wystąpił problem z wczytaniem listy funduszy inwestycyjnych.");
         }
         investmentNameMenu.add("Powrót");
-        return filePaths;
     }
 }

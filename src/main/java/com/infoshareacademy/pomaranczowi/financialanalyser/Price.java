@@ -5,10 +5,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-//Price objects can be stored in and returned by Currency objects
-public class Price {
+class Price {
 
     @Setter @Getter private String name;
     @Setter @Getter private LocalDate date;

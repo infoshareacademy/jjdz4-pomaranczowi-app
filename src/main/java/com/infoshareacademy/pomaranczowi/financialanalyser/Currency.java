@@ -41,7 +41,7 @@ class Currency implements QuotationInterface {
                     Price price = new Price();
 
                     price.setName(matcher.group(1));
-                    price.setDate(LocalDate.parse(matcher.group(2),formatter));
+                    price.setDate(LocalDate.parse(matcher.group(2), formatter));
                     price.setOpen(new BigDecimal(matcher.group(3)));
                     price.setHigh(new BigDecimal(matcher.group(4)));
                     price.setLow(new BigDecimal(matcher.group(5)));
@@ -52,78 +52,62 @@ class Currency implements QuotationInterface {
 
                 }
             }
-        } catch (NullPointerException e) {}
-    }
-
-    //returns Price object for demanded date (in String), if no object returns null
-    public Price getPrice(LocalDate date) {
-        int i = 0;
-
-        for (Price x : getPrices()) {
-            if (date.equals(x.getDate())) {
-                return getPrices().get(i);
-            }
-            i++;
+        } catch (NullPointerException e) {
+            System.out.println("Wystąpił błąd przy wczytywaniu pliku!");
         }
-        return null;
     }
 
     @Override
     public BigDecimal getOpen(LocalDate date) {
-        int i = 0;
+
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getOpen();
             }
-            i++;
         }
         return null;
     }
 
     @Override
     public BigDecimal getHigh(LocalDate date) {
-        int i = 0;
+
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getHigh();
             }
-            i++;
         }
         return null;
     }
 
     @Override
     public BigDecimal getLow(LocalDate date) {
-        int i = 0;
+
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getLow();
             }
-            i++;
         }
         return null;
     }
 
     @Override
     public BigDecimal getClose(LocalDate date) {
-        int i = 0;
+
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getClose();
             }
-            i++;
         }
         return null;
     }
 
     @Override
     public BigDecimal getVolume(LocalDate date) {
-        int i = 0;
+
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getVolume();
             }
-            i++;
         }
         return null;
     }
@@ -154,18 +138,13 @@ class Currency implements QuotationInterface {
         return getPrices().size();
     }
 
-    void addPrice(Price price) {
-        getPrices().add(price);
-    }
-
-
     @Override
     public ArrayList<Price> getPrices() {
         return prices;
     }
 
     @Override
-    public boolean containsDate(LocalDate date){
+    public boolean containsDate(LocalDate date) {
         for (Price price : prices) {
             if (price.getDate().equals(date)) {
                 return true;

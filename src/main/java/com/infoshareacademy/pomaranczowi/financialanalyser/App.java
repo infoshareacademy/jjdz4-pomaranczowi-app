@@ -94,9 +94,7 @@ public class App {
                         }
                     }
 
-                    if(isCurrencyFileLoaded) {
-                        Actions.init(currency);
-                    }
+                    if(isCurrencyFileLoaded) Actions.init(currency);
                     break;
                 default:
                     mainMenu.exit();

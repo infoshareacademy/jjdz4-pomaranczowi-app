@@ -1,26 +1,27 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-public class Menu {
+ class Menu {
 
     private ArrayList<MenuPosition> menuPositions = new ArrayList<>();
     private String title;
     private boolean exit = false;
 
-    public Menu(String title) {
+     Menu(String title) {
         this.title = title;
     }
 
-    public void add(String label) {
+     void add(String label) {
         menuPositions.add(new MenuPosition(menuPositions.size(),label));
     }
 
     //menu initialization
-    public int Init() {
+     int Init() {
         System.out.println("\n"+title+"\n");
         for (MenuPosition menuPosition : menuPositions) {
             menuPosition.show();
@@ -51,31 +52,35 @@ public class Menu {
     }
 
     //used with while loop to allow user exit from a menu
-    public boolean wantExit() {
+     boolean wantExit() {
         if (exit) {
             exit = false;
             return true;
-        }  else return exit;
+        }  else {
+            return exit;
+        }
     }
 
-    public boolean isExitSet() {
+     boolean isExitSet() {
         return exit;
     }
 
     //gives an information that user wants to exit a menu
-    public void exit() {
+     void exit() {
         exit = true;
     }
 
-    public static void waitAndContinue() {
+     static void waitAndContinue() {
         System.out.println("\nNaciśnij klawisz ENTER aby kontynować...");
 
         try
         {
             System.in.read();
         }
-        catch(Exception e)
-        { }
+        catch(IOException e)
+        {
+            System.out.println("Wystąpił błąd IO.");
+        }
 
     }
 }
