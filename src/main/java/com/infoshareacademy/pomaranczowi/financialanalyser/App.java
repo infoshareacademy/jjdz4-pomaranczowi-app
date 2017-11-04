@@ -23,11 +23,6 @@ public class App {
         actionsMenu.add("Upraszczanie danych");
         actionsMenu.add("Powrót");
 
-        Menu currencyChoiceMenu = new Menu("Notowania kursów walut");
-        currencyChoiceMenu.add("Wczytaj dane z pliku");
-        currencyChoiceMenu.add("Wczytaj dane z adresu internetowego");
-        currencyChoiceMenu.add("Powrót");
-
         GetDateFromUser getDateFromUser = new GetDateFromUser();
         GetLocalExt getLocalExt = new GetLocalExt();
 
