@@ -16,17 +16,17 @@ public class App {
         investmentChoiceMenu.add("Wczytaj dane z adresu internetowego");
         investmentChoiceMenu.add("Powrót");
 
-        Menu investmentMenu = new Menu("Co chcesz zrobić?");
-        investmentMenu.add("Ekstrema globalne");
-        investmentMenu.add("Ekstrema lokalne");
-        investmentMenu.add("Wartości z danego dnia");
-        investmentMenu.add("Upraszczanie danych");
-        investmentMenu.add("Powrót");
+        Menu actionsMenu = new Menu("Co chcesz zrobić?");
+        actionsMenu.add("Ekstrema globalne");
+        actionsMenu.add("Ekstrema lokalne");
+        actionsMenu.add("Wartości z danego dnia");
+        actionsMenu.add("Upraszczanie danych");
+        actionsMenu.add("Powrót");
 
-        Menu currenciesMenu = new Menu("Notowania kursów walut");
-        currenciesMenu.add("Wczytaj dane z pliku");
-        currenciesMenu.add("Wczytaj dane z adresu internetowego");
-        currenciesMenu.add("Powrót");
+        Menu currencyChoiceMenu = new Menu("Notowania kursów walut");
+        currencyChoiceMenu.add("Wczytaj dane z pliku");
+        currencyChoiceMenu.add("Wczytaj dane z adresu internetowego");
+        currencyChoiceMenu.add("Powrót");
 
         GetDateFromUser getDateFromUser = new GetDateFromUser();
         GetLocalExt getLocalExt = new GetLocalExt();
@@ -85,8 +85,8 @@ public class App {
                         }
 
                         if (!investmentChoiceMenu.isExitSet()) {
-                            while (!investmentMenu.wantExit()) {
-                                switch (investmentMenu.Init()) {
+                            while (!actionsMenu.wantExit()) {
+                                switch (actionsMenu.Init()) {
                                     case 0:
                                         System.out.println("\nWybrano ekstrema globalne dla " + investment.getName());
                                         GetGlobalExt.ShowAll(investment);
@@ -125,7 +125,7 @@ public class App {
                                         Menu.waitAndContinue();
                                         break;
                                     default:
-                                        investmentMenu.exit();
+                                        actionsMenu.exit();
                                         break;
                                 }
                             }
@@ -135,18 +135,70 @@ public class App {
                 case 1:
                     System.out.println("\nNotowania kursów walut\n");
 
-                    Currency aud;
+                    Currency currency = null;
+                    Boolean isCurrencyFileLoaded = false;
 
-                    try {
-                        aud = new Currency("data/currency/AUD.txt");
-                        System.out.println("Plik wczzytano pomyślnie.");
-                    } catch (FileNotFoundException e) {
-                        System.out.println("Nie znaleziono pkiku!");
-                        Menu.waitAndContinue();
-                        break;
+                    while (!isCurrencyFileLoaded) {
+
+                        String currencyCode = Currency.getCurrencyCodeFromUser();
+
+                        try {
+                            currency = new Currency(currencyCode);
+                            System.out.println("\nPlik wczytano pomyślnie.");
+                            System.out.println("Wczytano " +currency.countPrices() + " notowań waluty od " +
+                                    currency.firstDate() + " do " + currency.lastDate());
+                            isCurrencyFileLoaded = true;
+                        } catch (FileNotFoundException e) {
+                            System.out.println("\nNieprawidłowa waluta lub brak waluty w bazie!");
+                        }
                     }
 
-                    Menu.waitAndContinue();
+                    if(isCurrencyFileLoaded) {
+                        while (!actionsMenu.wantExit()) {
+                            switch (actionsMenu.Init()) {
+                                case 0:
+                                    System.out.println("\nWybrano ekstrema globalne dla " + currency.getName());
+                                    GetGlobalExt.ShowAll(currency);
+
+                                    Menu.waitAndContinue();
+                                    break;
+                                case 1:
+                                    System.out.println("\nWybrano ekstrema lokalne dla " + currency.getName());
+                                    getLocalExt.setStartDate(getDateFromUser.askForStartDate());
+                                    getLocalExt.setEndDate(getDateFromUser.askForEndDate());
+                                    getDateFromUser.setStartDate(getDateFromUser.getStartDate());
+                                    getDateFromUser.setEndDate(getDateFromUser.getEndDate());
+
+                                    System.out.println("\nEkstrema dla przedziału " +getLocalExt.getStartDate() +
+                                            " - " + getLocalExt.getEndDate());
+
+                                    getLocalExt.ShowAll(currency);
+
+                                    Menu.waitAndContinue();
+                                    break;
+                                case 2:
+                                    System.out.println("\nWartości z danego dnia dla " + currency.getName());
+
+                                    LocalDate date;
+                                    do {
+                                        date = getDateFromUser.askForStartDate();
+                                    }while (!currency.containsDate(date));
+                                    QuotationInterface.showAll(currency, getDateFromUser.getStartDate());
+
+                                    Menu.waitAndContinue();
+                                    break;
+                                case 3:
+                                    System.out.println("\nUpraszczanie danych dla " + currency.getName());
+                                    Simplify.periodYear(currency);
+
+                                    Menu.waitAndContinue();
+                                    break;
+                                default:
+                                    actionsMenu.exit();
+                                    break;
+                            }
+                        }
+                    }
                     break;
                 default:
                     mainMenu.exit();

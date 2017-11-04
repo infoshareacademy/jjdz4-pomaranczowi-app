@@ -13,16 +13,23 @@ import java.util.regex.Pattern;
 //Currency class operates on Price objects
 class Currency implements QuotationInterface {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+    static String getCurrencyCodeFromUser() {
+        System.out.println("Podaj kod waluty (np. USD, PLN): ");
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
     //ArrayList of Price objects
     private ArrayList<Price> prices = new ArrayList<>();
 
     //File load on Currency creation
-    Currency(String path) throws FileNotFoundException {
+    Currency(String currencyCode) throws FileNotFoundException {
 
-        File file = new File(path);
+        File file = new File("data/currency/" + currencyCode + ".txt");
         Scanner fileScanner = new Scanner(file);
+
 
         Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]+.?[0-9]*)$");
 
