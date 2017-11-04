@@ -20,6 +20,7 @@ public class App {
         investmentMenu.add("Ekstrema globalne");
         investmentMenu.add("Ekstrema lokalne");
         investmentMenu.add("Wartości z danego dnia");
+        investmentMenu.add("Upraszczanie danych");
         investmentMenu.add("Powrót");
 
         Menu currenciesMenu = new Menu("Notowania kursów walut");
@@ -36,19 +37,22 @@ public class App {
                     while (!investmentChoiceMenu.wantExit()) {
 
                         InvestmentName investmentName = new InvestmentName();
-                        investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
+                        String investmentsDirectoryPath = null;
                         Investment investment = null;
 
                         switch (investmentChoiceMenu.Init()) {
                             case 0:
                                 System.out.println("\nWybrano wczytywanie z pliku");
+                                investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
+                                investmentsDirectoryPath = "data/fund/";
 
                                 Menu.waitAndContinue();
                                 break;
                             case 1:
                                 System.out.println("\nWybrano wczytywanie z internetu");
-
                                 ImportCurrentData.downloadFileFromURL();
+                                investmentName.loadInvestmentNameFromFile(ImportCurrentData.getFundListDestination());
+                                investmentsDirectoryPath = ImportCurrentData.getDataDirectoryDestination();
 
                                 Menu.waitAndContinue();
                                 break;
@@ -69,7 +73,7 @@ public class App {
                                     investmentChoiceMenu.exit();
                                 } else {
 
-                                    investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList("data/fund/" + investmentName.filePaths.get(userChoice).path));
+                                    investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList(investmentsDirectoryPath + investmentName.filePaths.get(userChoice).path));
 
                                     System.out.println("\nWybrano fundusz " + investment.getName());
                                     System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
@@ -111,6 +115,13 @@ public class App {
                                             date = getDateFromUser.askForStartDate();
                                         }while (!investment.containsDate(date));
                                         QuotationInterface.showAll(investment, getDateFromUser.getStartDate());
+
+                                        Menu.waitAndContinue();
+                                        break;
+                                    case 3:
+                                        System.out.println("\nUpraszczanie danych dla " + investment.getName());
+                                        Simplify.getYear(investment);
+
                                         Menu.waitAndContinue();
                                         break;
                                     default:
