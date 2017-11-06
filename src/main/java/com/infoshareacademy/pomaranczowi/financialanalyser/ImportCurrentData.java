@@ -23,9 +23,9 @@ class ImportCurrentData {
             ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
             dataDirectoryDestination = readJsonConfig.getDataDirectoryDestination();
             fundListDestination = readJsonConfig.getFundListDestination();
+            downloadData(readJsonConfig.getFundListURL(), readJsonConfig.getFundListDestination());
             System.out.println("Rozpoczęto pobieranie aktualnych danych, proszę czekać.");
             downloadData(readJsonConfig.getUrl(), readJsonConfig.getZipDestination());
-            downloadData(readJsonConfig.getFundListURL(), readJsonConfig.getFundListDestination());
             System.out.println("Rozpakowuję plik \"zip\"");
             extractAllFromZipFile(readJsonConfig.getZipDestination(), readJsonConfig.getDataDirectoryDestination());
             System.out.println("Pobieranie i rozpakowanie danych zakończone");
@@ -35,6 +35,14 @@ class ImportCurrentData {
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Nie można połączyć się z serwerem");
+            File stockData = new File(getDataDirectoryDestination());
+            File fundListFile = new File(getFundListDestination());
+            if(stockData.exists() && fundListFile.exists()){
+                System.out.println("Operacja zostanie przeprowadzona na ostatnio pobranych danych");
+            }
+            else{
+                System.out.println("Opcja tymczasowo niedostępna");
+            }
         }
     }
 
