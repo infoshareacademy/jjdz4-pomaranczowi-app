@@ -6,6 +6,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Investment implements QuotationInterface {
 
@@ -72,5 +73,11 @@ public class Investment implements QuotationInterface {
             }
         }
         return false;
+    }
+
+    static String getinvestmentFundCodeFromUser() {
+        System.out.println("Podaj kod funduszu:");
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
     }
 }
