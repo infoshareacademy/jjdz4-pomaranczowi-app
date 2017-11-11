@@ -48,18 +48,18 @@ public class App {
                         if (!investmentChoiceMenu.isExitSet()) {
                             while (!investmentName.investmentNameMenu.wantExit()) {
 
-                                System.out.println("\nFundusze\n");
+                                System.out.println("\nPodaj kod funduszu inwestycyjnego, np. PZU001 lub ING001:\n");
 
                                 Boolean isFundFileLoaded = false;
 
                                 while (!isFundFileLoaded) {
 
-                                    String fundCode = investment.getinvestmentFundCodeFromUser();
+                                    String fundCodeFromUser = Investment.getinvestmentFundCodeFromUser();
                                     try {
-                                        investment = new Investment("NAZWE TU TZREBA DAĆ ŻEBY SIĘ WSTAWIAŁA", Loader.getQuotationsList(investmentsDirectoryPath + fundCode + ".txt"));
 
-                                        // System.out.println("\nWybrano fundusz " + investment.getName());
-                                        System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
+                                        investment = new Investment(investmentName.fundCodeName.get(fundCodeFromUser).toString(), Loader.getQuotationsList(investmentsDirectoryPath + investmentName.fundCodePath.get(fundCodeFromUser)));
+
+                                        System.out.println("\nWybrano fundusz " + investment.getName() + "\nWczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
 
                                         isFundFileLoaded = true;
                                     }catch (IndexOutOfBoundsException e){
