@@ -45,32 +45,33 @@ public class App {
                                 break;
                         }
 
-                        if(!investmentChoiceMenu.isExitSet()) {
+                        if (!investmentChoiceMenu.isExitSet()) {
                             while (!investmentName.investmentNameMenu.wantExit()) {
 
-                                int userChoice;
+                                System.out.println("\nPodaj kod funduszu inwestycyjnego, np. PZU001 lub ING001:\n");
 
-                                userChoice = investmentName.investmentNameMenu.Init();
+                                Boolean isFundFileLoaded = false;
 
-                                if (userChoice == investmentName.filePaths.size()) {
-                                    investmentName.investmentNameMenu.exit();
-                                    investmentChoiceMenu.exit();
-                                } else {
+                                while (!isFundFileLoaded) {
 
-                                    investment = new Investment(investmentName.filePaths.get(userChoice).name, Loader.getQuotationsList(investmentsDirectoryPath + investmentName.filePaths.get(userChoice).path));
+                                    String fundCodeFromUser = Investment.getinvestmentFundCodeFromUser();
+                                    try {
 
-                                    System.out.println("\nWybrano fundusz " + investment.getName());
-                                    System.out.println("Wczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
+                                        investment = new Investment(investmentName.fundCodeName.get(fundCodeFromUser).toString(), Loader.getQuotationsList(investmentsDirectoryPath + investmentName.fundCodePath.get(fundCodeFromUser)));
 
-                                    Menu.waitAndContinue();
-                                    investmentName.investmentNameMenu.exit();
+                                        System.out.println("\nWybrano fundusz " + investment.getName() + "\nWczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
+
+                                        isFundFileLoaded = true;
+                                    }catch (IndexOutOfBoundsException e){
+                                        System.out.println("Nie znaleziono pliku!");
+                                    }
                                 }
+
+                                investmentName.investmentNameMenu.exit();
+                                investmentChoiceMenu.exit();
                             }
                         }
-
-                        if (!investmentChoiceMenu.isExitSet()) {
-                            Actions.init(investment);
-                        }
+                        Actions.init(investment);
                     }
                     break;
                 case 1:
@@ -86,7 +87,7 @@ public class App {
                         try {
                             currency = new Currency(currencyCode);
                             System.out.println("\nPlik wczytano pomyślnie.");
-                            System.out.println("Wczytano " +currency.countPrices() + " notowań waluty od " +
+                            System.out.println("Wczytano " + currency.countPrices() + " notowań waluty od " +
                                     currency.firstDate() + " do " + currency.lastDate());
                             isCurrencyFileLoaded = true;
                         } catch (FileNotFoundException e) {
@@ -94,7 +95,7 @@ public class App {
                         }
                     }
 
-                    if(isCurrencyFileLoaded) Actions.init(currency);
+                    if (isCurrencyFileLoaded) Actions.init(currency);
                     break;
                 default:
                     mainMenu.exit();

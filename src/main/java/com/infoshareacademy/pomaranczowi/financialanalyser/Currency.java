@@ -16,7 +16,7 @@ class Currency implements QuotationInterface {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     static String getCurrencyCodeFromUser() {
-        System.out.println("Podaj kod waluty (np. USD, PLN): ");
+        System.out.println("Podaj kod waluty (np. USD, EUR): ");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
@@ -29,7 +29,6 @@ class Currency implements QuotationInterface {
 
         File file = new File("data/currency/" + currencyCode + ".txt");
         Scanner fileScanner = new Scanner(file);
-
 
         Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]+.?[0-9]*)$");
 
