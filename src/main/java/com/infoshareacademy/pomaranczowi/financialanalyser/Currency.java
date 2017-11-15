@@ -111,18 +111,18 @@ class Currency implements QuotationInterface {
         throw new NoSuchDateException();
     }
 
-    String firstDate() {
+    LocalDate firstDate() {
         try {
-            return getPrices().get(1).getDate().toString();
+            return getPrices().get(0).getDate();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
     }
 
-    String lastDate() {
+    LocalDate lastDate() {
 
         try {
-            return getPrices().get(getPrices().size() - 1).getDate().toString();
+            return getPrices().get(getPrices().size()-1).getDate();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
