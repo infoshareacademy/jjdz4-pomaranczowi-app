@@ -121,4 +121,24 @@ public class CurrencyTest {
         assertThat(currency.firstDate()).isEqualTo(firstDate);
         assertThat(currency.lastDate()).isEqualTo(lastDate);
     }
+
+    @Test
+    public void containsDateTest() {
+        //given
+        Currency currency = null;
+
+        try {
+            currency = new Currency("test");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //when
+        LocalDate correctDate = LocalDate.parse("19930114",DateTimeFormatter.ofPattern("yyyyMMdd"));
+        LocalDate wrongDate = LocalDate.parse("20100114",DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+        //then
+        assertThat(currency.containsDate(correctDate)).isTrue();
+        assertThat(currency.containsDate(wrongDate)).isFalse();
+    }
 }
