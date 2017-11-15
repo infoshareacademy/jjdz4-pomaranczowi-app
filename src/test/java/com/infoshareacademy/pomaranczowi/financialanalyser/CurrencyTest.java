@@ -35,7 +35,7 @@ public class CurrencyTest {
         }
     }
 
-    /*@AfterClass
+    @AfterClass
     public static void afterClass() {
 
         try {
@@ -43,7 +43,7 @@ public class CurrencyTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     @Test
     public void getTest() {
