@@ -5,11 +5,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -18,14 +23,19 @@ public class CurrencyTest {
     @BeforeClass
     public static void beforeClass() {
 
+        List<String> list = new ArrayList<>();
+        list.add("AUD,19930113,1.0714,1.0715,1.0716,1.0717,0");
+        list.add("AUD,19930114,1.0715,1.0716,1.0717,1.0718,0");
+        list.add("AUD,19930115,1.0716,1.0717,1.0718,1.0719,0");
+
         try {
-            Files.write(Paths.get("data/currency/test.txt"), "AUD,19930113,1.0714,1.0715,1.0716,1.0717,0".getBytes());
+            Files.write(Paths.get("data/currency/test.txt"), list);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @AfterClass
+    /*@AfterClass
     public static void afterClass() {
 
         try {
@@ -33,7 +43,7 @@ public class CurrencyTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Test
     public void getTest() {
@@ -63,7 +73,6 @@ public class CurrencyTest {
 
     @Test
     public void getWrongDate() {
-
         //given
         Currency currency = null;
 
@@ -74,7 +83,7 @@ public class CurrencyTest {
         }
 
         //when
-        LocalDate date = LocalDate.parse("19930115", DateTimeFormatter.ofPattern("yyyyMMdd"));
+        LocalDate date = LocalDate.parse("20030520", DateTimeFormatter.ofPattern("yyyyMMdd"));
 
         //then
         try {
@@ -91,5 +100,25 @@ public class CurrencyTest {
         } catch (NoSuchDateException e) {
             assertThat(e);
         }
+    }
+
+    @Test
+    public void firstDateLastDateTest() {
+        //given
+        Currency currency = null;
+
+        try {
+            currency = new Currency("test");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //when
+        LocalDate firstDate = LocalDate.parse("19930113",DateTimeFormatter.ofPattern("yyyyMMdd"));
+        LocalDate lastDate = LocalDate.parse("19930115",DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+        //then
+        assertThat(currency.firstDate()).isEqualTo(firstDate);
+        assertThat(currency.lastDate()).isEqualTo(lastDate);
     }
 }
