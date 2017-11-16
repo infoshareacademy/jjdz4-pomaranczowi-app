@@ -2,7 +2,6 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import com.google.gson.Gson;
 import lombok.Getter;
-import lombok.Setter;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.slf4j.Logger;
