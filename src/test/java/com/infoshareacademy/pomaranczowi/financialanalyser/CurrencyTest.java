@@ -5,14 +5,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,7 +44,7 @@ public class CurrencyTest {
     }
 
     @Test
-    public void getTest() {
+    public void currencyGettersCorrectDateTest() {
         //given
         Currency currency = null;
 
@@ -72,7 +70,7 @@ public class CurrencyTest {
     }
 
     @Test
-    public void getWrongDate() {
+    public void currencyGettersWrongDateTest() {
         //given
         Currency currency = null;
 
@@ -103,7 +101,7 @@ public class CurrencyTest {
     }
 
     @Test
-    public void firstDateLastDateTest() {
+    public void currencyFirstDateLastDateTest() {
         //given
         Currency currency = null;
 
@@ -123,7 +121,7 @@ public class CurrencyTest {
     }
 
     @Test
-    public void containsDateTest() {
+    public void currencyContainsDateTest() {
         //given
         Currency currency = null;
 
