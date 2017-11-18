@@ -57,72 +57,72 @@ class Currency implements QuotationInterface {
     }
 
     @Override
-    public BigDecimal getOpen(LocalDate date) {
+    public BigDecimal getOpen(LocalDate date) throws NoSuchDateException {
 
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getOpen();
             }
         }
-        return null;
+        throw new NoSuchDateException();
     }
 
     @Override
-    public BigDecimal getHigh(LocalDate date) {
+    public BigDecimal getHigh(LocalDate date) throws NoSuchDateException {
 
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getHigh();
             }
         }
-        return null;
+        throw new NoSuchDateException();
     }
 
     @Override
-    public BigDecimal getLow(LocalDate date) {
+    public BigDecimal getLow(LocalDate date) throws NoSuchDateException {
 
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getLow();
             }
         }
-        return null;
+        throw new NoSuchDateException();
     }
 
     @Override
-    public BigDecimal getClose(LocalDate date) {
+    public BigDecimal getClose(LocalDate date) throws NoSuchDateException {
 
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getClose();
             }
         }
-        return null;
+        throw new NoSuchDateException();
     }
 
     @Override
-    public BigDecimal getVolume(LocalDate date) {
+    public BigDecimal getVolume(LocalDate date)  throws NoSuchDateException {
 
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getVolume();
             }
         }
-        return null;
+        throw new NoSuchDateException();
     }
 
-    String firstDate() {
+    LocalDate firstDate() {
         try {
-            return getPrices().get(1).getDate().toString();
+            return getPrices().get(0).getDate();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
     }
 
-    String lastDate() {
+    LocalDate lastDate() {
 
         try {
-            return getPrices().get(getPrices().size() - 1).getDate().toString();
+            return getPrices().get(getPrices().size()-1).getDate();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
