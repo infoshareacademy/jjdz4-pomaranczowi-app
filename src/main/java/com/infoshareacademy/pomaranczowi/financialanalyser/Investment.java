@@ -2,6 +2,8 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,6 +18,8 @@ public class Investment implements QuotationInterface {
     public Investment(String name, ArrayList<Price> prices) {
         this.name = name;
         this.prices = prices;
+        Logger logger = LoggerFactory.getLogger(Investment.class.getName());
+        logger.info("Stworzono nowy obiekt funduszu inwestycyjnego o nazwie: " + name + ".");
     }
 
     @Override
