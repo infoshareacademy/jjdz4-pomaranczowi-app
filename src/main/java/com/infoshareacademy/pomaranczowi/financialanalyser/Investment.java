@@ -8,14 +8,15 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Investment implements QuotationInterface {
 
     @Setter @Getter public String name;
-    private ArrayList<Price> prices = new ArrayList<>();
+    private List<Price> prices = new ArrayList<>();
 
-    public Investment(String name, ArrayList<Price> prices) {
+    public Investment(String name, List<Price> prices) {
         this.name = name;
         this.prices = prices;
         Logger logger = LoggerFactory.getLogger(Investment.class.getName());
@@ -53,7 +54,7 @@ public class Investment implements QuotationInterface {
     }
 
     @Override
-    public ArrayList<Price> getPrices() {
+    public List<Price> getPrices() {
         return prices;
     }
 

@@ -2,7 +2,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 interface QuotationInterface {
 
@@ -24,7 +24,7 @@ interface QuotationInterface {
     BigDecimal getClose(LocalDate date) throws NoSuchDateException;
     BigDecimal getVolume(LocalDate date) throws NoSuchDateException;
     String getName();
-    ArrayList<Price> getPrices();
+    List<Price> getPrices();
 
     boolean containsDate(LocalDate date);
 }

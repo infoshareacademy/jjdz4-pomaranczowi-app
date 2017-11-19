@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +23,7 @@ class Currency implements QuotationInterface {
     }
 
     //ArrayList of Price objects
-    private ArrayList<Price> prices = new ArrayList<>();
+    private List<Price> prices = new ArrayList<>();
 
     //File load on Currency creation
     Currency(String currencyCode) throws FileNotFoundException {
@@ -138,7 +139,7 @@ class Currency implements QuotationInterface {
     }
 
     @Override
-    public ArrayList<Price> getPrices() {
+    public List<Price> getPrices() {
         return prices;
     }
 

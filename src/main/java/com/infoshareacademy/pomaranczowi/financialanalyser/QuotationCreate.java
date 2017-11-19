@@ -8,13 +8,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class QuotationCreate {
 
     private static final String DATE_FORMAT = "yyyyMMdd";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-    private ArrayList<Price> quotations = new ArrayList<>();
+    private List<Price> quotations = new ArrayList<>();
     private Logger logger = LoggerFactory.getLogger(QuotationCreate.class.getName());
 
     int getNumberOfQuotations() {
