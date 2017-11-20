@@ -24,6 +24,7 @@ class ImportCurrentData {
             FileReader fileReader = new FileReader("config.json");
             Gson gson = new Gson();
             ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
+
             logger.debug("Odczytano plik konfiguracyjny");
             dataDirectoryDestination = readJsonConfig.getDataDirectoryDestination();
             fundListDestination = readJsonConfig.getFundListDestination();
