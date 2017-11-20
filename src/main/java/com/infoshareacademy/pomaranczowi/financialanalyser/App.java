@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 public class App {
     public static void main(String[] args) {
 
+        new LoggerFileNameInit().getTimeAndDateForFileName();
+
         Menu mainMenu = new Menu("$$$$ ANALIZATOR FINANSOWY $$$$");
         mainMenu.add("Notowania funduszy inwestycyjnych");
         mainMenu.add("Notowania kursów walut");
