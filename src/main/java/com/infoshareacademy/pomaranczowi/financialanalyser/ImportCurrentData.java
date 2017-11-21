@@ -2,7 +2,6 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import com.google.gson.Gson;
 import lombok.Getter;
-import lombok.Setter;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.slf4j.Logger;
@@ -25,6 +24,7 @@ class ImportCurrentData {
             FileReader fileReader = new FileReader("config.json");
             Gson gson = new Gson();
             ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
+
             logger.debug("Odczytano plik konfiguracyjny");
             dataDirectoryDestination = readJsonConfig.getDataDirectoryDestination();
             fundListDestination = readJsonConfig.getFundListDestination();
