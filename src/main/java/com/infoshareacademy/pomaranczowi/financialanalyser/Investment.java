@@ -12,7 +12,9 @@ import java.util.Scanner;
 
 public class Investment implements QuotationInterface {
 
-    @Setter @Getter public String name;
+    @Setter
+    @Getter
+    public String name;
     private ArrayList<Price> prices = new ArrayList<>();
 
     public Investment(String name, ArrayList<Price> prices) {
@@ -41,13 +43,13 @@ public class Investment implements QuotationInterface {
     }
 
     @Override
-    public BigDecimal getClose(LocalDate date){
+    public BigDecimal getClose(LocalDate date) {
         for (Price price : prices) if (price.getDate().equals(date)) return price.getClose();
         return null;
-        }
+    }
 
     @Override
-    public BigDecimal getVolume(LocalDate date){
+    public BigDecimal getVolume(LocalDate date) {
         for (Price price : prices) if (price.getDate().equals(date)) return price.getVolume();
         return null;
     }
@@ -57,20 +59,20 @@ public class Investment implements QuotationInterface {
         return prices;
     }
 
-    LocalDate getFirstDate(){
+    LocalDate getFirstDate() {
         return prices.get(0).getDate();
-        }
+    }
 
-    LocalDate getLastDate(){
-        return prices.get(prices.size()-1).getDate();
-        }
+    LocalDate getLastDate() {
+        return prices.get(prices.size() - 1).getDate();
+    }
 
-    Integer getNumberOfQuotation(){
+    Integer getNumberOfQuotation() {
         return prices.size();
-        }
+    }
 
     @Override
-    public boolean containsDate(LocalDate date){
+    public boolean containsDate(LocalDate date) {
         for (Price price : prices) {
             if (price.getDate().equals(date)) {
                 return true;
