@@ -11,7 +11,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//Currency class operates on Price objects
 class Currency implements QuotationInterface {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -22,10 +21,8 @@ class Currency implements QuotationInterface {
         return scanner.nextLine();
     }
 
-    //ArrayList of Price objects
     private List<Price> prices = new ArrayList<>();
 
-    //File load on Currency creation
     Currency(String currencyCode) throws FileNotFoundException {
 
         File file = new File("data/currency/" + currencyCode + ".txt");
@@ -60,56 +57,32 @@ class Currency implements QuotationInterface {
     @Override
     public BigDecimal getOpen(LocalDate date) throws NoSuchDateException {
 
-        for (Price x : getPrices()) {
-            if (date.equals(x.getDate())) {
-                return x.getOpen();
-            }
-        }
-        throw new NoSuchDateException();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getOpen();
     }
 
     @Override
     public BigDecimal getHigh(LocalDate date) throws NoSuchDateException {
 
-        for (Price x : getPrices()) {
-            if (date.equals(x.getDate())) {
-                return x.getHigh();
-            }
-        }
-        throw new NoSuchDateException();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getHigh();
     }
 
     @Override
     public BigDecimal getLow(LocalDate date) throws NoSuchDateException {
 
-        for (Price x : getPrices()) {
-            if (date.equals(x.getDate())) {
-                return x.getLow();
-            }
-        }
-        throw new NoSuchDateException();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getLow();
+
     }
 
     @Override
     public BigDecimal getClose(LocalDate date) throws NoSuchDateException {
 
-        for (Price x : getPrices()) {
-            if (date.equals(x.getDate())) {
-                return x.getClose();
-            }
-        }
-        throw new NoSuchDateException();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getClose();
     }
 
     @Override
-    public BigDecimal getVolume(LocalDate date)  throws NoSuchDateException {
+    public BigDecimal getVolume(LocalDate date) throws NoSuchDateException {
 
-        for (Price x : getPrices()) {
-            if (date.equals(x.getDate())) {
-                return x.getVolume();
-            }
-        }
-        throw new NoSuchDateException();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getVolume();
     }
 
     LocalDate firstDate() {
@@ -123,7 +96,7 @@ class Currency implements QuotationInterface {
     LocalDate lastDate() {
 
         try {
-            return getPrices().get(getPrices().size()-1).getDate();
+            return getPrices().get(getPrices().size() - 1).getDate();
         } catch (IndexOutOfBoundsException exception) {
             return null;
         }
@@ -140,16 +113,13 @@ class Currency implements QuotationInterface {
 
     @Override
     public List<Price> getPrices() {
+
         return prices;
     }
 
     @Override
     public boolean containsDate(LocalDate date) {
-        for (Price price : prices) {
-            if (price.getDate().equals(date)) {
-                return true;
-            }
-        }
-        return false;
+
+        return prices.parallelStream().anyMatch(x -> x.getDate().equals(date));
     }
 }
