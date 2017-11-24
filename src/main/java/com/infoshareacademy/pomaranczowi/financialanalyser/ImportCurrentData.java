@@ -2,7 +2,6 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 
 import com.google.gson.Gson;
 import lombok.Getter;
-import lombok.Setter;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.slf4j.Logger;
@@ -16,18 +15,16 @@ import java.nio.channels.ReadableByteChannel;
 
 class ImportCurrentData {
 
-    @Getter private static String dataDirectoryDestination = "";
-    @Getter private static String fundListDestination = "";
+    @Getter
+    private static String dataDirectoryDestination = "";
+    @Getter
+    private static String fundListDestination = "";
     private static Logger logger = LoggerFactory.getLogger(ImportCurrentData.class.getName());
 
     static void downloadFileFromURL() {
         try {
-            FileReader fileReader = new FileReader("config.json");
-            Gson gson = new Gson();
-            ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
-            logger.debug("Odczytano plik konfiguracyjny");
-            dataDirectoryDestination = readJsonConfig.getDataDirectoryDestination();
-            fundListDestination = readJsonConfig.getFundListDestination();
+            ReadJsonConfig readJsonConfig = readJsonConfigFile();
+            setFilesDestinationVariables(readJsonConfig);
             downloadData(readJsonConfig.getFundListURL(), readJsonConfig.getFundListDestination());
             System.out.println("Rozpoczęto pobieranie aktualnych danych, proszę czekać.");
             downloadData(readJsonConfig.getUrl(), readJsonConfig.getZipDestination());
@@ -43,30 +40,37 @@ class ImportCurrentData {
         } catch (IOException e) {
             System.out.println("Nie można połączyć się z serwerem");
             logger.error("Nie można połączyć się z serwerem");
-            File stockData = new File(getDataDirectoryDestination());
-            File fundListFile = new File(getFundListDestination());
-            if(stockData.exists() && fundListFile.exists()){
-                System.out.println("Operacja zostanie przeprowadzona na ostatnio pobranych danych");
-                logger.info("Operacje przeprowadzono na ostatnio pobranych danych");
-            }
-            else{
-                System.out.println("Opcja tymczasowo niedostępna");
-                logger.info("Brak danych na dysku");
-            }
+            printAdditionalInformation();
         }
     }
 
+    private static ReadJsonConfig readJsonConfigFile() throws FileNotFoundException {
+        FileReader fileReader = new FileReader("config.json");
+        Gson gson = new Gson();
+        ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
+        logger.debug("Odczytano plik konfiguracyjny");
+        return readJsonConfig;
+    }
+
+    private static void setFilesDestinationVariables(ReadJsonConfig readJsonConfig) {
+        dataDirectoryDestination = readJsonConfig.getDataDirectoryDestination();
+        fundListDestination = readJsonConfig.getFundListDestination();
+    }
+
     private static void downloadData(String url, String destination) throws IOException {
-        ReadableByteChannel readableByteChannel;
         URL website = new URL(url);
-        readableByteChannel = Channels.newChannel(website.openStream());
+        ReadableByteChannel readableByteChannel = Channels.newChannel(website.openStream());
         logger.info("Został otwarty nowy kanał pobierania danych, URL: " + url);
+        fileOutputFromChannel(destination, readableByteChannel);
+        readableByteChannel.close();
+        logger.info("Zamknięto kanał danych");
+    }
+
+    private static void fileOutputFromChannel(String destination, ReadableByteChannel readableByteChannel) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(destination);
         fileOutputStream.getChannel().transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
         logger.info("Przechwycono dane z otwartego kanału danych, docelowa lokalizacja: " + destination);
         fileOutputStream.close();
-        readableByteChannel.close();
-        logger.info("Zamknięto kanał danych");
     }
 
     private static void extractAllFromZipFile(String source, String destination) {
@@ -77,6 +81,18 @@ class ImportCurrentData {
         } catch (ZipException e) {
             System.out.println("Nie można rozpakować pliku " + source);
             logger.error("Plik \"" + source + "\" nie został rozpakowany");
+        }
+    }
+
+    private static void printAdditionalInformation() {
+        File stockData = new File(getDataDirectoryDestination());
+        File fundListFile = new File(getFundListDestination());
+        if (stockData.exists() && fundListFile.exists()) {
+            System.out.println("Operacja zostanie przeprowadzona na ostatnio pobranych danych");
+            logger.info("Operacje przeprowadzono na ostatnio pobranych danych");
+        } else {
+            System.out.println("Opcja tymczasowo niedostępna");
+            logger.info("Brak danych na dysku");
         }
     }
 }
