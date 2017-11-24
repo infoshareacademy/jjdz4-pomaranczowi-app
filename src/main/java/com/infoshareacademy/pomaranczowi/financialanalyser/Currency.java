@@ -1,5 +1,7 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -10,15 +12,17 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//Currency class operates on Price objects
 class Currency implements QuotationInterface {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    private static Logger logger = LoggerFactory.getLogger(Currency.class);
 
     static String getCurrencyCodeFromUser() {
         System.out.println("Podaj kod waluty (np. USD, EUR): ");
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        String currencyCode = scanner.nextLine();
+        logger.info("Wczytano kod waluty od użykownika (" + currencyCode + ").");
+        return currencyCode;
     }
 
     //ArrayList of Price objects
@@ -27,7 +31,10 @@ class Currency implements QuotationInterface {
     //File load on Currency creation
     Currency(String currencyCode) throws FileNotFoundException {
 
+        logger.info("Utworzono nowy obiekt Currency.");
+
         File file = new File("data/currency/" + currencyCode + ".txt");
+        logger.info("Wczytano plik txt.");
         Scanner fileScanner = new Scanner(file);
 
         Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]+.?[0-9]*)$");
@@ -49,10 +56,13 @@ class Currency implements QuotationInterface {
 
                     getPrices().add(price);
 
+                } else {
+                    logger.warn("Wczytywany wiersz nie jest poprawnym wierszem z danymi.");
                 }
             }
         } catch (NullPointerException e) {
             System.out.println("Wystąpił błąd przy wczytywaniu pliku!");
+            logger.error("Wystąpił błąd przy wczytywaniu pliku.");
         }
     }
 
@@ -64,6 +74,7 @@ class Currency implements QuotationInterface {
                 return x.getOpen();
             }
         }
+        logger.debug("Podano nieprawidłową datę (" + date + ") lub datę, dla której nie ma danych.");
         throw new NoSuchDateException();
     }
 
@@ -75,6 +86,7 @@ class Currency implements QuotationInterface {
                 return x.getHigh();
             }
         }
+        logger.debug("Podano nieprawidłową datę (" + date + ") lub datę, dla której nie ma danych.");
         throw new NoSuchDateException();
     }
 
@@ -86,6 +98,7 @@ class Currency implements QuotationInterface {
                 return x.getLow();
             }
         }
+        logger.debug("Podano nieprawidłową datę (" + date + ") lub datę, dla której nie ma danych.");
         throw new NoSuchDateException();
     }
 
@@ -97,17 +110,19 @@ class Currency implements QuotationInterface {
                 return x.getClose();
             }
         }
+        logger.debug("Podano nieprawidłową datę (" + date + ") lub datę, dla której nie ma danych.");
         throw new NoSuchDateException();
     }
 
     @Override
-    public BigDecimal getVolume(LocalDate date)  throws NoSuchDateException {
+    public BigDecimal getVolume(LocalDate date) throws NoSuchDateException {
 
         for (Price x : getPrices()) {
             if (date.equals(x.getDate())) {
                 return x.getVolume();
             }
         }
+        logger.debug("Podano nieprawidłową datę (" + date + ") lub datę, dla której nie ma danych.");
         throw new NoSuchDateException();
     }
 
@@ -115,6 +130,7 @@ class Currency implements QuotationInterface {
         try {
             return getPrices().get(0).getDate();
         } catch (IndexOutOfBoundsException exception) {
+            logger.error("Wystąpił błąd. Wykroczono poa zakres tablicy z danymi.");
             return null;
         }
     }
@@ -122,8 +138,9 @@ class Currency implements QuotationInterface {
     LocalDate lastDate() {
 
         try {
-            return getPrices().get(getPrices().size()-1).getDate();
+            return getPrices().get(getPrices().size() - 1).getDate();
         } catch (IndexOutOfBoundsException exception) {
+            logger.error("Wystąpił błąd. Wykroczono poa zakres tablicy z danymi.");
             return null;
         }
     }
