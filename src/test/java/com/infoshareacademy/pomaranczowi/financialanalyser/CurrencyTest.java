@@ -1,6 +1,5 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import java.io.FileNotFoundException;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.fail;
 public class CurrencyTest {
 
     @BeforeClass
-    public static void beforeClass() {
+    public static void BeforeClass() {
 
         List<String> list = new ArrayList<>();
         list.add("AUD,19930113,1.0714,1.0715,1.0716,1.0717,0");
@@ -28,16 +27,6 @@ public class CurrencyTest {
 
         try {
             Files.write(Paths.get("data/currency/test.txt"), list);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @AfterClass
-    public static void afterClass() {
-
-        try {
-            Files.delete(Paths.get("data/currency/test.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
