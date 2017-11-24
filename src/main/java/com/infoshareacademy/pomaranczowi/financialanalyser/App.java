@@ -24,7 +24,7 @@ public class App {
 
                         InvestmentName investmentName = new InvestmentName();
                         String investmentsDirectoryPath = null;
-                        Investment investment = null;
+                        Quotation investment = new Quotation();
 
                         switch (investmentChoiceMenu.Init()) {
                             case 0:
@@ -56,12 +56,13 @@ public class App {
 
                                 while (!isFundFileLoaded) {
 
-                                    String fundCodeFromUser = Investment.getinvestmentFundCodeFromUser();
+                                    String fundCodeFromUser = InvestmentLoader.getinvestmentFundCodeFromUser();
                                     try {
 
-                                        investment = new Investment(investmentName.fundCodeName.get(fundCodeFromUser).toString(), Loader.getQuotationsList(investmentsDirectoryPath + investmentName.fundCodePath.get(fundCodeFromUser)));
+                                        investment.setName(investmentName.fundCodeName.get(fundCodeFromUser).toString());
+                                        investment = InvestmentLoader.load(investmentsDirectoryPath + investmentName.fundCodePath.get(fundCodeFromUser));
 
-                                        System.out.println("\nWybrano fundusz " + investment.getName() + "\nWczytano " + investment.getNumberOfQuotation() + " danych z okresu od " + investment.getFirstDate() + " do " + investment.getLastDate() + ".");
+                                        System.out.println("\nWybrano fundusz " + investment.getName() + "\nWczytano " + investment.countPrices() + " danych z okresu od " + investment.firstDate() + " do " + investment.lastDate() + ".");
 
                                         isFundFileLoaded = true;
                                     }catch (IndexOutOfBoundsException e){
@@ -79,15 +80,15 @@ public class App {
                 case 1:
                     System.out.println("\nNotowania kursów walut\n");
 
-                    Currency currency = null;
                     Boolean isCurrencyFileLoaded = false;
+                    Quotation currency = new Quotation();
 
                     while (!isCurrencyFileLoaded) {
 
-                        String currencyCode = Currency.getCurrencyCodeFromUser();
+                        String currencyCode = CurrencyLoader.getCurrencyCodeFromUser();
 
                         try {
-                            currency = new Currency(currencyCode);
+                            currency = CurrencyLoader.load(currencyCode);
                             System.out.println("\nPlik wczytano pomyślnie.");
                             System.out.println("Wczytano " + currency.countPrices() + " notowań waluty od " +
                                     currency.firstDate() + " do " + currency.lastDate());

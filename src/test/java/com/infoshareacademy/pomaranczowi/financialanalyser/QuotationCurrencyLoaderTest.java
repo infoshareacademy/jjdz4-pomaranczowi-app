@@ -5,20 +5,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-public class CurrencyTest {
+public class QuotationCurrencyLoaderTest {
 
     @BeforeClass
     public static void beforeClass() {
@@ -48,10 +46,10 @@ public class CurrencyTest {
     @Test
     public void getTest() {
         //given
-        Currency currency = null;
+        Quotation currency = new Quotation();
 
         try {
-            currency = new Currency("test");
+            currency = CurrencyLoader.load("test");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -74,10 +72,10 @@ public class CurrencyTest {
     @Test
     public void getWrongDate() {
         //given
-        Currency currency = null;
+        Quotation currency = new Quotation();
 
         try {
-            currency = new Currency("test");
+            currency = CurrencyLoader.load("test");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -105,10 +103,10 @@ public class CurrencyTest {
     @Test
     public void firstDateLastDateTest() {
         //given
-        Currency currency = null;
+        Quotation currency = new Quotation();
 
         try {
-            currency = new Currency("test");
+            currency = CurrencyLoader.load("test");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -125,10 +123,10 @@ public class CurrencyTest {
     @Test
     public void containsDateTest() {
         //given
-        Currency currency = null;
+        Quotation currency = new Quotation();
 
         try {
-            currency = new Currency("test");
+            currency = CurrencyLoader.load("test");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

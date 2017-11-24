@@ -2,6 +2,8 @@
 *.iml
 target/
 out/
+data/
+log/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.next

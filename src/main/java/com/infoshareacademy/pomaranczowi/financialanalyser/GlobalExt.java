@@ -6,7 +6,7 @@ import java.time.LocalDate;
 class GlobalExt {
 
     
-    static void ShowAll(QuotationInterface quotation) {
+    static void ShowAll(Quotation quotation) {
 
         Extremes maxOpen = GlobalExt.getMaxOpen(quotation);
         System.out.println("\nMaksymalna wartość OPEN to: "+
@@ -54,7 +54,7 @@ class GlobalExt {
                 minVolume.getDate());
     }
     
-    private static Extremes getMaxOpen(QuotationInterface quotation) {
+    private static Extremes getMaxOpen(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getOpen();
@@ -74,7 +74,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMaxClose(QuotationInterface quotation) {
+    private static Extremes getMaxClose(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getClose();
@@ -94,7 +94,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMaxHigh(QuotationInterface quotation) {
+    private static Extremes getMaxHigh(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getHigh();
@@ -114,7 +114,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMaxLow(QuotationInterface quotation) {
+    private static Extremes getMaxLow(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getLow();
@@ -134,7 +134,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMaxVolume(QuotationInterface quotation) {
+    private static Extremes getMaxVolume(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getVolume();
@@ -152,7 +152,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMinOpen(QuotationInterface quotation) {
+    private static Extremes getMinOpen(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getOpen();
@@ -172,7 +172,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMinClose(QuotationInterface quotation) {
+    private static Extremes getMinClose(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getClose();
@@ -192,7 +192,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMinHigh(QuotationInterface quotation) {
+    private static Extremes getMinHigh(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getHigh();
@@ -210,7 +210,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMinLow(QuotationInterface quotation) {
+    private static Extremes getMinLow(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getLow();
@@ -228,7 +228,7 @@ class GlobalExt {
         return extremes;
     }
 
-    private static Extremes getMinVolume(QuotationInterface quotation) {
+    private static Extremes getMinVolume(Quotation quotation) {
 
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = quotation.getPrices().get(0).getVolume();

@@ -3,7 +3,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser;
 import java.time.LocalDate;
 
 class Actions {
-    static void init(QuotationInterface quotationInterface) {
+    static void init(Quotation quotation) {
 
         Menu actionsMenu = new Menu("Co chcesz zrobić?");
         actionsMenu.add("Ekstrema globalne");
@@ -18,13 +18,13 @@ class Actions {
         while (!actionsMenu.wantExit()) {
             switch (actionsMenu.Init()) {
                 case 0:
-                    System.out.println("\nWybrano ekstrema globalne dla " + quotationInterface.getName());
-                    GlobalExt.ShowAll(quotationInterface);
+                    System.out.println("\nWybrano ekstrema globalne dla " + quotation.getName());
+                    GlobalExt.ShowAll(quotation);
 
                     Menu.waitAndContinue();
                     break;
                 case 1:
-                    System.out.println("\nWybrano ekstrema lokalne dla " + quotationInterface.getName());
+                    System.out.println("\nWybrano ekstrema lokalne dla " + quotation.getName());
 
                     boolean areChoosenDatesCorrect = false;
 
@@ -33,7 +33,7 @@ class Actions {
                         localExt.setStartDate(dateFromUser.askForStartDate());
                         localExt.setEndDate(dateFromUser.askForEndDate());
 
-                        for (Price price : quotationInterface.getPrices()) {
+                        for (Price price : quotation.getPrices()) {
                             if ((price.getDate().isAfter(localExt.getStartDate()) ||
                                     price.getDate().isEqual(localExt.getStartDate())) &&
                                     (price.getDate().isBefore(localExt.getEndDate()) ||
@@ -53,24 +53,24 @@ class Actions {
                     System.out.println("\nEkstrema dla przedziału " + localExt.getStartDate() +
                             " - " + localExt.getEndDate());
 
-                    localExt.ShowAll(quotationInterface);
+                    localExt.ShowAll(quotation);
 
                     Menu.waitAndContinue();
                     break;
                 case 2:
-                    System.out.println("\nWartości z danego dnia dla " + quotationInterface.getName());
+                    System.out.println("\nWartości z danego dnia dla " + quotation.getName());
 
                     LocalDate date;
                     do {
                         date = dateFromUser.askForStartDate();
-                    } while (!quotationInterface.containsDate(date));
-                    QuotationInterface.showAll(quotationInterface, dateFromUser.getStartDate());
+                    } while (!quotation.containsDate(date));
+                    Quotation.showAll(quotation, dateFromUser.getStartDate());
 
                     Menu.waitAndContinue();
                     break;
                 case 3:
-                    System.out.println("\nUpraszczanie danych dla " + quotationInterface.getName());
-                    Simplify.periodYear(quotationInterface);
+                    System.out.println("\nUpraszczanie danych dla " + quotation.getName());
+                    Simplify.periodYear(quotation);
 
                     Menu.waitAndContinue();
                     break;

@@ -11,7 +11,7 @@ class LocalExt {
     @Setter @Getter private LocalDate startDate;
     @Setter @Getter private LocalDate endDate;
 
-    void ShowAll(QuotationInterface quotation) {
+    void ShowAll(Quotation quotation) {
 
         System.out.println("\nMaksymalna wartość OPEN to: " +
                 getMaxOpen(quotation).getValue() +
@@ -49,7 +49,7 @@ class LocalExt {
                 " z dnia " + getMinVolume(quotation).getDate());
     }
 
-    private Extremes getMaxOpen(QuotationInterface quotation) {
+    private Extremes getMaxOpen(Quotation quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -63,7 +63,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMaxClose(QuotationInterface quotation) {
+    private Extremes getMaxClose(Quotation quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -77,7 +77,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMaxHigh(QuotationInterface quotation) {
+    private Extremes getMaxHigh(Quotation quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -91,7 +91,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMaxLow(QuotationInterface quotation) {
+    private Extremes getMaxLow(Quotation quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -105,7 +105,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMaxVolume(QuotationInterface quotation) {
+    private Extremes getMaxVolume(Quotation quotation) {
         Extremes extremes = new Extremes();
 
         for (Price x : quotation.getPrices()) {
@@ -122,7 +122,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinOpen(QuotationInterface quotation) {
+    private Extremes getMinOpen(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -142,7 +142,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinClose(QuotationInterface quotation) {
+    private Extremes getMinClose(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -162,7 +162,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinHigh(QuotationInterface quotation) {
+    private Extremes getMinHigh(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -182,7 +182,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinLow(QuotationInterface quotation) {
+    private Extremes getMinLow(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -202,7 +202,7 @@ class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinVolume(QuotationInterface quotation) {
+    private Extremes getMinVolume(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
