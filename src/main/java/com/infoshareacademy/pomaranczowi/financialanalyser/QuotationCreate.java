@@ -8,13 +8,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class QuotationCreate {
 
     private static final String DATE_FORMAT = "yyyyMMdd";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-    private ArrayList<Price> quotations = new ArrayList<>();
+    private List<Price> quotations = new ArrayList<>();
     private Logger logger = LoggerFactory.getLogger(QuotationCreate.class.getName());
 
     int getNumberOfQuotations() {
@@ -31,7 +32,6 @@ class QuotationCreate {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 String data[] = scanner.nextLine().split(",");
-                String name = data[0];
                 LocalDate date = LocalDate.parse(data[1], formatter);
                 BigDecimal open = new BigDecimal(data[2]);
                 BigDecimal high = new BigDecimal(data[3]);
@@ -40,7 +40,6 @@ class QuotationCreate {
                 BigDecimal volume = new BigDecimal(data[6]);
 
                 Price price = new Price();
-                price.setName(name);
                 price.setDate(date);
                 price.setOpen(open);
                 price.setHigh(high);
@@ -50,7 +49,7 @@ class QuotationCreate {
                 quotations.add(price);
             }
             logger.info("Wczytano poprawnie dane wybranego funduszu inwestycyjnego: \n- kod funduszu: "
-                    + quotations.get(0).getName() + "," + "\n- ścieżka pliku: " + filepath + ".");
+                    + "," + "\n- ścieżka pliku: " + filepath + ".");
             scanner.close();
         } catch (Exception e) {
             System.out.println("Wystąpił problem z pobraniem wartości funduszu z pliku.");

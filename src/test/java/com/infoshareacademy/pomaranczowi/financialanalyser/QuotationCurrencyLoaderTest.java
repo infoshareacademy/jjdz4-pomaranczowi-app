@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-public class CurrencyTest {
+public class QuotationCurrencyLoaderTest {
 
     @BeforeClass
     public static void BeforeClass() {
@@ -35,10 +35,10 @@ public class CurrencyTest {
     @Test
     public void currencyGettersCorrectDateTest() {
         //given
-        Currency currency = null;
+        Quotation currency = new Quotation();
 
         try {
-            currency = new Currency("test");
+            currency = CurrencyLoader.load("test");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -61,10 +61,10 @@ public class CurrencyTest {
     @Test
     public void currencyGettersWrongDateTest() {
         //given
-        Currency currency = null;
+        Quotation currency = new Quotation();
 
         try {
-            currency = new Currency("test");
+            currency = CurrencyLoader.load("test");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -92,10 +92,10 @@ public class CurrencyTest {
     @Test
     public void currencyFirstDateLastDateTest() {
         //given
-        Currency currency = null;
+        Quotation currency = new Quotation();
 
         try {
-            currency = new Currency("test");
+            currency = CurrencyLoader.load("test");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -112,10 +112,10 @@ public class CurrencyTest {
     @Test
     public void currencyContainsDateTest() {
         //given
-        Currency currency = null;
+        Quotation currency = new Quotation();
 
         try {
-            currency = new Currency("test");
+            currency = CurrencyLoader.load("test");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
