@@ -26,28 +26,33 @@ class Quotation {
 
     BigDecimal getOpen(LocalDate date) throws NoSuchDateException {
 
-        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getOpen();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
+                findFirst().orElseThrow(NoSuchDateException::new).getOpen();
     }
 
     BigDecimal getHigh(LocalDate date) throws NoSuchDateException {
 
-        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getHigh();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
+                findFirst().orElseThrow(NoSuchDateException::new).getHigh();
     }
 
     BigDecimal getLow(LocalDate date) throws NoSuchDateException {
 
-        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getLow();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
+                findFirst().orElseThrow(NoSuchDateException::new).getLow();
 
     }
 
     BigDecimal getClose(LocalDate date) throws NoSuchDateException {
 
-        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getClose();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
+                findFirst().orElseThrow(NoSuchDateException::new).getClose();
     }
 
     BigDecimal getVolume(LocalDate date) throws NoSuchDateException {
 
-        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).findFirst().orElseThrow(NoSuchDateException::new).getVolume();
+        return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
+                findFirst().orElseThrow(NoSuchDateException::new).getVolume();
     }
 
     LocalDate firstDate() {
