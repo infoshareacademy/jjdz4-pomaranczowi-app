@@ -29,8 +29,8 @@ public class App {
                         switch (investmentChoiceMenu.Init()) {
                             case 0:
                                 System.out.println("\nWybrano wczytywanie z pliku");
-                                investmentName.loadInvestmentNameFromFile("data/fund/omegafun.lst");
-                                investmentsDirectoryPath = "data/fund/";
+                                investmentName.loadInvestmentNameFromFile("cli/data/fund/omegafun.lst");
+                                investmentsDirectoryPath = "cli/data/fund/";
 
                                 Menu.waitAndContinue();
                                 break;
