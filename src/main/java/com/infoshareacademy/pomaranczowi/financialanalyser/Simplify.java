@@ -14,7 +14,7 @@ class Simplify {
     private static Integer yearSelected;
     private static ArrayList<Weeks> week = new ArrayList<>();
 
-    static void periodYear(QuotationInterface quotation) {
+    static void periodYear(Quotation quotation) {
         System.out.println("\nDostępne są notowania z poniższych lat.\n" +
                 "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
         getYear(quotation);
@@ -57,7 +57,7 @@ class Simplify {
         }
     }
 
-    private static void periodMonth(QuotationInterface quotation, Integer yearSelected) {
+    private static void periodMonth(Quotation quotation, Integer yearSelected) {
         boolean dataOk = false;
         getMonthsForYear(quotation, yearSelected);
         for (int i : month) {
@@ -100,7 +100,7 @@ class Simplify {
         }
     }
 
-    private static void periodWeek(QuotationInterface quotation, Integer yearSelected, Integer monthSelected) {
+    private static void periodWeek(Quotation quotation, Integer yearSelected, Integer monthSelected) {
         LocalDate date = LocalDate.of(yearSelected, monthSelected, 1);
         getWeeksForMonth(date);
         for (Weeks x : week) {
@@ -109,14 +109,14 @@ class Simplify {
         }
     }
 
-    private static void getYear(QuotationInterface quotation) {
+    private static void getYear(Quotation quotation) {
         year.clear();
         for (Price x : quotation.getPrices()) {
             year.add(x.getDate().getYear());
         }
     }
 
-    private static void getMonthsForYear(QuotationInterface quotation, Integer yearSelected) {
+    private static void getMonthsForYear(Quotation quotation, Integer yearSelected) {
         month.clear();
         for (Price x : quotation.getPrices()) {
             if (x.getDate().getYear() == yearSelected)
@@ -124,7 +124,7 @@ class Simplify {
         }
     }
 
-    private static void result(QuotationInterface quotation, LocalDate from, LocalDate to) {
+    private static void result(Quotation quotation, LocalDate from, LocalDate to) {
         LocalExt localExt = new LocalExt();
         localExt.setStartDate(from);
         localExt.setEndDate(to);
