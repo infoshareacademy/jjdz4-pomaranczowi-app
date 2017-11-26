@@ -12,7 +12,7 @@
 
     <modules>
         <module>cli</module>
-        <module>web-app</module>
+        <module>webapp</module>
     </modules>
 
 </project>
