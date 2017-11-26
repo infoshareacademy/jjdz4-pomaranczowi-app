@@ -59,9 +59,8 @@ public class App {
                                     String fundCodeFromUser = InvestmentLoader.getinvestmentFundCodeFromUser();
                                     try {
 
-                                        investment.setName(investmentName.fundCodeName.get(fundCodeFromUser).toString());
                                         investment = InvestmentLoader.load(investmentsDirectoryPath + investmentName.fundCodePath.get(fundCodeFromUser));
-
+                                        investment.setName(investmentName.fundCodeName.get(fundCodeFromUser).toString());
                                         System.out.println("\nWybrano fundusz " + investment.getName() + "\nWczytano " + investment.countPrices() + " danych z okresu od " + investment.firstDate() + " do " + investment.lastDate() + ".");
 
                                         isFundFileLoaded = true;

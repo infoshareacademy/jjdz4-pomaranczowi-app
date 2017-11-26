@@ -16,7 +16,7 @@ class DateFromUser {
     @Setter @Getter private LocalDate endDate;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static Logger logger = LoggerFactory.getLogger(Currency.class);
+    private static Logger logger = LoggerFactory.getLogger(Quotation.class);
 
     LocalDate askForStartDate() {
 

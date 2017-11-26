@@ -67,10 +67,6 @@ class Quotation {
         }
     }
 
-    String getName() {
-        return getPrices().get(1).getName();
-    }
-
     Integer countPrices() {
         return getPrices().size();
     }

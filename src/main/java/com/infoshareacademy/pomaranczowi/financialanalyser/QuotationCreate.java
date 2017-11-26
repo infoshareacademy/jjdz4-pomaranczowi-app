@@ -32,7 +32,6 @@ class QuotationCreate {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 String data[] = scanner.nextLine().split(",");
-                String name = data[0];
                 LocalDate date = LocalDate.parse(data[1], formatter);
                 BigDecimal open = new BigDecimal(data[2]);
                 BigDecimal high = new BigDecimal(data[3]);
@@ -41,7 +40,6 @@ class QuotationCreate {
                 BigDecimal volume = new BigDecimal(data[6]);
 
                 Price price = new Price();
-                price.setName(name);
                 price.setDate(date);
                 price.setOpen(open);
                 price.setHigh(high);
@@ -51,7 +49,7 @@ class QuotationCreate {
                 quotations.add(price);
             }
             logger.info("Wczytano poprawnie dane wybranego funduszu inwestycyjnego: \n- kod funduszu: "
-                    + quotations.get(0).getName() + "," + "\n- ścieżka pliku: " + filepath + ".");
+                    + "," + "\n- ścieżka pliku: " + filepath + ".");
             scanner.close();
         } catch (Exception e) {
             System.out.println("Wystąpił problem z pobraniem wartości funduszu z pliku.");

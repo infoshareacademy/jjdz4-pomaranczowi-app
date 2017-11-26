@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Data
 class Price {
 
-    private String name;
     private LocalDate date;
     private BigDecimal open;
     private BigDecimal high;

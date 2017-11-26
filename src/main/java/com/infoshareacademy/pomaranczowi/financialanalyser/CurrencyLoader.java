@@ -33,8 +33,7 @@ class CurrencyLoader {
                 Matcher matcher = pattern.matcher(fileScanner.nextLine());
                 if (matcher.matches()) {
                     Price price = new Price();
-
-                    price.setName(matcher.group(1));
+                    currency.setName(matcher.group(1));
                     price.setDate(LocalDate.parse(matcher.group(2), formatter));
                     price.setOpen(new BigDecimal(matcher.group(3)));
                     price.setHigh(new BigDecimal(matcher.group(4)));
