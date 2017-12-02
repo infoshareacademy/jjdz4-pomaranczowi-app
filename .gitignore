@@ -3,6 +3,7 @@
 target/
 out/
 log/
+data/
 *.jar
 *.war
 pom.xml.tag

@@ -1,5 +1,8 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -12,30 +15,34 @@ class Simplify {
     private static HashSet<Integer> month = new HashSet<>();
 
     private static Integer yearSelected;
+    private static String yearSelectedAsString;
     private static ArrayList<Weeks> week = new ArrayList<>();
 
     static void periodYear(Quotation quotation) {
+        Logger logger = LoggerFactory.getLogger(Actions_backup.class.getName());
         System.out.println("\nDostępne są notowania z poniższych lat.\n" +
                 "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
         getYear(quotation);
         System.out.println(year);
 
         boolean dataOk = false;
-
         while (!dataOk) {
             try {
                 Scanner scanner = new Scanner(System.in);
-                yearSelected = scanner.nextInt();
+                yearSelectedAsString = scanner.nextLine();
+                yearSelected = Integer.parseInt(yearSelectedAsString);
                 if (year.contains(yearSelected)) {
                     dataOk = true;
                 } else {
                     System.out.println("Wprowadzony rok nie jest jednym z listy\n" +
                             "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
+                    logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - chce upraszczac dane z roku "+ yearSelectedAsString +", lecz brak notowań z tego roku");
                     System.out.println(year);
                 }
-            } catch (InputMismatchException exception) {
+            } catch (NumberFormatException e) {
                 System.out.println("Wprowadź proszę rok w formacie 4 cyfr z poniższej listy");
                 System.out.println(year);
+                logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - upraszczając dane wskazuje rok: "+ yearSelectedAsString + ", - nie jest to rok poprawny");
             }
         }
         LocalDate date = LocalDate.of(yearSelected, 1, 1);
@@ -53,7 +60,10 @@ class Simplify {
                 dataOk = true;
             } else if (answer.equals("N")) {
                 dataOk = true;
-            } else System.out.println("Wprowadź odpowiedź T lub N");
+            } else {
+                System.out.println("Wprowadź odpowiedź T lub N");
+                logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - na pytanie czy chce otrzymac dane uproszczone dla m-cy podaje odpowiedź: "+ answer +" (spodziewane T/N)");
+            }
         }
     }
 
