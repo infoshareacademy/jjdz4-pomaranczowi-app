@@ -1,10 +1,12 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import java.time.LocalDate;
 
 class Actions {
     static void init(Quotation quotation) {
-
+        Logger logger = LoggerFactory.getLogger(Actions.class.getName());
         Menu actionsMenu = new Menu("Co chcesz zrobić?");
         actionsMenu.add("Ekstrema globalne");
         actionsMenu.add("Ekstrema lokalne");
@@ -45,7 +47,8 @@ class Actions {
                         }
 
                         if (!areChoosenDatesCorrect) System.out.println("Brak notowań pomiędzy podanymi datami!");
-
+                        logger.info("Brak notowań pomiędzy podanymi datami! (FUN/WAL: "+ quotation.getName()+
+                                ", OD:"+localExt.getStartDate() +" DO:"+localExt.getEndDate() +")");
                     }
 
                     dateFromUser.setEndDate(dateFromUser.getEndDate());

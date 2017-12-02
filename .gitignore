@@ -2,7 +2,6 @@
 *.iml
 target/
 out/
-data/
 log/
 *.jar
 *.war
