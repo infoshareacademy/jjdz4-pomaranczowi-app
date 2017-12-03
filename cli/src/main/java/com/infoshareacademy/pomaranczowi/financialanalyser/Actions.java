@@ -1,13 +1,17 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 
+
+@Slf4j
+
 class Actions {
     static void init(Quotation quotation) {
-        Logger logger = LoggerFactory.getLogger(Actions_backup.class.getName());
+
         Menu actionsMenu = new Menu("Co chcesz zrobić?");
         actionsMenu.add("Ekstrema globalne");
         actionsMenu.add("Ekstrema lokalne");
@@ -48,7 +52,7 @@ class Actions {
                         }
                         if (!areChoosenDatesCorrect) {
                             System.out.println("Brak notowań pomiędzy podanymi datami!");
-                            logger.info("Użytkownik zarządał danych ekstremów lokalnch dla (FUN/WAL: "+ quotation.getName()+
+                            log.info("Użytkownik zarządał danych ekstremów lokalnch dla (FUN/WAL: "+ quotation.getName()+
                                     ", w przedziale OD:"+localExt.getStartDate() +" DO:"+localExt.getEndDate() +") - Brak notowań pomiędzy podanymi datami");
                         }
                     }
@@ -70,7 +74,7 @@ class Actions {
                         date = dateFromUser.askForStartDate();
                         if(!quotation.containsDate(date)){
                             System.out.println("Brak wartości dla dnia: "+date);
-                            logger.info("Użytkownik zarządał danych z wybranego dnia dla (FUN/WAL: "+ quotation.getName()+
+                            log.info("Użytkownik zarządał danych z wybranego dnia dla (FUN/WAL: "+ quotation.getName()+
                                     ", dzień:"+date +") - Brak notowań dla wybranej daty");
                         }
                     } while (!quotation.containsDate(date));

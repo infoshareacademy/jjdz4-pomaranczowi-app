@@ -1,5 +1,6 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,6 +9,8 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+
+@Slf4j
 
 class Simplify {
 
@@ -21,7 +24,6 @@ class Simplify {
     private static ArrayList<Weeks> week = new ArrayList<>();
 
     static void periodYear(Quotation quotation) {
-        Logger logger = LoggerFactory.getLogger(Actions_backup.class.getName());
         System.out.println("\nDostępne są notowania z poniższych lat.\n" +
                 "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
         getYear(quotation);
@@ -38,13 +40,13 @@ class Simplify {
                 } else {
                     System.out.println("Wprowadzony rok nie jest jednym z listy\n" +
                             "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
-                    logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - chce upraszczac dane z roku "+ yearSelectedAsString +", lecz brak notowań z tego roku");
+                    log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - chce upraszczac dane z roku "+ yearSelectedAsString +", lecz brak notowań z tego roku");
                     System.out.println(year);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Wprowadź proszę rok w formacie 4 cyfr z poniższej listy");
                 System.out.println(year);
-                logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - upraszczając dane wskazuje rok: "+ yearSelectedAsString + ", - nie jest to rok poprawny");
+                log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - upraszczając dane wskazuje rok: "+ yearSelectedAsString + ", - nie jest to rok poprawny");
             }
         }
         LocalDate date = LocalDate.of(yearSelected, 1, 1);
@@ -64,13 +66,12 @@ class Simplify {
                 dataOk = true;
             } else {
                 System.out.println("Wprowadź odpowiedź T lub N");
-                logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - na pytanie czy chce otrzymac dane uproszczone dla m-cy podaje odpowiedź: "+ answer +" (spodziewane T/N)");
+                log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - na pytanie czy chce otrzymac dane uproszczone dla m-cy podaje odpowiedź: "+ answer +" (spodziewane T/N)");
             }
         }
     }
 
     private static void periodMonth(Quotation quotation, Integer yearSelected) {
-        Logger logger = LoggerFactory.getLogger(Actions_backup.class.getName());
         boolean dataOk = false;
         getMonthsForYear(quotation, yearSelected);
         for (int i : month) {
@@ -105,7 +106,7 @@ class Simplify {
                     } catch (NumberFormatException e) {
                         System.out.println("Wprowadź proszę miesiąc w formacie cyfry z poniższej listy");
                         System.out.println(month);
-                        logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - upraszczając dane wskazuje miesiąc: "+ monthSelectedAsString + ", - nie jest to miesiąc poprawny");
+                        log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - upraszczając dane wskazuje miesiąc: "+ monthSelectedAsString + ", - nie jest to miesiąc poprawny");
                     }
                 }
                 dataOk = true;
@@ -113,7 +114,7 @@ class Simplify {
                 dataOk = true;
             } else {
                 System.out.println("Wprowadź odpowiedź T lub N");
-                logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - na pytanie czy chce otrzymac dane uproszczone dla tygodni podaje odpowiedź: "+ answer +" (spodziewane T/N)");
+                log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - na pytanie czy chce otrzymac dane uproszczone dla tygodni podaje odpowiedź: "+ answer +" (spodziewane T/N)");
             }
         }
     }
