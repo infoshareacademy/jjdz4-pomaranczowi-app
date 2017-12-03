@@ -1,5 +1,6 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-class DateFromUser {
+public class DateFromUser {
 
     @Setter @Getter private LocalDate startDate;
     @Setter @Getter private LocalDate endDate;
@@ -18,7 +19,7 @@ class DateFromUser {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static Logger logger = LoggerFactory.getLogger(Quotation.class);
 
-    LocalDate askForStartDate() {
+    public LocalDate askForStartDate() {
 
         boolean isDataOk = false;
 

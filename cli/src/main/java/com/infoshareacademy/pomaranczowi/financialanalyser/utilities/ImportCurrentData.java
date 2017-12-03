@@ -1,4 +1,4 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.utilities;
 
 import com.google.gson.Gson;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-class ImportCurrentData {
+public class ImportCurrentData {
 
     @Getter
     private static String dataDirectoryDestination = "";
@@ -20,7 +20,7 @@ class ImportCurrentData {
     private static String fundListDestination = "";
     private static Logger logger = LoggerFactory.getLogger(ImportCurrentData.class.getName());
 
-    static void downloadFileFromURL() {
+    public static void downloadFileFromURL() {
         try {
             ReadJsonConfig readJsonConfig = readJsonConfigFile();
             setFilesDestinationVariables(readJsonConfig);

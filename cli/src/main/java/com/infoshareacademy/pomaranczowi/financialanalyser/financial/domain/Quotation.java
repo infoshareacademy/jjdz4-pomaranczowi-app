@@ -1,5 +1,6 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.exceptions.NoSuchDateException;
 import lombok.Getter;
 import lombok.Setter;
 import java.math.BigDecimal;
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class Quotation {
+public class Quotation {
 
     private List<Price> prices = new ArrayList<>();
     @Setter @Getter private String name;
@@ -55,7 +56,7 @@ class Quotation {
                 findFirst().orElseThrow(NoSuchDateException::new).getVolume();
     }
 
-    LocalDate firstDate() {
+    public LocalDate firstDate() {
         try {
             return getPrices().get(0).getDate();
         } catch (IndexOutOfBoundsException exception) {
@@ -63,7 +64,7 @@ class Quotation {
         }
     }
 
-    LocalDate lastDate() {
+    public LocalDate lastDate() {
 
         try {
             return getPrices().get(getPrices().size() - 1).getDate();
@@ -72,11 +73,11 @@ class Quotation {
         }
     }
 
-    Integer countPrices() {
+    public Integer countPrices() {
         return getPrices().size();
     }
 
-    List<Price> getPrices() {
+    public List<Price> getPrices() {
 
         return prices;
     }

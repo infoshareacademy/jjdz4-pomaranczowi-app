@@ -1,4 +1,4 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.utilities;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations;
 
 import lombok.Getter;
 import lombok.Setter;

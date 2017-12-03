@@ -1,12 +1,15 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Extremes;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Price;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-class LocalExt {
+public class LocalExt {
 
     @Setter @Getter private LocalDate startDate;
     @Setter @Getter private LocalDate endDate;

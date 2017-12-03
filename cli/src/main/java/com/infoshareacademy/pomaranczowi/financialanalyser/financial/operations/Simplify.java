@@ -1,4 +1,7 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations;
+
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Price;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -6,7 +9,7 @@ import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
-class Simplify {
+public class Simplify {
 
     private static HashSet<Integer> year = new HashSet<>();
     private static HashSet<Integer> month = new HashSet<>();

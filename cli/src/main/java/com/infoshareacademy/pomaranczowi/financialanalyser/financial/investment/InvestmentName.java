@@ -1,5 +1,6 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.investment;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.menu.Menu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,14 +12,14 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class InvestmentName {
+public class InvestmentName {
 
-    Menu investmentNameMenu = new Menu("Fundusze inwestycyjne");
-    Map fundCodeName = new TreeMap();
-    Map fundCodePath = new TreeMap();
+    public Menu investmentNameMenu = new Menu("Fundusze inwestycyjne");
+    public Map fundCodeName = new TreeMap();
+    public Map fundCodePath = new TreeMap();
     Logger logger = LoggerFactory.getLogger(InvestmentName.class.getName());
 
-    void loadInvestmentNameFromFile(String filepath) {
+    public void loadInvestmentNameFromFile(String filepath) {
         File file = new File(filepath);
         Scanner fileScanner = null;
         try {

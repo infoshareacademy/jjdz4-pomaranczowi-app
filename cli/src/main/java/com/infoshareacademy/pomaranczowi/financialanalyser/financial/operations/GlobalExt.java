@@ -1,12 +1,16 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations;
+
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Extremes;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Price;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-class GlobalExt {
+public class GlobalExt {
 
     
-    static void ShowAll(Quotation quotation) {
+    public static void ShowAll(Quotation quotation) {
 
         Extremes maxOpen = GlobalExt.getMaxOpen(quotation);
         System.out.println("\nMaksymalna wartość OPEN to: "+

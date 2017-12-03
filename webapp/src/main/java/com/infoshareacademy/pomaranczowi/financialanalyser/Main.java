@@ -5,6 +5,10 @@ Prawdopodobnie później zostanie usunięty z projektu
 
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.investment.InvestmentLoader;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.investment.InvestmentName;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world");

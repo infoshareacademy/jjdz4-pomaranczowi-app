@@ -1,4 +1,7 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.currency;
+
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Price;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,17 +12,17 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class CurrencyLoader {
+public class CurrencyLoader {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-    static String getCurrencyCodeFromUser() {
+    public static String getCurrencyCodeFromUser() {
         System.out.println("Podaj kod waluty (np. USD, EUR): ");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
 
-    static Quotation load(String currencyCode) throws FileNotFoundException {
+    public static Quotation load(String currencyCode) throws FileNotFoundException {
 
         Quotation currency = new Quotation();
         File file = new File("cli/data/currency/" + currencyCode + ".txt");

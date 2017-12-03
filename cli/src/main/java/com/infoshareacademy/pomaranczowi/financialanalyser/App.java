@@ -1,5 +1,14 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.currency.CurrencyLoader;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.investment.InvestmentLoader;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.investment.InvestmentName;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
+import com.infoshareacademy.pomaranczowi.financialanalyser.menu.Actions;
+import com.infoshareacademy.pomaranczowi.financialanalyser.menu.Menu;
+import com.infoshareacademy.pomaranczowi.financialanalyser.utilities.ImportCurrentData;
+import com.infoshareacademy.pomaranczowi.financialanalyser.utilities.LoggerFileNameInit;
+
 import java.io.FileNotFoundException;
 
 public class App {

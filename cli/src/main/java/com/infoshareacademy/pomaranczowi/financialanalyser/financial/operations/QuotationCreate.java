@@ -1,5 +1,6 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Price;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,22 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class QuotationCreate {
+public class QuotationCreate {
 
     private static final String DATE_FORMAT = "yyyyMMdd";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
     private List<Price> quotations = new ArrayList<>();
     private Logger logger = LoggerFactory.getLogger(QuotationCreate.class.getName());
 
-    int getNumberOfQuotations() {
+    public int getNumberOfQuotations() {
         return quotations.size();
     }
 
-    Price getQuotation(int i) {
+    public Price getQuotation(int i) {
         return quotations.get(i);
     }
 
-    void loadDataFromFile(String filepath) {
+    public void loadDataFromFile(String filepath) {
         try {
             Scanner scanner = new Scanner(new FileReader(filepath));
             scanner.nextLine();

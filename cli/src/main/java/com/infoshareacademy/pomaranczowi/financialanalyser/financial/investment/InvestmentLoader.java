@@ -1,22 +1,22 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.financial.investment;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.QuotationCreate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-class InvestmentLoader {
+public class InvestmentLoader {
     private static Logger logger = LoggerFactory.getLogger(QuotationCreate.class.getName());
 
-    static String getinvestmentFundCodeFromUser() {
+    public static String getinvestmentFundCodeFromUser() {
         System.out.println("Podaj kod funduszu:");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
 
-    static Quotation load(String filePath) {
+    public static Quotation load(String filePath) {
 
         Quotation investment = new Quotation();
 

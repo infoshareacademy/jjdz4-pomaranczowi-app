@@ -1,9 +1,16 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.menu;
+
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Price;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.DateFromUser;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.LocalExt;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.GlobalExt;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.Simplify;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 
 import java.time.LocalDate;
 
-class Actions {
-    static void init(Quotation quotation) {
+public class Actions {
+    public static void init(Quotation quotation) {
 
         Menu actionsMenu = new Menu("Co chcesz zrobić?");
         actionsMenu.add("Ekstrema globalne");

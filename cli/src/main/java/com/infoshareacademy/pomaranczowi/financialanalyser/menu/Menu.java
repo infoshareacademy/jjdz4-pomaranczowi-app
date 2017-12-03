@@ -1,4 +1,4 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.menu;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,22 +6,22 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
- class Menu {
+ public class Menu {
 
     private ArrayList<MenuPosition> menuPositions = new ArrayList<>();
     private String title;
     private boolean exit = false;
 
-     Menu(String title) {
+     public Menu(String title) {
         this.title = title;
     }
 
-     void add(String label) {
+     public void add(String label) {
         menuPositions.add(new MenuPosition(menuPositions.size(),label));
     }
 
     //menu initialization
-     int Init() {
+     public int Init() {
         System.out.println("\n"+title+"\n");
         for (MenuPosition menuPosition : menuPositions) {
             menuPosition.show();
@@ -52,7 +52,7 @@ import java.util.Scanner;
     }
 
     //used with while loop to allow user exit from a menu
-     boolean wantExit() {
+     public boolean wantExit() {
         if (exit) {
             exit = false;
             return true;
@@ -61,16 +61,16 @@ import java.util.Scanner;
         }
     }
 
-     boolean isExitSet() {
+     public boolean isExitSet() {
         return exit;
     }
 
     //gives an information that user wants to exit a menu
-     void exit() {
+     public void exit() {
         exit = true;
     }
 
-     static void waitAndContinue() {
+     public static void waitAndContinue() {
         System.out.println("\nNaciśnij klawisz ENTER aby kontynować...");
 
         try
