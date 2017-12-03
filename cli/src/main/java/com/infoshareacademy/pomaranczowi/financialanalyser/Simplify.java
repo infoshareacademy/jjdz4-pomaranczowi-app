@@ -1,10 +1,16 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+
+@Slf4j
 
 class Simplify {
 
@@ -12,6 +18,9 @@ class Simplify {
     private static HashSet<Integer> month = new HashSet<>();
 
     private static Integer yearSelected;
+    private static String yearSelectedAsString;
+    private static Integer monthSelected;
+    private static String monthSelectedAsString;
     private static ArrayList<Weeks> week = new ArrayList<>();
 
     static void periodYear(Quotation quotation) {
@@ -21,21 +30,23 @@ class Simplify {
         System.out.println(year);
 
         boolean dataOk = false;
-
         while (!dataOk) {
             try {
                 Scanner scanner = new Scanner(System.in);
-                yearSelected = scanner.nextInt();
+                yearSelectedAsString = scanner.nextLine();
+                yearSelected = Integer.parseInt(yearSelectedAsString);
                 if (year.contains(yearSelected)) {
                     dataOk = true;
                 } else {
                     System.out.println("Wprowadzony rok nie jest jednym z listy\n" +
                             "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
+                    log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - chce upraszczac dane z roku "+ yearSelectedAsString +", lecz brak notowań z tego roku");
                     System.out.println(year);
                 }
-            } catch (InputMismatchException exception) {
+            } catch (NumberFormatException e) {
                 System.out.println("Wprowadź proszę rok w formacie 4 cyfr z poniższej listy");
                 System.out.println(year);
+                log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - upraszczając dane wskazuje rok: "+ yearSelectedAsString + ", - nie jest to rok poprawny");
             }
         }
         LocalDate date = LocalDate.of(yearSelected, 1, 1);
@@ -53,7 +64,10 @@ class Simplify {
                 dataOk = true;
             } else if (answer.equals("N")) {
                 dataOk = true;
-            } else System.out.println("Wprowadź odpowiedź T lub N");
+            } else {
+                System.out.println("Wprowadź odpowiedź T lub N");
+                log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - na pytanie czy chce otrzymac dane uproszczone dla m-cy podaje odpowiedź: "+ answer +" (spodziewane T/N)");
+            }
         }
     }
 
@@ -79,7 +93,8 @@ class Simplify {
                 while (!data1Ok) {
                     try {
                         Scanner scanner1 = new Scanner(System.in);
-                        Integer monthSelected = scanner1.nextInt();
+                        monthSelectedAsString = scanner.nextLine();
+                        monthSelected = Integer.parseInt(monthSelectedAsString);
                         if (month.contains(monthSelected)) {
                             data1Ok = true;
                             periodWeek(quotation, yearSelected, monthSelected);
@@ -88,15 +103,19 @@ class Simplify {
                                     "Wybierz jeden z poniższych miesięcy dla którego chcesz otrzymać dane:");
                             System.out.println(month);
                         }
-                    } catch (InputMismatchException exception) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Wprowadź proszę miesiąc w formacie cyfry z poniższej listy");
                         System.out.println(month);
+                        log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - upraszczając dane wskazuje miesiąc: "+ monthSelectedAsString + ", - nie jest to miesiąc poprawny");
                     }
                 }
                 dataOk = true;
             } else if (answer.equals("N")) {
                 dataOk = true;
-            } else System.out.println("Wprowadź odpowiedź T lub N");
+            } else {
+                System.out.println("Wprowadź odpowiedź T lub N");
+                log.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - na pytanie czy chce otrzymac dane uproszczone dla tygodni podaje odpowiedź: "+ answer +" (spodziewane T/N)");
+            }
         }
     }
 
