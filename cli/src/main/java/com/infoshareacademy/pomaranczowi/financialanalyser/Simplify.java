@@ -16,6 +16,8 @@ class Simplify {
 
     private static Integer yearSelected;
     private static String yearSelectedAsString;
+    private static Integer monthSelected;
+    private static String monthSelectedAsString;
     private static ArrayList<Weeks> week = new ArrayList<>();
 
     static void periodYear(Quotation quotation) {
@@ -68,6 +70,7 @@ class Simplify {
     }
 
     private static void periodMonth(Quotation quotation, Integer yearSelected) {
+        Logger logger = LoggerFactory.getLogger(Actions_backup.class.getName());
         boolean dataOk = false;
         getMonthsForYear(quotation, yearSelected);
         for (int i : month) {
@@ -89,7 +92,8 @@ class Simplify {
                 while (!data1Ok) {
                     try {
                         Scanner scanner1 = new Scanner(System.in);
-                        Integer monthSelected = scanner1.nextInt();
+                        monthSelectedAsString = scanner.nextLine();
+                        monthSelected = Integer.parseInt(monthSelectedAsString);
                         if (month.contains(monthSelected)) {
                             data1Ok = true;
                             periodWeek(quotation, yearSelected, monthSelected);
@@ -98,15 +102,19 @@ class Simplify {
                                     "Wybierz jeden z poniższych miesięcy dla którego chcesz otrzymać dane:");
                             System.out.println(month);
                         }
-                    } catch (InputMismatchException exception) {
+                    } catch (NumberFormatException e) {
                         System.out.println("Wprowadź proszę miesiąc w formacie cyfry z poniższej listy");
                         System.out.println(month);
+                        logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - upraszczając dane wskazuje miesiąc: "+ monthSelectedAsString + ", - nie jest to miesiąc poprawny");
                     }
                 }
                 dataOk = true;
             } else if (answer.equals("N")) {
                 dataOk = true;
-            } else System.out.println("Wprowadź odpowiedź T lub N");
+            } else {
+                System.out.println("Wprowadź odpowiedź T lub N");
+                logger.info("Użytkownik upraszcza dane (FUN/WAL: "+quotation.getName()+") - na pytanie czy chce otrzymac dane uproszczone dla tygodni podaje odpowiedź: "+ answer +" (spodziewane T/N)");
+            }
         }
     }
 
