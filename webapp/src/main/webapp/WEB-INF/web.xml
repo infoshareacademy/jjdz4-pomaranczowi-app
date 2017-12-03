@@ -5,22 +5,14 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
-  <servlet>
-    <servlet-name>HelloServlet</servlet-name>
-    <servlet-class>com.infoshareacademy.pomaranczowi.financialanalyser.servlets.HelloServlet</servlet-class>
-  </servlet>
     <servlet>
-        <servlet-name>HelloPost</servlet-name>
+        <servlet-name>HomePageServlet</servlet-name>
         <servlet-class>com.infoshareacademy.pomaranczowi.financialanalyser.servlets.HomePageServlet</servlet-class>
     </servlet>
 
-  <servlet-mapping>
-    <servlet-name>HelloServlet</servlet-name>
-    <url-pattern>/hello</url-pattern>
-  </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>HelloPost</servlet-name>
-        <url-pattern>/post</url-pattern>
+        <servlet-name>HomePageServlet</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
 </web-app>
