@@ -17,7 +17,7 @@ public class Simplify {
     private static Integer yearSelected;
     private static ArrayList<Weeks> week = new ArrayList<>();
 
-    static void periodYear(Quotation quotation) {
+    public static void periodYear(Quotation quotation) {
         System.out.println("\nDostępne są notowania z poniższych lat.\n" +
                 "Wybierz z poniższego zestawu rok z którego chcesz otrzymać dane:");
         getYear(quotation);

@@ -38,7 +38,7 @@ public class DateFromUser {
         return startDate;
     }
 
-    LocalDate askForEndDate() {
+    public LocalDate askForEndDate() {
 
         boolean isDataOk = false;
 

@@ -13,7 +13,7 @@ public class Quotation {
     private List<Price> prices = new ArrayList<>();
     @Setter @Getter private String name;
 
-    static void showAll(Quotation quotation, LocalDate date) {
+    public static void showAll(Quotation quotation, LocalDate date) {
         try {
             System.out.println("\nDla dnia " + date + " wartość OPEN wynosi: " + quotation.getOpen(date));
             System.out.println("Dla dnia " + date + " wartość LOW wynosi: " + quotation.getLow(date));
@@ -82,7 +82,7 @@ public class Quotation {
         return prices;
     }
 
-    boolean containsDate(LocalDate date) {
+    public boolean containsDate(LocalDate date) {
 
         return getPrices().parallelStream().anyMatch(x -> x.getDate().equals(date));
     }

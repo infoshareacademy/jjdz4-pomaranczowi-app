@@ -14,7 +14,7 @@ public class LocalExt {
     @Setter @Getter private LocalDate startDate;
     @Setter @Getter private LocalDate endDate;
 
-    void ShowAll(Quotation quotation) {
+    public void ShowAll(Quotation quotation) {
 
         System.out.println("\nMaksymalna wartość OPEN to: " +
                 getMaxOpen(quotation).getValue() +
