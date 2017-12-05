@@ -2,8 +2,8 @@
 *.iml
 target/
 out/
-data/
 log/
+data/
 *.jar
 *.war
 pom.xml.tag

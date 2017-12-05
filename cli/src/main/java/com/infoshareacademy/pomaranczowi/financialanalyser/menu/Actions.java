@@ -7,7 +7,13 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.Simplify;
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
+
+@Slf4j
 
 public class Actions {
     public static void init(Quotation quotation) {
@@ -44,15 +50,17 @@ public class Actions {
                             if ((price.getDate().isAfter(localExt.getStartDate()) ||
                                     price.getDate().isEqual(localExt.getStartDate())) &&
                                     (price.getDate().isBefore(localExt.getEndDate()) ||
-                                    price.getDate().isEqual(localExt.getEndDate()))) {
-                                
+                                            price.getDate().isEqual(localExt.getEndDate()))) {
+
                                 areChoosenDatesCorrect = true;
                                 break;
                             }
                         }
-
-                        if (!areChoosenDatesCorrect) System.out.println("Brak notowań pomiędzy podanymi datami!");
-
+                        if (!areChoosenDatesCorrect) {
+                            System.out.println("Brak notowań pomiędzy podanymi datami!");
+                            log.info("Użytkownik zarządał danych ekstremów lokalnch dla (FUN/WAL: "+ quotation.getName()+
+                                    ", w przedziale OD:"+localExt.getStartDate() +" DO:"+localExt.getEndDate() +") - Brak notowań pomiędzy podanymi datami");
+                        }
                     }
 
                     dateFromUser.setEndDate(dateFromUser.getEndDate());
@@ -70,6 +78,11 @@ public class Actions {
                     LocalDate date;
                     do {
                         date = dateFromUser.askForStartDate();
+                        if(!quotation.containsDate(date)){
+                            System.out.println("Brak wartości dla dnia: "+date);
+                            log.info("Użytkownik zarządał danych z wybranego dnia dla (FUN/WAL: "+ quotation.getName()+
+                                    ", dzień:"+date +") - Brak notowań dla wybranej daty");
+                        }
                     } while (!quotation.containsDate(date));
                     Quotation.showAll(quotation, dateFromUser.getStartDate());
 
