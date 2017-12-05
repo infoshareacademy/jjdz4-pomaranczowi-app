@@ -1,7 +1,0 @@
-{
-  "url": "http://bossa.pl/pub/fundinwest/omega/omegafun.zip",
-  "zipDestination": "data/stock_data.zip",
-  "dataDirectoryDestination": "data/stock_data/",
-  "fundListURL": "http://bossa.pl/pub/fundinwest/omega/omegafun.lst",
-  "fundListDestination": "data/omegafun.lst"
-}

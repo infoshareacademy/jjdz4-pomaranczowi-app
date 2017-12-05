@@ -2,6 +2,10 @@
 *.iml
 target/
 out/
+data/
+log/
+*.jar
+*.war
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.next
