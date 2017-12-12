@@ -1,12 +1,19 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.utilities;
 
+import org.apache.commons.io.FileUtils;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -15,32 +22,44 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ImportCurrentDataTest {
 
-    @Mock
-    FileReader fileReader = new FileReader("cli/config.json");
-
-    public ImportCurrentDataTest() throws FileNotFoundException {
-    }
-
     @Test
     public void downloadFileFromURL() {
     }
 
     @Test
-    public void getDataDirectoryDestination() {
+    public void getDataDirectoryDestinationTest() {
         //given
-        try {
-            when(new FileReader("cli/config")).thenReturn(fileReader);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        ReadJsonConfig readJsonConfig = ImportCurrentData.readJsonConfigFile("config.json");
         //when
-        ImportCurrentData.downloadFileFromURL();
         String dataDestination = ImportCurrentData.getDataDirectoryDestination();
         //then
         assertThat(dataDestination).isEqualTo("cli/data/stock_data/");
     }
 
     @Test
-    public void getFundListDestination() {
+    public void getFundListDestinationTest() {
+        //given
+        ReadJsonConfig readJsonConfig = ImportCurrentData.readJsonConfigFile("config.json");
+        //when
+        String dataDestination = ImportCurrentData.getFundListDestination();
+        //then
+        assertThat(dataDestination).isEqualTo("cli/data/omegafun.lst");
+    }
+
+    @Test
+    public void readJsonConfigFile() {
+    }
+
+    @Test
+    public void extractAllFromZipFileTest() throws IOException {
+        //given
+        String source = "data/stock_data.zip";
+        String destination = "data/stock_data/";
+        File directory = new File(destination);
+        //when
+        FileUtils.deleteDirectory(directory);
+        ImportCurrentData.extractAllFromZipFile(source, destination);
+        //then
+        assertThat(directory).exists();
     }
 }
