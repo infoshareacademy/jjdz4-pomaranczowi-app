@@ -1,30 +1,27 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.utilities;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 
-@RunWith(MockitoJUnitRunner.class)
 public class ImportCurrentDataTest {
 
-    @Test
-    public void downloadFileFromURL() {
-    }
+/*    @Test
+    public void downloadFileFromURLIT() throws IOException {
+        //given
+        ReadJsonConfig readJsonConfig = ImportCurrentData.readJsonConfigFile("config.json");
+        new File("cli/").mkdir();
+        //when
+        ImportCurrentData.downloadFileFromURL(readJsonConfig);
+        //then
+        assertThat(new File("cli/data/stock_data/")).exists();
+        FileUtils.deleteDirectory(new File("cli"));
+    }*/
 
     @Test
     public void getDataDirectoryDestinationTest() {
@@ -47,7 +44,53 @@ public class ImportCurrentDataTest {
     }
 
     @Test
-    public void readJsonConfigFile() {
+    public void readJsonConfigFileTest_dataDirectoryDestinaation() {
+        //given
+        String path = "config.json";
+        //when
+        ReadJsonConfig readJsonConfig = ImportCurrentData.readJsonConfigFile(path);
+        //then
+        assertThat(readJsonConfig.getDataDirectoryDestination()).isEqualTo("cli/data/stock_data/");
+    }
+
+    @Test
+    public void readJsonConfigFileTest_fundListDestinaation() {
+        //given
+        String path = "config.json";
+        //when
+        ReadJsonConfig readJsonConfig = ImportCurrentData.readJsonConfigFile(path);
+        //then
+        assertThat(readJsonConfig.getFundListDestination()).isEqualTo("cli/data/omegafun.lst");
+    }
+
+    @Test
+    public void readJsonConfigFileTest_fundListURL() {
+        //given
+        String path = "config.json";
+        //when
+        ReadJsonConfig readJsonConfig = ImportCurrentData.readJsonConfigFile(path);
+        //then
+        assertThat(readJsonConfig.getFundListURL()).isEqualTo("http://bossa.pl/pub/fundinwest/omega/omegafun.lst");
+    }
+
+    @Test
+    public void readJsonConfigFileTest_URL() {
+        //given
+        String path = "config.json";
+        //when
+        ReadJsonConfig readJsonConfig = ImportCurrentData.readJsonConfigFile(path);
+        //then
+        assertThat(readJsonConfig.getUrl()).isEqualTo("http://bossa.pl/pub/fundinwest/omega/omegafun.zip");
+    }
+
+    @Test
+    public void readJsonConfigFileTest_zipDestination() {
+        //given
+        String path = "config.json";
+        //when
+        ReadJsonConfig readJsonConfig = ImportCurrentData.readJsonConfigFile(path);
+        //then
+        assertThat(readJsonConfig.getZipDestination()).isEqualTo("cli/data/stock_data.zip");
     }
 
     @Test
