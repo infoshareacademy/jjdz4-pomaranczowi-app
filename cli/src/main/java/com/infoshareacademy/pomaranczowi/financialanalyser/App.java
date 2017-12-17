@@ -45,7 +45,7 @@ public class App {
                                 break;
                             case 1:
                                 System.out.println("\nWybrano wczytywanie z internetu");
-                                ImportCurrentData.downloadFileFromURL();
+                                ImportCurrentData.downloadFileFromURL(ImportCurrentData.readJsonConfigFile("cli/config.json"));
                                 investmentName.loadInvestmentNameFromFile(ImportCurrentData.getFundListDestination());
                                 investmentsDirectoryPath = ImportCurrentData.getDataDirectoryDestination();
 

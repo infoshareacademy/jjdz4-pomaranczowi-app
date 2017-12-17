@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Paths;
 
 public class ImportCurrentData {
 
@@ -21,10 +22,9 @@ public class ImportCurrentData {
     private static String fundListDestination = "";
     private static Logger logger = LoggerFactory.getLogger(ImportCurrentData.class.getName());
 
-    public static void downloadFileFromURL() {
+    public static void downloadFileFromURL(ReadJsonConfig readJsonConfig) {
         try {
-            ReadJsonConfig readJsonConfig = readJsonConfigFile();
-            setFilesDestinationVariables(readJsonConfig);
+            createDataDirectoryIfNotExists();
             downloadData(readJsonConfig.getFundListURL(), readJsonConfig.getFundListDestination());
             System.out.println("Rozpoczęto pobieranie aktualnych danych, proszę czekać.");
             downloadData(readJsonConfig.getUrl(), readJsonConfig.getZipDestination());
@@ -44,12 +44,25 @@ public class ImportCurrentData {
         }
     }
 
-    private static ReadJsonConfig readJsonConfigFile() throws FileNotFoundException {
-        FileReader fileReader = new FileReader("cli/config.json");
+    private static void createDataDirectoryIfNotExists() {
+        File directory = new File("cli/", "data");
+        if (!directory.exists()) {
+            new File("cli/data").mkdir();
+        }
+    }
+
+    public static ReadJsonConfig readJsonConfigFile(String path) {
         Gson gson = new Gson();
-        ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
-        logger.debug("Odczytano plik konfiguracyjny");
-        return readJsonConfig;
+        try {
+            FileReader fileReader = new FileReader(path);
+            ReadJsonConfig readJsonConfig = gson.fromJson(fileReader, ReadJsonConfig.class);
+            logger.debug("Odczytano plik konfiguracyjny");
+            setFilesDestinationVariables(readJsonConfig);
+            return readJsonConfig;
+        } catch (IOException e) {
+            logger.debug("Nie można odczytać pliku konfiguracyjnego");
+            return null;
+        }
     }
 
     private static void setFilesDestinationVariables(ReadJsonConfig readJsonConfig) {
@@ -73,7 +86,7 @@ public class ImportCurrentData {
         fileOutputStream.close();
     }
 
-    private static void extractAllFromZipFile(String source, String destination) {
+    public static void extractAllFromZipFile(String source, String destination) {
         try {
             ZipFile zipFile = new ZipFile(source);
             zipFile.extractAll(destination);
