@@ -8,13 +8,23 @@
   <display-name>Archetype Created Web Application</display-name>
 
     <servlet>
-        <servlet-name>HomePageServlet</servlet-name>
-        <servlet-class>com.infoshareacademy.pomaranczowi.financialanalyser.servlets.HomePageServlet</servlet-class>
+        <servlet-name>WelcomeServlet</servlet-name>
+        <jsp-file>index.jsp</jsp-file>
+    </servlet>
+
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <jsp-file>/portal/home.jsp</jsp-file>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>HomePageServlet</servlet-name>
+        <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/portal/home</url-pattern>
     </servlet-mapping>
 
     <context-param>

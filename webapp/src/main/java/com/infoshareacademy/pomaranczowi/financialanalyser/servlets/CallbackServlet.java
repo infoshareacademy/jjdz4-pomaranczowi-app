@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@WebServlet(urlPatterns = {"/callback"})
+@WebServlet(urlPatterns = "/callback")
 public class CallbackServlet extends HttpServlet {
 
     private String redirectOnSuccess;
@@ -25,7 +25,7 @@ public class CallbackServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        redirectOnSuccess = "/home";
+        redirectOnSuccess = "/portal/home";
         redirectOnFail = "/";
 
         try {
