@@ -17,7 +17,7 @@
             <div class="row">
                 <content class="col col-sm-12 col-lg-8 offset-lg-2">
                     <div class="jumbotron">
-                        <h1 class="display-3">Analizator finansowy</h1>
+                        <h1 class="display-3">Financial Analyser</h1>
                         <p class="lead">Congratulations! You're successfully logged in!</p>
                         <hr class="my-4">
                         <p>Now you can log out because there is nothing more on this page.</p>

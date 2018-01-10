@@ -38,5 +38,4 @@ public class LoginServlet extends HttpServlet {
                 .build();
         res.sendRedirect(authorizeUrl);
     }
-
 }

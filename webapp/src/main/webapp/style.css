@@ -1,6 +1,7 @@
 body {
     padding: 0;
-    background: url("background.jpg");
+    background: url("https://blog.prosper.com/wp-content/uploads/2017/12/Financial-Resolutions.jpg");
+    /* background: url("http://www.myfloridaprepaid.com/wp-content/uploads/529.jpeg"); */
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -13,8 +14,9 @@ body {
 }
 
 .jumbotron {
-    opacity: 0.9;
+    opacity: 0.8;
     position: absolute;
+    width: 100%;
     top: 50%;
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
