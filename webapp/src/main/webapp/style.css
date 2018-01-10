@@ -1,0 +1,22 @@
+body {
+    padding: 0;
+    background: url("background.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+.row {
+    display: block;
+    position: relative;
+    height: 100%;
+}
+
+.jumbotron {
+    opacity: 0.9;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
