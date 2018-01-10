@@ -1,7 +1,6 @@
 body {
     padding: 0;
-    background: url("https://blog.prosper.com/wp-content/uploads/2017/12/Financial-Resolutions.jpg");
-    /* background: url("http://www.myfloridaprepaid.com/wp-content/uploads/529.jpeg"); */
+    background-image: url(/img/background2.jpg);
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
