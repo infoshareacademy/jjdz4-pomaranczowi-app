@@ -1,5 +1,8 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 
+import com.auth0.AuthenticationController;
+import com.infoshareacademy.pomaranczowi.financialanalyser.AuthenticationControllerProvider;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
