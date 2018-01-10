@@ -24,7 +24,7 @@
                         <p>It uses utility classes for typography and spacing to space content out within the larger
                             container.</p>
                         <p class="lead">
-                            <a class="btn btn-primary btn-lg" href="#" role="button">Logowanie</a>
+                            <a class="btn btn-primary btn-lg" href="/login" role="button">Logowanie</a>
                         </p>
                     </div>
                 </content>
