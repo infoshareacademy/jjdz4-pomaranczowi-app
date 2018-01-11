@@ -7,16 +7,6 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
-    <servlet>
-        <servlet-name>HomeServlet</servlet-name>
-        <jsp-file>/portal/home.jsp</jsp-file>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/portal/home</url-pattern>
-    </servlet-mapping>
-
     <context-param>
         <param-name>com.auth0.domain</param-name>
         <param-value>dawidsremski.eu.auth0.com</param-value>

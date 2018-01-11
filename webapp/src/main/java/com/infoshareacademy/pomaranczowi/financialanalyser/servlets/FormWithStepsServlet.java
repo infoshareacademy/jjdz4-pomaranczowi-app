@@ -12,7 +12,7 @@ import java.io.IOException;
 public class FormWithStepsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/form-step-1.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/form-step-0.jsp");
         requestDispatcher.forward(req, resp);
     }
 
