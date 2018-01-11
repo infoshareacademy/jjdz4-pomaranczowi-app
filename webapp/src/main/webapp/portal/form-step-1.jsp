@@ -1,13 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<p>Podaj kod funduszu lub waluty:</p>
-<form action="/portal/home" method="post" class="form-inline">
-    <input type="hidden" name="step" value="2"/>
-    <div class="form-row align-items-center">
-        <div class="col-auto">
-            <input type="text" class="form-control" name="code">
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary">Dalej</button>
+<form action="/portal/home" method="post">
+    <div class="form-group row">
+        <div class="col col-sm-10">
+            <label for="chooseCode">Podaj kod funduszu lub waluty:</label>
+            <input type="text" class="form-control" name="code" id="chooseCode">
         </div>
     </div>
+    <%@include file="form-step-nav.jsp" %>
 </form>
