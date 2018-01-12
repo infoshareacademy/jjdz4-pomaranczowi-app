@@ -7,15 +7,25 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
-    <servlet>
-        <servlet-name>HomePageServlet</servlet-name>
-        <servlet-class>com.infoshareacademy.pomaranczowi.financialanalyser.servlets.HomePageServlet</servlet-class>
-    </servlet>
+    <context-param>
+        <param-name>com.auth0.domain</param-name>
+        <param-value>dawidsremski.eu.auth0.com</param-value>
+    </context-param>
 
-    <servlet-mapping>
-        <servlet-name>HomePageServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+    <context-param>
+        <param-name>com.auth0.clientId</param-name>
+        <param-value>vHiPIengo3c527yi5iGGPvvmzoq2FFaf</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>com.auth0.clientSecret</param-name>
+        <param-value>kz_IOssZMXtUpny6T6ZnI2pTfRoQ1OLensEOU2ACfPY2dwUAwMNHqqZMYTnrECic</param-value>
+    </context-param>
+
+    <welcome-file-list>
+        <welcome-file>WelcomeServlet</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 
 </web-app>
 
