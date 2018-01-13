@@ -1,4 +1,8 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.dao;
 
-public class QuotationRepositoryDao {
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Quotation;
+
+public interface QuotationRepositoryDao {
+
+    boolean addQuotation(Quotation quotation);
 }
