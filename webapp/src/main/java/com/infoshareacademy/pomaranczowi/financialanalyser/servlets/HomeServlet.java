@@ -14,14 +14,14 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
-        request.getSession().setAttribute("step",0);
+        request.setAttribute("step",0);
         requestDispatcher.forward(request,response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
-        request.getSession().setAttribute("step",request.getParameter("step"));
+        request.setAttribute("step",request.getParameter("step"));
         requestDispatcher.forward(request,response);
     }
 }

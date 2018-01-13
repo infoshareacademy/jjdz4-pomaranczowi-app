@@ -35,18 +35,18 @@
         <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
 
             <c:set var="steps" scope="application" value="3"/>
-            <h2>Krok <c:out value="${sessionScope.step} z ${applicationScope.steps}"/></h2>
+            <h2>Krok <c:out value="${step} z ${steps}"/></h2>
 
-            <c:set var="progress" scope="session" value="${(100/steps)*step}"/>
+            <c:set var="progress" scope="request" value="${(100/steps)*step}"/>
 
             <div class="progress">
                 <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar"
-                     style="width: <c:out value="${sessionScope.progress}"/>%"
-                     aria-valuenow="<c:out value="${sessionScope.progress}"/>"
+                     style="width: <c:out value="${progress}"/>%"
+                     aria-valuenow="<c:out value="${progress}"/>"
                      aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-            <jsp:include page="form-step-${sessionScope.step}.jsp"/>
+            <jsp:include page="form-step-${step}.jsp"/>
 
         </div>
     </div>
