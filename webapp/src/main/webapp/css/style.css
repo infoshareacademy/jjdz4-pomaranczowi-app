@@ -1,0 +1,43 @@
+body {
+    padding: 0;
+    background-image: url(/img/background2.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+.row {
+    display: block;
+    position: relative;
+}
+
+.col {
+    height: auto;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.vertical-center {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.opacity {
+    opacity: 0.8;
+}
+
+.navbar {
+    margin-bottom: 1rem;
+}
+
+.progress {
+    margin-bottom: 1rem;
+}
