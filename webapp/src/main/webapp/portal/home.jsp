@@ -6,7 +6,7 @@
     <meta charset="UTF-8"/>
     <title>Analizator Finansowy</title>
     <link rel="stylesheet" href="../css/style.css"/>
-    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -56,5 +56,23 @@
 
 <script src="../js/jquery-3.2.1.slim.min.js"></script>
 <script src="../js/popper.min.js"></script>
+
+<script>
+    (function() {
+        'use strict';
+
+        window.addEventListener('load', function() {
+            var form = document.getElementById('form');
+            document.getElementById('next').addEventListener('click', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        }, false);
+    })();
+</script>
+
 </body>
 </html>
