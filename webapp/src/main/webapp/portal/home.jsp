@@ -37,20 +37,7 @@
             <c:set var="steps" scope="application" value="3"/>
             <h2>Krok <c:out value="${sessionScope.step} z ${applicationScope.steps}"/></h2>
 
-            <c:choose>
-                <c:when test="${sessionScope.step == 0}">
-                    <c:set var="progress" scope="session" value="0"/>
-                </c:when>
-                <c:when test="${sessionScope.step == 1}">
-                    <c:set var="progress" scope="session" value="33"/>
-                </c:when>
-                <c:when test="${sessionScope.step == 2}">
-                    <c:set var="progress" scope="session" value="66"/>
-                </c:when>
-                <c:when test="${sessionScope.step == 3}">
-                    <c:set var="progress" scope="session" value="100"/>
-                </c:when>
-            </c:choose>
+            <c:set var="progress" scope="session" value="${(100/steps)*step}"/>
 
             <div class="progress">
                 <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar"
