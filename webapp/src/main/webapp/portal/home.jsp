@@ -59,20 +59,7 @@
                      aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-            <c:choose>
-                <c:when test="${sessionScope.step == 0}">
-                    <%@include file="form-step-0.jsp" %>
-                </c:when>
-                <c:when test="${sessionScope.step == 1}">
-                    <%@include file="form-step-1.jsp" %>
-                </c:when>
-                <c:when test="${sessionScope.step == 2}">
-                    <%@include file="form-step-2.jsp" %>
-                </c:when>
-                <c:when test="${sessionScope.step == 3}">
-                    <%@include file="analysis.jsp" %>
-                </c:when>
-            </c:choose>
+            <jsp:include page="form-step-${sessionScope.step}.jsp"/>
 
         </div>
     </div>
