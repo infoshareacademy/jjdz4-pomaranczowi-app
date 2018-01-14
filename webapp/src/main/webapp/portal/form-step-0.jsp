@@ -15,8 +15,8 @@
             <input type="hidden" name="step" value="1"/>
             <label for="chooseFundOrCurrency">Wybierz proszę, jakie dane chcesz przeanalizować:</label>
             <select class="form-control" type="text" name="fundOrCurrency" id="chooseFundOrCurrency">
-                <option>Notowania funduszy inwestycyjnych</option>
-                <option>Notowania kursów walut</option>
+                <option value="1">Notowania funduszy inwestycyjnych</option>
+                <option value="2">Notowania kursów walut</option>
             </select>
         </div>
     </div>
