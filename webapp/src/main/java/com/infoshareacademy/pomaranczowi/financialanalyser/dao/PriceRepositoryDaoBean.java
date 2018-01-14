@@ -4,7 +4,9 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.repository.PriceRepository;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
+@Stateless
 public class PriceRepositoryDaoBean implements PriceRepositoryDao {
 
     @EJB
@@ -15,4 +17,5 @@ public class PriceRepositoryDaoBean implements PriceRepositoryDao {
         priceRepository.addPrices(price);
         return true;
     }
+
 }

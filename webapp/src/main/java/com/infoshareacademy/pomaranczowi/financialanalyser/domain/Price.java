@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "getPriceByDate", query = "from Price p where p.date=:user_date")
+})
+
 public class Price {
 
     @Id

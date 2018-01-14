@@ -13,7 +13,8 @@ public class PriceRepository {
     private EntityManager entityManager;
 
     public boolean addPrices(Price price) {
-        entityManager.persist(price);
+        entityManager.flush();
+        entityManager.merge(price);
         System.out.println("Price id: " + price.getId() + " added");
         return true;
     }

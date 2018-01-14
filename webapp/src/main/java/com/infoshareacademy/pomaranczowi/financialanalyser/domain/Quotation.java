@@ -1,11 +1,17 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.domain;
 
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Quotation {
+/*@NamedQueries({
+        @NamedQuery(name = "addPriceToQuotation", query = "update Quotation q set q.prices=:priceToAdded where q.id=:parentId")
+})*/
+
+public class Quotation implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -15,8 +21,9 @@ public class Quotation {
     @Column
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "price_id")
+    @OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
+    //@OneToMany
+    @JoinColumn(name = "quotation_id")
     private List<Price> prices = new ArrayList<>();
 
 

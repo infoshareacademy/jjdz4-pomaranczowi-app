@@ -8,6 +8,8 @@
     <persistence-unit name="pUnit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/FinAnalyser</jta-data-source>
+        <class>com.infoshareacademy.pomaranczowi.financialanalyser.domain.Quotation</class>
+        <class>com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price</class>
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="true"/>
