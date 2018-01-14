@@ -21,7 +21,28 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
-        request.setAttribute("step",request.getParameter("step"));
+
+        Integer step = Integer.valueOf(request.getParameter("step"));
+        request.getSession().setAttribute("step",step);
+
+        if (step == 1) {
+            if (request.getParameter("data") != null) {
+                request.getSession().setAttribute("data", request.getParameter("data"));
+            }
+        }
+
+        if (step == 2) {
+            if (request.getParameter("code") != null) {
+                request.getSession().setAttribute("code", request.getParameter("code"));
+            }
+        }
+
+        if (step == 3) {
+            if (request.getParameter("action") != null) {
+                request.getSession().setAttribute("action", request.getParameter("action"));
+            }
+        }
+
         requestDispatcher.forward(request,response);
     }
 }
