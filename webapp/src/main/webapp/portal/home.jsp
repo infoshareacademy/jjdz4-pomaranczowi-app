@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -45,7 +45,8 @@
                 <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar"
                      style="width: <c:out value="${progress}"/>%"
                      aria-valuenow="<c:out value="${progress}"/>"
-                     aria-valuemin="0" aria-valuemax="100"></div>
+                     aria-valuemin="0" aria-valuemax="100">
+                </div>
             </div>
 
             <jsp:include page="form-step-${step}.jsp"/>

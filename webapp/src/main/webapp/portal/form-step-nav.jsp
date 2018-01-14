@@ -16,7 +16,7 @@
                 class="btn btn-dark<c:if test="${step == steps}"> disabled</c:if>"
                 name="step"
                 value="<c:out value="${step+1}"/>"
-                <c:if test="${step == steps}">disabled</c:if>>
+                <c:if test="${step == steps}">disabled</c:if> autofocus>
             Dalej
         </button>
     </div>
