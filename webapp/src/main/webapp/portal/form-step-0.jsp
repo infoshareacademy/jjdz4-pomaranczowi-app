@@ -1,5 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <div class="alert alert-info" role="alert">
     <h4 class="alert-heading">Witaj!</h4>
     <p>Za pomocą naszej aplikacji uzyskasz informacje na temat notowań kursów walut oraz funduszy inwestycyjnych.
@@ -14,11 +14,13 @@
         <div class="col-sm-10">
             <input type="hidden" name="step" value="1"/>
             <label for="chooseFundOrCurrency">Wybierz proszę, jakie dane chcesz przeanalizować:</label>
-            <select class="form-control" type="text" name="fundOrCurrency" id="chooseFundOrCurrency">
-                <option>Notowania funduszy inwestycyjnych</option>
-                <option>Notowania kursów walut</option>
+            <select class="form-control" type="text" name="data" id="chooseFundOrCurrency">
+                <option value="fund" <c:if test="${sessionScope.data == 'fund'}">selected</c:if>>
+                        Notowania funduszy inwestycyjnych</option>
+                <option value="currency" <c:if test="${sessionScope.data == 'currency'}">selected</c:if>>
+                    Notowania kursów walut</option>
             </select>
         </div>
     </div>
-    <%@include file="form-step-nav.jsp" %>
+    <jsp:include page="form-step-nav.jsp"/>
 </form>
