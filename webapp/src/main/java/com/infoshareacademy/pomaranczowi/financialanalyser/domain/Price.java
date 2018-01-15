@@ -6,7 +6,8 @@ import java.time.LocalDate;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "getPriceByDate", query = "from Price p where p.date=:user_date")
+        @NamedQuery(name = "getPricesByDate", query = "FROM Price p WHERE p.id =:quotationId AND p.date=:localDate"),
+        //@NamedQuery(name = "getPricesByDate2", query = "FROM Price.quotation JOIN Quotation WHERE p.date=:localDate"),
 })
 
 public class Price {
@@ -23,6 +24,10 @@ public class Price {
     private BigDecimal low;
     private BigDecimal close;
     private BigDecimal volume;
+
+    @ManyToOne
+    //@JoinColumn(name = "quot")
+    private Quotation quotation;
 
     public Long getId() {
         return id;

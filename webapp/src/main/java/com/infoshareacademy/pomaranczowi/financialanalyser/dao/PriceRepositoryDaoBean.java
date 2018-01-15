@@ -5,6 +5,8 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.repository.PriceRepos
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.time.LocalDate;
+import java.util.List;
 
 @Stateless
 public class PriceRepositoryDaoBean implements PriceRepositoryDao {
@@ -13,9 +15,14 @@ public class PriceRepositoryDaoBean implements PriceRepositoryDao {
     PriceRepository priceRepository;
 
     @Override
-    public boolean addPrices (Price price){
-        priceRepository.addPrices(price);
+    public boolean addOrUpdatePrice (Price price){
+        priceRepository.addOrUpdatePrice(price);
         return true;
+    }
+
+    @Override
+    public List<Price> getPricesFromDate(String quotationCode, LocalDate localDate){
+        return priceRepository.getPricesFromDate(quotationCode,localDate);
     }
 
 }

@@ -11,6 +11,7 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDa
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationRepositoryDao;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Quotation;
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -59,7 +60,7 @@ public class QuotAndPriceServlet extends HttpServlet {
         price.setLow(BigDecimal.valueOf(35.23));
         price.setOpen(BigDecimal.valueOf(34.89));
         price.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addPrices(price);
+        priceRepositoryDao.addOrUpdatePrice(price);
 
         Price price2 = new Price();
         price2.setId(2l);
@@ -70,7 +71,7 @@ public class QuotAndPriceServlet extends HttpServlet {
         price2.setLow(BigDecimal.valueOf(54.17));
         price2.setOpen(BigDecimal.valueOf(54.58));
         price2.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addPrices(price2);
+        priceRepositoryDao.addOrUpdatePrice(price2);
 
         Price price3 = new Price();
         price3.setId(3l);
@@ -81,7 +82,7 @@ public class QuotAndPriceServlet extends HttpServlet {
         price3.setLow(BigDecimal.valueOf(23.17));
         price3.setOpen(BigDecimal.valueOf(23.58));
         price3.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addPrices(price3);
+        priceRepositoryDao.addOrUpdatePrice(price3);
 
         List<Price> priceList = new ArrayList<>();
         priceList.add(price);
@@ -92,12 +93,17 @@ public class QuotAndPriceServlet extends HttpServlet {
         quotation.setId(1l);
         quotation.setName("Fundusz INVEST PRO");
         quotation.setPrices(priceList);
+        quotation.setCode("INV001");
+        quotation.setQuotationType(QuotationType.FUNDINVESTMENT);
         quotationRepositoryDao.addOrUpdateQuotation(quotation);
 
         Quotation quotation2 = new Quotation();
         quotation2.setId(2l);
         quotation2.setName("Fundusz Akcjki Krakowiak PZU");
         quotation2.setPrices(priceList2);
+        quotation2.setCode("PZU001");
+        quotation2.setQuotationType(QuotationType.CURRENCY);
+        quotation2.setQuotationType(QuotationType.valueOf("CURRENCY"));
         quotationRepositoryDao.addOrUpdateQuotation(quotation2);
 
         List<Price> priceList3 = new ArrayList<>();
@@ -115,7 +121,7 @@ public class QuotAndPriceServlet extends HttpServlet {
         price4.setLow(BigDecimal.valueOf(23.17));
         price4.setOpen(BigDecimal.valueOf(23.58));
         price4.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addPrices(price4);
+        priceRepositoryDao.addOrUpdatePrice(price4);
 
         Price price5 = new Price();
         price5.setId(5l);
@@ -126,7 +132,7 @@ public class QuotAndPriceServlet extends HttpServlet {
         price5.setLow(BigDecimal.valueOf(23.17));
         price5.setOpen(BigDecimal.valueOf(23.58));
         price5.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addPrices(price5);
+        priceRepositoryDao.addOrUpdatePrice(price5);
 
         List<Price> priceList45 = new ArrayList<>();
         priceList45.add(price4);
@@ -144,6 +150,9 @@ public class QuotAndPriceServlet extends HttpServlet {
                 .collect(Collectors.toList());
         quotation.setPrices(newList12);
         quotationRepositoryDao.addOrUpdateQuotation(quotation);
+
+        List<Price> priceListFromDate = priceRepositoryDao.getPricesFromDate("PZU001", LocalDate.now());
+        for(Price priceFor : priceListFromDate) System.out.println("Price open: " + priceFor.getOpen());
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/analysis.jsp");
         requestDispatcher.forward(req, resp);

@@ -19,6 +19,11 @@ public class QuotationRepository {
         return true;
     }
 
+   /* public Long getQuotationIdByCode (String quoatationCode){
+        return (Long) entityManager.createNamedQuery("getQuotationIdByCode")
+                .setParameter("quotationCode", quoatationCode).getSingleResult();
+    }*/
+
     /*public void addPriceToQuotation(Long quotationId ,List<Price> priceToAdded){
         entityManager.createQuery("update Quotation q set q.prices=:priceToAdded where q.id=:quotationId")
                 .setParameter("priceToAdded",priceToAdded)

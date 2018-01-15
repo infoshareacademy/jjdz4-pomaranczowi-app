@@ -18,6 +18,11 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao{
         return true;
     }
 
+   /* @Override
+    public Long getQuotationIdByCode (String quoatationCode){
+       return quotationRepository.getQuotationIdByCode(quoatationCode);
+    }*/
+
     /*@Override
     public void addPriceToQuotation (Long id ,List<Price> priceToAdded){
         quotationRepository.addPriceToQuotation(id, priceToAdded);
