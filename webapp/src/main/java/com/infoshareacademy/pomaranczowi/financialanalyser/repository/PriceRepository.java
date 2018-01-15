@@ -34,10 +34,10 @@ public class PriceRepository {
                 .setParameter("localDate",localDate)
                 .getResultList();
 
-        List<Price> priceList8 = entityManager.createQuery("FROM Price p where p.")
+        /*List<Price> priceList8 = entityManager.createQuery("FROM Price p where p.")
                 .setParameter("quotationId", quotationId)
                 .setParameter("localDate",localDate)
-                .getResultList();
+                .getResultList();*/
 
         return priceList;
     }
