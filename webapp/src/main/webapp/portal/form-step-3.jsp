@@ -18,7 +18,7 @@
                     <label for="chooseDate">Podaj date w formacie YYYY-MM-DD:</label>
                     <input type="text" class="form-control" name="date" id="chooseDate">
                 </c:when>
-                <c:when test="${param.action == 3}">
+                <c:when test="${param.action == 4}">
                     <h4 class="alert-heading">Upraszczanie danych:</h4>
                     <label for="chooseYear">Wybierz rok:</label>
                     <select class="form-control" type="text" name="year" id="chooseYear">

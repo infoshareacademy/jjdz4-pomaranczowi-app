@@ -34,7 +34,7 @@
     <div class="row">
         <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
 
-            <c:set var="steps" scope="application" value="3"/>
+            <c:set var="steps" scope="application" value="4"/>
             <h2>Krok <c:out value="${sessionScope.step} z ${applicationScope.steps}"/></h2>
 
             <c:choose>
@@ -42,12 +42,15 @@
                     <c:set var="progress" scope="session" value="0"/>
                 </c:when>
                 <c:when test="${sessionScope.step == 1}">
-                    <c:set var="progress" scope="session" value="33"/>
+                    <c:set var="progress" scope="session" value="25"/>
                 </c:when>
                 <c:when test="${sessionScope.step == 2}">
-                    <c:set var="progress" scope="session" value="66"/>
+                    <c:set var="progress" scope="session" value="50"/>
                 </c:when>
                 <c:when test="${sessionScope.step == 3}">
+                    <c:set var="progress" scope="session" value="75"/>
+                </c:when>
+                <c:when test="${sessionScope.step == 4}">
                     <c:set var="progress" scope="session" value="100"/>
                 </c:when>
             </c:choose>
@@ -70,6 +73,9 @@
                     <%@include file="form-step-2.jsp" %>
                 </c:when>
                 <c:when test="${sessionScope.step == 3}">
+                    <%@include file="form-step-3.jsp" %>
+                </c:when>
+                <c:when test="${sessionScope.step == 4}">
                     <%@include file="analysis.jsp" %>
                 </c:when>
             </c:choose>
