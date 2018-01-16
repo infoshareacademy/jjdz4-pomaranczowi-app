@@ -4,10 +4,10 @@
         <div class="col-sm-10">
             <label for="chooseAction">Wybierz sposób sposób analizy:</label>
             <select type="text" class="form-control" name="action" id="chooseAction">
-                <option>Ekstrema globalne</option>
-                <option>Ekstrema lokalne</option>
-                <option>Wartości z danego dnia</option>
-                <option>Upraszczanie danych</option>
+                <option value="1">Ekstrema globalne</option>
+                <option value="2">Ekstrema lokalne</option>
+                <option value="3">Wartości z danego dnia</option>
+                <option value="4">Upraszczanie danych</option>
             </select>
         </div>
     </div>
