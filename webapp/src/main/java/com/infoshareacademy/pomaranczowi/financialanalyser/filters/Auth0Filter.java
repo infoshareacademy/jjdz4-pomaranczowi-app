@@ -20,7 +20,7 @@ public class Auth0Filter implements Filter {
         String accessToken = (String) SessionUtils.get(req, "accessToken");
         String idToken = (String) SessionUtils.get(req, "idToken");
         if (accessToken == null && idToken == null) {
-            res.sendRedirect("/");
+            res.sendRedirect("/login");
             return;
         }
         next.doFilter(request, response);
