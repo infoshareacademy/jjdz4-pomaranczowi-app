@@ -19,7 +19,7 @@
                 <hr class="my-4">
                 <p>Please use the button below to sign in or sign up.</p>
                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="/login" role="button">Logowanie</a>
+                    <a class="btn btn-primary btn-lg" href="/portal/home" role="button">Logowanie</a>
                 </p>
             </div>
         </content>

@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8"/>
     <title>Analizator Finansowy</title>
     <link rel="stylesheet" href="../css/style.css"/>
-    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -34,51 +34,22 @@
     <div class="row">
         <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
 
-            <c:set var="steps" scope="application" value="4"/>
-            <h2>Krok <c:out value="${sessionScope.step} z ${applicationScope.steps}"/></h2>
+            <%-- Here you need to set total number of form steps --%>
+            <c:set var="steps" scope="application" value="3"/>
 
-            <c:choose>
-                <c:when test="${sessionScope.step == 0}">
-                    <c:set var="progress" scope="session" value="0"/>
-                </c:when>
-                <c:when test="${sessionScope.step == 1}">
-                    <c:set var="progress" scope="session" value="25"/>
-                </c:when>
-                <c:when test="${sessionScope.step == 2}">
-                    <c:set var="progress" scope="session" value="50"/>
-                </c:when>
-                <c:when test="${sessionScope.step == 3}">
-                    <c:set var="progress" scope="session" value="75"/>
-                </c:when>
-                <c:when test="${sessionScope.step == 4}">
-                    <c:set var="progress" scope="session" value="100"/>
-                </c:when>
-            </c:choose>
+            <h2>Krok <c:out value="${step} z ${steps}"/></h2>
+
+            <c:set var="progress" scope="request" value="${(100/steps)*step}"/>
 
             <div class="progress">
                 <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar"
-                     style="width: <c:out value="${sessionScope.progress}"/>%"
-                     aria-valuenow="<c:out value="${sessionScope.progress}"/>"
-                     aria-valuemin="0" aria-valuemax="100"></div>
+                     style="width: <c:out value="${progress}"/>%"
+                     aria-valuenow="<c:out value="${progress}"/>"
+                     aria-valuemin="0" aria-valuemax="100">
+                </div>
             </div>
 
-            <c:choose>
-                <c:when test="${sessionScope.step == 0}">
-                    <%@include file="form-step-0.jsp" %>
-                </c:when>
-                <c:when test="${sessionScope.step == 1}">
-                    <%@include file="form-step-1.jsp" %>
-                </c:when>
-                <c:when test="${sessionScope.step == 2}">
-                    <%@include file="form-step-2.jsp" %>
-                </c:when>
-                <c:when test="${sessionScope.step == 3}">
-                    <%@include file="form-step-3.jsp" %>
-                </c:when>
-                <c:when test="${sessionScope.step == 4}">
-                    <%@include file="analysis.jsp" %>
-                </c:when>
-            </c:choose>
+            <jsp:include page="form-step-${step}.jsp"/>
 
         </div>
     </div>
@@ -86,5 +57,23 @@
 
 <script src="../js/jquery-3.2.1.slim.min.js"></script>
 <script src="../js/popper.min.js"></script>
+
+<script>
+    (function() {
+        'use strict';
+
+        window.addEventListener('load', function() {
+            var form = document.getElementById('form');
+            document.getElementById('next').addEventListener('click', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        }, false);
+    })();
+</script>
+
 </body>
 </html>

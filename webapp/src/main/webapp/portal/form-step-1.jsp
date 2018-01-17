@@ -1,18 +1,18 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<form action="/portal/home" method="post">
+<form id="form" action="/portal/home" method="post" novalidate>
     <div class="form-group row">
         <div class="col-sm-10">
-            <c:choose>
-                <c:when test="${param.fundOrCurrency == 1}">
-                    <c:set var="userQuotation" scope="session" value="funduszu"/>
-                </c:when>
-                <c:when test="${param.fundOrCurrency == 2}">
-                    <c:set var="userQuotation" scope="session" value="waluty"/>
-                </c:when>
-            </c:choose>
-            <label for="chooseCode">Podaj kod ${sessionScope.userQuotation}:</label>
-            <input type="text" class="form-control" name="code" id="chooseCode">
+            <label for="chooseCode">Podaj kod
+                <c:out value="${data == 'fund' ? ' funduszu inwestycyjnego, którego ': ' waluty, której '}"/>
+                analizy chcesz dokonać:
+            </label>
+            <input type="text" class="form-control" name="code" id="chooseCode"
+                   value="<c:out value="${sessionScope.code}"/>" required>
+            <div class="invalid-feedback">
+                Proszę podać kod <c:out value="${data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'}"/>.
+            </div>
         </div>
     </div>
-    <%@include file="form-step-nav.jsp" %>
+    <jsp:include page="form-step-nav.jsp"/>
 </form>
