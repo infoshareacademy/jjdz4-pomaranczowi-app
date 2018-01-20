@@ -32,7 +32,7 @@ public class Actions {
             switch (actionsMenu.Init()) {
                 case 0:
                     System.out.println("\nWybrano ekstrema globalne dla " + quotation.getName());
-                    GlobalExt.ShowAll(quotation);
+                    GlobalExt.showAll(quotation);
 
                     Menu.waitAndContinue();
                     break;
@@ -68,7 +68,7 @@ public class Actions {
                     System.out.println("\nEkstrema dla przedziału " + localExt.getStartDate() +
                             " - " + localExt.getEndDate());
 
-                    localExt.ShowAll(quotation);
+                    localExt.showAll(quotation);
 
                     Menu.waitAndContinue();
                     break;

@@ -150,7 +150,7 @@ public class Simplify {
         LocalExt localExt = new LocalExt();
         localExt.setStartDate(from);
         localExt.setEndDate(to);
-        localExt.ShowAll(quotation);
+        localExt.showAll(quotation);
     }
 
     private static void getWeeksForMonth(LocalDate date) {
