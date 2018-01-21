@@ -16,7 +16,7 @@ public class QuotationRepository {
         entityManager.flush();
          //quotation.setPrices(quotation.getPrices());
         entityManager.merge(quotation);
-        System.out.println("Quotation " + quotation + " added ora update");
+        System.out.println("Quotation " + quotation + " added or update");
         return true;
     }
 
