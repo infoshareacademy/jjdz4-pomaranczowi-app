@@ -19,6 +19,41 @@ import java.time.LocalDate;
                         "from Price p " +
                         "join Quotation q on q.id = p.quotation.id " +
                         "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getMinOpenFromDateToDate",
+                query = "select MIN(p.open) " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getMaxCloseFromDateToDate",
+                query = "select MAX(p.close) " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getMinCloseFromDateToDate",
+                query = "select MIN(p.close) " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getMaxHighFromDateToDate",
+                query = "select MAX(p.high) " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getMinHighFromDateToDate",
+                query = "select MIN(p.high) " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getMaxLowFromDateToDate",
+                query = "select MAX(p.low) " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getMinLowFromDateToDate",
+                query = "select MIN(p.low) " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
         @NamedQuery(name = "getpricefromQurrencyCode",
                 query = "select p " +
                         "from Price p " +

@@ -36,5 +36,38 @@ public class PriceRepositoryDaoBean implements PriceRepositoryDao {
         return priceRepository.getMaxOpenFromDateToDate(quotationCode, startDate, endDate);
     }
 
+    @Override
+    public BigDecimal getMinOpenFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getMinOpenFromDateToDate(quotationCode, startDate, endDate);
+    }
 
+    @Override
+    public BigDecimal getMaxCloseFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getMaxCloseFromDateToDate(quotationCode, startDate, endDate);
+    }
+
+    @Override
+    public BigDecimal getMinCloseFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getMinCloseFromDateToDate(quotationCode, startDate, endDate);
+    }
+
+    @Override
+    public BigDecimal getMaxHighFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getMaxHighFromDateToDate(quotationCode, startDate, endDate);
+    }
+
+    @Override
+    public BigDecimal getMinHighFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getMinHighFromDateToDate(quotationCode, startDate, endDate);
+    }
+
+    @Override
+    public BigDecimal getMaxLowFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getMaxLowFromDateToDate(quotationCode, startDate, endDate);
+    }
+
+    @Override
+    public BigDecimal getMinLowFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getMinLowFromDateToDate(quotationCode, startDate, endDate);
+    }
 }

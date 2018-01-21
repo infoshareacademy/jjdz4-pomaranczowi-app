@@ -48,4 +48,60 @@ public class PriceRepository {
                 .setParameter("endDate",endDate)
                 .getResultList().get(0);
     }
+
+    public BigDecimal getMinOpenFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return  (BigDecimal) entityManager.createNamedQuery("getMinOpenFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList().get(0);
+    }
+
+    public BigDecimal getMaxCloseFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return  (BigDecimal) entityManager.createNamedQuery("getMaxCloseFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList().get(0);
+    }
+
+    public BigDecimal getMinCloseFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return  (BigDecimal) entityManager.createNamedQuery("getMinCloseFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList().get(0);
+    }
+
+    public BigDecimal getMaxHighFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return  (BigDecimal) entityManager.createNamedQuery("getMaxHighFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList().get(0);
+    }
+
+    public BigDecimal getMinHighFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return  (BigDecimal) entityManager.createNamedQuery("getMinHighFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList().get(0);
+    }
+
+    public BigDecimal getMaxLowFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return  (BigDecimal) entityManager.createNamedQuery("getMaxLowFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList().get(0);
+    }
+
+    public BigDecimal getMinLowFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return  (BigDecimal) entityManager.createNamedQuery("getMinLowFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList().get(0);
+    }
 }
