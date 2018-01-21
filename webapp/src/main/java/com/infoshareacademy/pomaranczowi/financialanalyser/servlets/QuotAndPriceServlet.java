@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -244,6 +245,9 @@ public class QuotAndPriceServlet extends HttpServlet {
         //price9.setQuotation(quotation5);
         priceRepositoryDao.addOrUpdatePrice(price9, "EUR");
 
+        LocalDate.parse("2018-01-20", DateTimeFormatter.ISO_DATE);
+
+        System.out.println("Max Open:" + priceRepositoryDao.getMaxOpenFromDateToDate("PZU001",LocalDate.parse("2018-01-20", DateTimeFormatter.ISO_DATE), LocalDate.parse("2018-01-25", DateTimeFormatter.ISO_DATE)));
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/analysis.jsp");
         requestDispatcher.forward(req, resp);

@@ -5,6 +5,7 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,5 +39,13 @@ public class PriceRepository {
                 .setParameter("startDate",startDate)
                 .setParameter("endDate",endDate)
                 .getResultList();
+    }
+
+    public BigDecimal getMaxOpenFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return  (BigDecimal) entityManager.createNamedQuery("getMaxOpenFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList().get(0);
     }
 }

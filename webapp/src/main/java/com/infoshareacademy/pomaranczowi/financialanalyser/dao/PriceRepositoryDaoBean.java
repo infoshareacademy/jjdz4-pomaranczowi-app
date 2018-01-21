@@ -5,6 +5,7 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.repository.PriceRepos
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,5 +30,11 @@ public class PriceRepositoryDaoBean implements PriceRepositoryDao {
     public List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
         return priceRepository.getPricesFromDateToDate(quotationCode, startDate, endDate);
     }
+
+    @Override
+    public BigDecimal getMaxOpenFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getMaxOpenFromDateToDate(quotationCode, startDate, endDate);
+    }
+
 
 }

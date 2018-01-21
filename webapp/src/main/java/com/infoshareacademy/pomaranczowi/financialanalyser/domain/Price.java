@@ -14,6 +14,11 @@ import java.time.LocalDate;
                         "from Price p " +
                         "join Quotation q on q.id = p.quotation.id " +
                         "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getMaxOpenFromDateToDate",
+                query = "select MAX(p.open) " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
         @NamedQuery(name = "getpricefromQurrencyCode",
                 query = "select p " +
                         "from Price p " +
