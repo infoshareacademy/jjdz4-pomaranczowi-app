@@ -8,10 +8,7 @@ import java.time.LocalDate;
 
 public class Extremes {
 
-    @Setter @Getter private BigDecimal value;
+    @Setter @Getter private BigDecimal value=BigDecimal.valueOf(0);
     @Setter @Getter private LocalDate date;
 
-    public Extremes (){
-        this.value = BigDecimal.valueOf(0);
-    }
 }

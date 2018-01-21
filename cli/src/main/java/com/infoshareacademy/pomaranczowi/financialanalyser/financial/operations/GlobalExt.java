@@ -9,55 +9,20 @@ import java.time.LocalDate;
 
 public class GlobalExt {
 
-    
-    public static void ShowAll(Quotation quotation) {
-
-        Extremes maxOpen = GlobalExt.getMaxOpen(quotation);
-        System.out.println("\nMaksymalna wartość OPEN to: "+
-                maxOpen.getValue()+" z dnia "+
-                maxOpen.getDate());
-        Extremes minOpen = GlobalExt.getMinOpen(quotation);
-        System.out.println("Minimalna wartość OPEN to: "+
-                minOpen.getValue()+" z dnia "+
-                minOpen.getDate());
-
-        Extremes maxLow = GlobalExt.getMaxLow(quotation);
-        System.out.println("\nMaksymalna wartość LOW to: "+
-                maxLow.getValue()+" z dnia "+
-                maxLow.getDate());
-        Extremes minLow = GlobalExt.getMinLow(quotation);
-        System.out.println("Minimalna wartość LOW to: "+
-                minLow.getValue()+" z dnia "+
-                minLow.getDate());
-
-        Extremes maxHigh = GlobalExt.getMaxHigh(quotation);
-        System.out.println("\nMaksymalna wartość HIGH to: "+
-                maxHigh.getValue()+" z dnia "+
-                maxHigh.getDate());
-        Extremes minHigh = GlobalExt.getMinHigh(quotation);
-        System.out.println("Minimalna wartość HIGH to: "+
-                minHigh.getValue()+" z dnia "+
-                minHigh.getDate());
-
-        Extremes maxClose = GlobalExt.getMaxClose(quotation);
-        System.out.println("\nMaksymalna wartość CLOSE to: "+
-                maxClose.getValue()+" z dnia "+
-                maxClose.getDate());
-        Extremes minClose = GlobalExt.getMinClose(quotation);
-        System.out.println("Minimalna wartość CLOSE to: "+
-                minClose.getValue()+" z dnia "+
-                minClose.getDate());
-
-        Extremes maxVolume = GlobalExt.getMaxVolume(quotation);
-        System.out.println("\nMaksymalna wartość VOLUME to: "+
-                maxVolume.getValue()+" z dnia "+
-                maxVolume.getDate());
-        Extremes minVolume = GlobalExt.getMinVolume(quotation);
-        System.out.println("Minimalna wartość VOLUME to: "+
-                minVolume.getValue()+" z dnia "+
-                minVolume.getDate());
+    private static void printGroup(Extremes max, Extremes min, String groupName) {
+        System.out.println("\nMaksymalna wartość "+groupName+" to: "+ max.getValue()+" z dnia "+ max.getDate());
+        System.out.println("Minimalna wartość "+groupName+" to: "+ min.getValue()+" z dnia "+min.getDate());
     }
-    
+
+    public static void showAll(Quotation quotation) {
+
+        printGroup(GlobalExt.getMaxOpen(quotation), GlobalExt.getMinOpen(quotation), "OPEN");
+        printGroup(GlobalExt.getMaxLow(quotation), GlobalExt.getMinLow(quotation), "LOW");
+        printGroup(GlobalExt.getMaxHigh(quotation), GlobalExt.getMinHigh(quotation), "HIGH");
+        printGroup(GlobalExt.getMaxClose(quotation), GlobalExt.getMinClose(quotation), "CLOSE");
+        printGroup(GlobalExt.getMaxVolume(quotation), GlobalExt.getMinVolume(quotation), "VOLUME");
+    }
+
     private static Extremes getMaxOpen(Quotation quotation) {
 
         Extremes extremes = new Extremes();
