@@ -1,5 +1,9 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDao;
+import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationRepositoryDao;
+
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,9 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet(urlPatterns = "/portal/home")
 public class HomeServlet extends HttpServlet {
+
+    @EJB
+    QuotationRepositoryDao quotationRepositoryDao;
+
+    @EJB
+    PriceRepositoryDao priceRepositoryDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,9 +52,16 @@ public class HomeServlet extends HttpServlet {
         if (step == 3) {
             if (request.getParameter("action") != null) {
                 request.getSession().setAttribute("action", request.getParameter("action"));
+                printPricesIfGlobalExtremes(request);
             }
         }
 
         requestDispatcher.forward(request,response);
+    }
+
+    private void printPricesIfGlobalExtremes(HttpServletRequest request) {
+        if(request.getParameter("action").equals("globalExtremes")){
+            request.getSession().setAttribute("maxOpen", 10);
+        }
     }
 }
