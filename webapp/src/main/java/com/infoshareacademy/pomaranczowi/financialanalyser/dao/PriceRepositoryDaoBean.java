@@ -15,14 +15,19 @@ public class PriceRepositoryDaoBean implements PriceRepositoryDao {
     PriceRepository priceRepository;
 
     @Override
-    public boolean addOrUpdatePrice (Price price){
-        priceRepository.addOrUpdatePrice(price);
+    public boolean addOrUpdatePrice (Price price, String quotationCode){
+        priceRepository.addOrUpdatePrice(price, quotationCode);
         return true;
     }
 
     @Override
     public List<Price> getPricesFromDate(String quotationCode, LocalDate localDate){
         return priceRepository.getPricesFromDate(quotationCode,localDate);
+    }
+
+    @Override
+    public List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return priceRepository.getPricesFromDateToDate(quotationCode, startDate, endDate);
     }
 
 }

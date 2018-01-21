@@ -18,6 +18,11 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao{
         return true;
     }
 
+    @Override
+    public boolean isQuotationCodeInDB(String quotationCode){
+        return quotationRepository.isQuotationCodeInDB(quotationCode);
+    }
+
    /* @Override
     public Long getQuotationIdByCode (String quoatationCode){
        return quotationRepository.getQuotationIdByCode(quoatationCode);

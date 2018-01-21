@@ -12,7 +12,12 @@ import java.util.List;
                 query = "select Quotation.id from Quotation where Quotation.code=:quotationCode")
         //@NamedQuery(name = "addPriceToQuotation", query = "update Quotation q set q.prices=:priceToAdded where q.id=:parentId")
 })*/
-
+/*@NamedQueries({
+        @NamedQuery(name = "pricefromQurrencyCode", query = "select p from Price p join Quotation q on q.id = p.quotation.id")
+})*/
+@NamedQueries({
+        @NamedQuery(name = "isQuotationCodeInDB", query = "select q.code from Quotation q where q.code=:quotationCode")
+})
 public class Quotation implements Serializable {
 
     @Id
@@ -26,13 +31,17 @@ public class Quotation implements Serializable {
     @Column
     private String code;
 
-    @Column
+    @Enumerated(EnumType.STRING)
     private QuotationType quotationType;
 
     //@OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     //@OneToMany
-    @OneToMany(targetEntity = Price.class)
-    @JoinColumn(name = "quotation_id")
+
+    //my
+    //@OneToMany(targetEntity = Price.class)
+    //@JoinColumn(name = "quotation_id")
+
+    @OneToMany(mappedBy = "quotation", targetEntity = Price.class ,cascade = CascadeType.PERSIST, orphanRemoval = false, fetch = FetchType.EAGER)
     private List<Price> prices = new ArrayList<>();
 
     public Long getId() {

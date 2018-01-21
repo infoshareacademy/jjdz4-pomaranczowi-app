@@ -14,9 +14,16 @@ public class QuotationRepository {
 
     public boolean addOrUpdateQuotation(Quotation quotation) {
         entityManager.flush();
+         quotation.setPrices(quotation.getPrices());
         entityManager.merge(quotation);
         System.out.println("Quotation " + quotation + " added ora update");
         return true;
+    }
+
+    public boolean isQuotationCodeInDB(String quotationCode){
+        return entityManager.createNamedQuery("isQuotationCodeInDB")
+                .setParameter("quotationCode", quotationCode)
+                .getSingleResult().equals(quotationCode);
     }
 
    /* public Long getQuotationIdByCode (String quoatationCode){

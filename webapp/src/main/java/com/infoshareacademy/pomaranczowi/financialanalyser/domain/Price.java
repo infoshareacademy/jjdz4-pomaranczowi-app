@@ -7,8 +7,11 @@ import java.time.LocalDate;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "getPricesByDate", query = "FROM Price p WHERE p.id =:quotationId AND p.date=:localDate"),
+        @NamedQuery(name = "getPricesFromDateToDate", query = "select p from Price p join Quotation q on q.id = p.quotation.id where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
         //@NamedQuery(name = "getPricesByDate2", query = "FROM Price.quotation JOIN Quotation WHERE p.date=:localDate"),
+        @NamedQuery(name = "getpricefromQurrencyCode", query = "select p from Price p join Quotation q on q.id = p.quotation.id where q.code=:quotationCode AND p.date=:userDate")
 })
+
 
 public class Price {
 
@@ -24,9 +27,22 @@ public class Price {
     private BigDecimal low;
     private BigDecimal close;
     private BigDecimal volume;
+    private String quotationCode;
+
+    public String getQuotationCode() {
+        return quotationCode;
+    }
+
+    public void setQuotationCode(String quotationCode) {
+        this.quotationCode = quotationCode;
+    }
+    //@JoinColumn(name = "quot")
+
+    //my
+    //@ManyToOne
 
     @ManyToOne
-    //@JoinColumn(name = "quot")
+    @JoinColumn(name="quotation_id")
     private Quotation quotation;
 
     public Long getId() {
@@ -85,7 +101,15 @@ public class Price {
         this.volume = volume;
     }
 
+    public Quotation getQuotation() {
+        return quotation;
+    }
+
+    public void setQuotation(Quotation quotation) {
+        this.quotation = quotation;
+    }
 }
+
 
 
 

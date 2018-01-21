@@ -11,34 +11,28 @@ import java.util.List;
 @Stateless
 public class PriceRepository {
 
-    /*@EJB
-    QuotationRepositoryDao quotationRepositoryDao;*/
-
     @PersistenceContext(unitName = "pUnit")
     private EntityManager entityManager;
 
-    public boolean addOrUpdatePrice(Price price) {
+    public void addOrUpdatePrice(Price price, String quotationCode) {
+        price.setQuotationCode(quotationCode);
         entityManager.flush();
         entityManager.merge(price);
         System.out.println("Price id: " + price.getId() + " added/updatetd");
-        return true;
     }
 
     public List<Price> getPricesFromDate(String quotationCode, LocalDate localDate){
-        //Long quotationId = quotationRepositoryDao.getQuotationIdByCode(quotationCode);
-
-        Long quotationId = 2l;
-
-        List<Price> priceList = entityManager.createNamedQuery("getPricesByDate")
-                .setParameter("quotationId", quotationId)
-                .setParameter("localDate",localDate)
+        return   entityManager.createNamedQuery("getpricefromQurrencyCode")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("userDate",localDate)
                 .getResultList();
+    }
 
-        /*List<Price> priceList8 = entityManager.createQuery("FROM Price p where p.")
-                .setParameter("quotationId", quotationId)
-                .setParameter("localDate",localDate)
-                .getResultList();*/
-
-        return priceList;
+    public List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
+        return   entityManager.createNamedQuery("getPricesFromDateToDate")
+                .setParameter("quotationCode", quotationCode)
+                .setParameter("startDate",startDate)
+                .setParameter("endDate",endDate)
+                .getResultList();
     }
 }

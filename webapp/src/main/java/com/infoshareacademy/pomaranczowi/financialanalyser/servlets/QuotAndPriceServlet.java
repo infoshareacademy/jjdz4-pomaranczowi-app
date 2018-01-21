@@ -60,7 +60,7 @@ public class QuotAndPriceServlet extends HttpServlet {
         price.setLow(BigDecimal.valueOf(35.23));
         price.setOpen(BigDecimal.valueOf(34.89));
         price.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addOrUpdatePrice(price);
+        priceRepositoryDao.addOrUpdatePrice(price, "price1");
 
         Price price2 = new Price();
         price2.setId(2l);
@@ -71,7 +71,7 @@ public class QuotAndPriceServlet extends HttpServlet {
         price2.setLow(BigDecimal.valueOf(54.17));
         price2.setOpen(BigDecimal.valueOf(54.58));
         price2.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addOrUpdatePrice(price2);
+        priceRepositoryDao.addOrUpdatePrice(price2, "price2");
 
         Price price3 = new Price();
         price3.setId(3l);
@@ -82,7 +82,7 @@ public class QuotAndPriceServlet extends HttpServlet {
         price3.setLow(BigDecimal.valueOf(23.17));
         price3.setOpen(BigDecimal.valueOf(23.58));
         price3.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addOrUpdatePrice(price3);
+        priceRepositoryDao.addOrUpdatePrice(price3, "price4");
 
         List<Price> priceList = new ArrayList<>();
         priceList.add(price);
@@ -119,9 +119,9 @@ public class QuotAndPriceServlet extends HttpServlet {
         price4.setHigh(BigDecimal.valueOf(23.09));
         price4.setLow(BigDecimal.valueOf(23.24));
         price4.setLow(BigDecimal.valueOf(23.17));
-        price4.setOpen(BigDecimal.valueOf(23.58));
+        price4.setOpen(BigDecimal.valueOf(28.25));
         price4.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addOrUpdatePrice(price4);
+        priceRepositoryDao.addOrUpdatePrice(price4, "price5");
 
         Price price5 = new Price();
         price5.setId(5l);
@@ -130,9 +130,9 @@ public class QuotAndPriceServlet extends HttpServlet {
         price5.setHigh(BigDecimal.valueOf(23.09));
         price5.setLow(BigDecimal.valueOf(23.24));
         price5.setLow(BigDecimal.valueOf(23.17));
-        price5.setOpen(BigDecimal.valueOf(23.58));
+        price5.setOpen(BigDecimal.valueOf(28.45));
         price5.setVolume(BigDecimal.valueOf(0));
-        priceRepositoryDao.addOrUpdatePrice(price5);
+        priceRepositoryDao.addOrUpdatePrice(price5, "price6");
 
         List<Price> priceList45 = new ArrayList<>();
         priceList45.add(price4);
@@ -151,8 +151,87 @@ public class QuotAndPriceServlet extends HttpServlet {
         quotation.setPrices(newList12);
         quotationRepositoryDao.addOrUpdateQuotation(quotation);
 
+        price5.setQuotation(quotation2);
+
+        priceRepositoryDao.addOrUpdatePrice(price5, "price5");
+
+        Quotation quotation3 = new Quotation();
+        quotation3.setId(3l);
+        quotation3.setName("Fundusz GAOMI");
+        quotation3.setPrices(priceList2);
+        quotation3.setCode("GAO005");
+        quotation3.setQuotationType(QuotationType.FUNDINVESTMENT);
+        quotationRepositoryDao.addOrUpdateQuotation(quotation3);
+
+        Quotation quotation4 = new Quotation();
+        quotation4.setId(4l);
+        quotation4.setName("Euro");
+        quotation4.setPrices(priceList2);
+        quotation4.setCode("EUR");
+        quotation4.setQuotationType(QuotationType.CURRENCY);
+        quotationRepositoryDao.addOrUpdateQuotation(quotation4);
+
+        Price price6 = new Price();
+        price6.setId(6l);
+        price6.setClose(BigDecimal.valueOf(23.67));
+        price6.setDate(LocalDate.now());
+        price6.setHigh(BigDecimal.valueOf(23.09));
+        price6.setLow(BigDecimal.valueOf(23.24));
+        price6.setLow(BigDecimal.valueOf(23.17));
+        price6.setOpen(BigDecimal.valueOf(27.99));
+        price6.setVolume(BigDecimal.valueOf(0));
+        price6.setQuotation(quotation2);
+        priceRepositoryDao.addOrUpdatePrice(price6, "price6");
+
+        Price price7 = new Price();
+        price7.setId(7l);
+        price7.setClose(BigDecimal.valueOf(23.67));
+        price7.setDate(LocalDate.now());
+        price7.setHigh(BigDecimal.valueOf(23.09));
+        price7.setLow(BigDecimal.valueOf(23.24));
+        price7.setLow(BigDecimal.valueOf(23.17));
+        price7.setOpen(BigDecimal.valueOf(62.78));
+        price7.setVolume(BigDecimal.valueOf(0));
+        price7.setQuotation(quotation2);
+        priceRepositoryDao.addOrUpdatePrice(price7, "price7");
+
         List<Price> priceListFromDate = priceRepositoryDao.getPricesFromDate("PZU001", LocalDate.now());
         for(Price priceFor : priceListFromDate) System.out.println("Price open: " + priceFor.getOpen());
+
+        if (quotationRepositoryDao.isQuotationCodeInDB(quotation2.getCode()))
+            System.out.println("Znaleziono! " + quotation2.getCode());
+        else System.out.println("Nie ma w bazie " + quotation2.getCode());
+
+        List<Price> priceListDateToDate = priceRepositoryDao.getPricesFromDateToDate("PZU001", LocalDate.now().minusDays(2), LocalDate.now().plusDays(2));
+        for(Price priceFor : priceListDateToDate) System.out.println("Price open: " + priceFor.getOpen());
+
+        quotation2.setName("Alabastrowy Fundusz");
+        System.out.println("Alabastrowy list Price: " + quotation2.getPrices());
+        quotationRepositoryDao.addOrUpdateQuotation(quotation2);
+
+        Quotation quotation5 = new Quotation();
+        quotation5.setId(5l);
+        quotation5.setName("Dycha");
+        //quotation4.setPrices(priceList2);
+        quotation5.setCode("TEN");
+        quotation5.setQuotationType(QuotationType.CURRENCY);
+        quotationRepositoryDao.addOrUpdateQuotation(quotation5);
+
+        Price price8 = new Price();
+        price8.setId(8l);
+        price8.setClose(BigDecimal.valueOf(10.10));
+        price8.setDate(LocalDate.now());
+        price8.setHigh(BigDecimal.valueOf(10.45));
+        price8.setLow(BigDecimal.valueOf(10.56));
+        price8.setLow(BigDecimal.valueOf(10.90));
+        price8.setOpen(BigDecimal.valueOf(10.31));
+        price8.setVolume(BigDecimal.valueOf(0));
+        price8.setQuotation(quotation5);
+        priceRepositoryDao.addOrUpdatePrice(price8, "price8");
+
+        price2.setQuotation(quotation5);
+        priceRepositoryDao.addOrUpdatePrice(price2, "price2");
+
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/analysis.jsp");
         requestDispatcher.forward(req, resp);

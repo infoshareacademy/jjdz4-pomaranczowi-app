@@ -10,6 +10,7 @@ import java.util.List;
 @Local
 public interface PriceRepositoryDao {
 
-    boolean addOrUpdatePrice (Price price);
+    boolean addOrUpdatePrice (Price price, String quotationCode);
     List<Price> getPricesFromDate(String quotationCode, LocalDate localDate);
+    List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate);
 }
