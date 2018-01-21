@@ -14,7 +14,7 @@ public class QuotationRepository {
 
     public boolean addOrUpdateQuotation(Quotation quotation) {
         entityManager.flush();
-         quotation.setPrices(quotation.getPrices());
+         //quotation.setPrices(quotation.getPrices());
         entityManager.merge(quotation);
         System.out.println("Quotation " + quotation + " added ora update");
         return true;
@@ -26,20 +26,10 @@ public class QuotationRepository {
                 .getSingleResult().equals(quotationCode);
     }
 
-   /* public Long getQuotationIdByCode (String quoatationCode){
-        return (Long) entityManager.createNamedQuery("getQuotationIdByCode")
-                .setParameter("quotationCode", quoatationCode).getSingleResult();
+   /*public Quotation getQuotationByCode (String quoatationCode){
+        return (Quotation) entityManager.createNamedQuery("getQuotationByCode")
+                .setParameter("quotationCode", quoatationCode);
     }*/
-
-    /*public void addPriceToQuotation(Long quotationId ,List<Price> priceToAdded){
-        entityManager.createQuery("update Quotation q set q.prices=:priceToAdded where q.id=:quotationId")
-                .setParameter("priceToAdded",priceToAdded)
-                .setParameter("quotationId",quotationId)
-                .executeUpdate();
-        System.out.println("Dodano price with id: ");
-        for (Price price : priceToAdded) System.out.println(price.getId() + " ");
-    }*/
-
 }
 
 

@@ -23,13 +23,8 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao{
         return quotationRepository.isQuotationCodeInDB(quotationCode);
     }
 
-   /* @Override
-    public Long getQuotationIdByCode (String quoatationCode){
-       return quotationRepository.getQuotationIdByCode(quoatationCode);
-    }*/
-
-    /*@Override
-    public void addPriceToQuotation (Long id ,List<Price> priceToAdded){
-        quotationRepository.addPriceToQuotation(id, priceToAdded);
+   /*@Override
+    public Quotation getQuotationByCode (String quoatationCode){
+       return quotationRepository.getQuotationByCode(quoatationCode);
     }*/
 }

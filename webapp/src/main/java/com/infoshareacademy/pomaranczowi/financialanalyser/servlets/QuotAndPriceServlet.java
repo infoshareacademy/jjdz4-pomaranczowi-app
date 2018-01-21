@@ -232,6 +232,18 @@ public class QuotAndPriceServlet extends HttpServlet {
         price2.setQuotation(quotation5);
         priceRepositoryDao.addOrUpdatePrice(price2, "price2");
 
+        Price price9 = new Price();
+        price9.setId(9l);
+        price9.setClose(BigDecimal.valueOf(10.10));
+        price9.setDate(LocalDate.now());
+        price9.setHigh(BigDecimal.valueOf(10.45));
+        price9.setLow(BigDecimal.valueOf(10.56));
+        price9.setLow(BigDecimal.valueOf(10.90));
+        price9.setOpen(BigDecimal.valueOf(10.31));
+        price9.setVolume(BigDecimal.valueOf(0));
+        //price9.setQuotation(quotation5);
+        priceRepositoryDao.addOrUpdatePrice(price9, "EUR");
+
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/analysis.jsp");
         requestDispatcher.forward(req, resp);

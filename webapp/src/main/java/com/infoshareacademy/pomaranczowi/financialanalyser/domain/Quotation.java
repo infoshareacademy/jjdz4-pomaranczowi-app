@@ -1,22 +1,16 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.domain;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-/*@NamedQueries({
-        @NamedQuery(name = "getQuotationIdByCode",
-                query = "select Quotation.id from Quotation where Quotation.code=:quotationCode")
-        //@NamedQuery(name = "addPriceToQuotation", query = "update Quotation q set q.prices=:priceToAdded where q.id=:parentId")
-})*/
-/*@NamedQueries({
-        @NamedQuery(name = "pricefromQurrencyCode", query = "select p from Price p join Quotation q on q.id = p.quotation.id")
-})*/
 @NamedQueries({
-        @NamedQuery(name = "isQuotationCodeInDB", query = "select q.code from Quotation q where q.code=:quotationCode")
+        @NamedQuery(name = "isQuotationCodeInDB",
+                query = "select q.code from Quotation q where q.code=:quotationCode"),
+        /*@NamedQuery(name = "getQuotationByCode",
+                query = "from Quotation where Quotation.code=:quotationCode")*/
 })
 public class Quotation implements Serializable {
 
@@ -33,13 +27,6 @@ public class Quotation implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private QuotationType quotationType;
-
-    //@OneToMany(cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
-    //@OneToMany
-
-    //my
-    //@OneToMany(targetEntity = Price.class)
-    //@JoinColumn(name = "quotation_id")
 
     @OneToMany(mappedBy = "quotation", targetEntity = Price.class ,cascade = CascadeType.PERSIST, orphanRemoval = false, fetch = FetchType.EAGER)
     private List<Price> prices = new ArrayList<>();

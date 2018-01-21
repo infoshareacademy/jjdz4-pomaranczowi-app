@@ -6,13 +6,20 @@ import java.time.LocalDate;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "getPricesByDate", query = "FROM Price p WHERE p.id =:quotationId AND p.date=:localDate"),
-        @NamedQuery(name = "getPricesFromDateToDate", query = "select p from Price p join Quotation q on q.id = p.quotation.id where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
-        //@NamedQuery(name = "getPricesByDate2", query = "FROM Price.quotation JOIN Quotation WHERE p.date=:localDate"),
-        @NamedQuery(name = "getpricefromQurrencyCode", query = "select p from Price p join Quotation q on q.id = p.quotation.id where q.code=:quotationCode AND p.date=:userDate")
+        @NamedQuery(name = "getPricesByDate",
+                query = "FROM Price p " +
+                        "WHERE p.id =:quotationId AND p.date=:localDate"),
+        @NamedQuery(name = "getPricesFromDateToDate",
+                query = "select p " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getpricefromQurrencyCode",
+                query = "select p " +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode AND p.date=:userDate")
 })
-
-
 public class Price {
 
     @Id
@@ -28,18 +35,6 @@ public class Price {
     private BigDecimal close;
     private BigDecimal volume;
     private String quotationCode;
-
-    public String getQuotationCode() {
-        return quotationCode;
-    }
-
-    public void setQuotationCode(String quotationCode) {
-        this.quotationCode = quotationCode;
-    }
-    //@JoinColumn(name = "quot")
-
-    //my
-    //@ManyToOne
 
     @ManyToOne
     @JoinColumn(name="quotation_id")
@@ -107,6 +102,14 @@ public class Price {
 
     public void setQuotation(Quotation quotation) {
         this.quotation = quotation;
+    }
+
+    public String getQuotationCode() {
+        return quotationCode;
+    }
+
+    public void setQuotationCode(String quotationCode) {
+        this.quotationCode = quotationCode;
     }
 }
 
