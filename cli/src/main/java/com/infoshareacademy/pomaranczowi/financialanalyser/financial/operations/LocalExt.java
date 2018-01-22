@@ -35,7 +35,7 @@ public class LocalExt {
         return isBetween;
     }
 
-    private Extremes getMaxOpen(Quotation quotation) {
+    public Extremes getMaxOpen(Quotation quotation) {
         Extremes extremes = new Extremes();
         for (Price x : quotation.getPrices()) {
             if (isBetween(x, startDate, endDate)) {
@@ -48,7 +48,7 @@ public class LocalExt {
         return extremes;
     }
 
-    private Extremes getMaxClose(Quotation quotation) {
+    public Extremes getMaxClose(Quotation quotation) {
         Extremes extremes = new Extremes();
         for (Price x : quotation.getPrices()) {
             if (isBetween(x, startDate, endDate)) {
@@ -61,7 +61,7 @@ public class LocalExt {
         return extremes;
     }
 
-    private Extremes getMaxHigh(Quotation quotation) {
+    public Extremes getMaxHigh(Quotation quotation) {
         Extremes extremes = new Extremes();
         for (Price x : quotation.getPrices()) {
             if (isBetween(x, startDate, endDate)) {
@@ -74,7 +74,7 @@ public class LocalExt {
         return extremes;
     }
 
-    private Extremes getMaxLow(Quotation quotation) {
+    public Extremes getMaxLow(Quotation quotation) {
         Extremes extremes = new Extremes();
         for (Price x : quotation.getPrices()) {
             if (isBetween(x, startDate, endDate)) {
@@ -87,23 +87,24 @@ public class LocalExt {
         return extremes;
     }
 
-    private Extremes getMaxVolume(Quotation quotation) {
+    public Extremes getMaxVolume(Quotation quotation) {
         Extremes extremes = new Extremes();
         for (Price x : quotation.getPrices()) {
-            if (isBetween(x, startDate, endDate))
+            if (isBetween(x, startDate, endDate)) {
                 if (extremes.getValue().compareTo(BigDecimal.ZERO) == 0) {
                     extremes.setValue(x.getVolume());
                     extremes.setDate(x.getDate());
                 }
-            if (x.getVolume().compareTo(extremes.getValue()) > 0) {
-                extremes.setValue(x.getVolume());
-                extremes.setDate(x.getDate());
+                if (x.getVolume().compareTo(extremes.getValue()) > 0) {
+                    extremes.setValue(x.getVolume());
+                    extremes.setDate(x.getDate());
+                }
             }
         }
         return extremes;
     }
 
-    private Extremes getMinOpen(Quotation quotation) {
+    public Extremes getMinOpen(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -122,7 +123,7 @@ public class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinClose(Quotation quotation) {
+    public Extremes getMinClose(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -141,7 +142,7 @@ public class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinHigh(Quotation quotation) {
+    public Extremes getMinHigh(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -160,7 +161,7 @@ public class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinLow(Quotation quotation) {
+    public Extremes getMinLow(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
@@ -179,7 +180,7 @@ public class LocalExt {
         return extremes;
     }
 
-    private Extremes getMinVolume(Quotation quotation) {
+    public Extremes getMinVolume(Quotation quotation) {
         Extremes extremes = new Extremes();
         BigDecimal bigDecimal = BigDecimal.valueOf(0);
         extremes.setValue(bigDecimal);
