@@ -23,8 +23,8 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao{
         return quotationRepository.isQuotationCodeInDB(quotationCode);
     }
 
-   /*@Override
-    public Quotation getQuotationByCode (String quoatationCode){
-       return quotationRepository.getQuotationByCode(quoatationCode);
-    }*/
+    @Override
+    public Long getTheNextFreeQuotationId(){
+        return quotationRepository.getTheNextFreeQuotationId();
+    }
 }

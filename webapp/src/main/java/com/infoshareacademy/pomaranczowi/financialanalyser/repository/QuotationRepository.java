@@ -14,7 +14,6 @@ public class QuotationRepository {
 
     public boolean addOrUpdateQuotation(Quotation quotation) {
         entityManager.flush();
-         //quotation.setPrices(quotation.getPrices());
         entityManager.merge(quotation);
         System.out.println("Quotation " + quotation + " added or update");
         return true;
@@ -26,10 +25,14 @@ public class QuotationRepository {
                 .getSingleResult().equals(quotationCode);
     }
 
-   /*public Quotation getQuotationByCode (String quoatationCode){
-        return (Quotation) entityManager.createNamedQuery("getQuotationByCode")
-                .setParameter("quotationCode", quoatationCode);
-    }*/
+    public Long getTheNextFreeQuotationId(){
+        try{
+            return (Long) entityManager.createNamedQuery("getTheNextFreeQuotationId").getResultList().get(0)+1;
+        }catch (Exception e){
+            return 1l;
+        }
+    }
+
 }
 
 

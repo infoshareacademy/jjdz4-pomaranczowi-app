@@ -1,6 +1,7 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +10,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "isQuotationCodeInDB",
                 query = "select q.code from Quotation q where q.code=:quotationCode"),
-        /*@NamedQuery(name = "getQuotationByCode",
-                query = "from Quotation where Quotation.code=:quotationCode")*/
+        @NamedQuery(name = "getTheNextFreeQuotationId",
+                query = "select MAX(q.id) from Quotation q")
 })
 public class Quotation implements Serializable {
 
@@ -23,12 +24,13 @@ public class Quotation implements Serializable {
     private String name;
 
     @Column
+    @NotNull
     private String code;
 
     @Enumerated(EnumType.STRING)
     private QuotationType quotationType;
 
-    @OneToMany(mappedBy = "quotation", targetEntity = Price.class ,cascade = CascadeType.PERSIST, orphanRemoval = false, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "quotation", targetEntity = Price.class ,cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
     private List<Price> prices = new ArrayList<>();
 
     public Long getId() {

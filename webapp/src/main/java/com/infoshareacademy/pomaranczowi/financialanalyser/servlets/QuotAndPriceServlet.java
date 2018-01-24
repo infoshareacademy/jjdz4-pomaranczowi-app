@@ -51,6 +51,8 @@ public class QuotAndPriceServlet extends HttpServlet {
 
     private void addQuotation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        System.out.println("Next free Price id: " + priceRepositoryDao.getTheNextFreePriceId());
+        System.out.println("Next free Quotation id: " + quotationRepositoryDao.getTheNextFreeQuotationId());
 
         Price price = new Price();
         price.setId(1l);
@@ -248,6 +250,19 @@ public class QuotAndPriceServlet extends HttpServlet {
         LocalDate.parse("2018-01-20", DateTimeFormatter.ISO_DATE);
 
         System.out.println("Max Open:" + priceRepositoryDao.getMaxOpenFromDateToDate("PZU001",LocalDate.parse("2018-01-20", DateTimeFormatter.ISO_DATE), LocalDate.parse("2018-01-25", DateTimeFormatter.ISO_DATE)));
+
+        
+        Quotation quotation6 = new Quotation();
+        quotation6.setId(6l);
+        quotation6.setName("FROM CLI");
+        //quotation4.setPrices(priceList2);
+        quotation6.setCode("FROM CLI");
+        quotation6.setQuotationType(QuotationType.FUNDINVESTMENT);
+        quotationRepositoryDao.addOrUpdateQuotation(quotation6);
+
+        System.out.println("Next free Price id: " + priceRepositoryDao.getTheNextFreePriceId());
+        System.out.println("Next free Quotation id: " + quotationRepositoryDao.getTheNextFreeQuotationId());
+
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/analysis.jsp");
         requestDispatcher.forward(req, resp);
