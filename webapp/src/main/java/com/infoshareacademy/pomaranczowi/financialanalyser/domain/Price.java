@@ -14,6 +14,9 @@ import java.time.LocalDate;
                         "from Price p " +
                         "join Quotation q on q.id = p.quotation.id " +
                         "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+        @NamedQuery(name = "getTheNextFreePriceId",
+                query = "select MAX(p.id)" +
+                        "from Price p"),
         @NamedQuery(name = "getMaxOpenFromDateToDate",
                 query = "select MAX(p.open) " +
                         "from Price p " +
@@ -69,12 +72,19 @@ public class Price {
 
     @Column
     private LocalDate date;
+    @Column(precision = 11, scale = 4)
     private BigDecimal open;
+    @Column(precision = 11, scale = 4)
     private BigDecimal high;
+    @Column(precision = 11, scale = 4)
     private BigDecimal low;
+    @Column(precision = 11, scale = 4)
     private BigDecimal close;
+    @Column(precision = 11, scale = 4)
     private BigDecimal volume;
     private String quotationCode;
+    @Column(insertable = false, updatable = false)
+    private Long quotation_id;
 
     @ManyToOne
     @JoinColumn(name="quotation_id")
@@ -150,6 +160,29 @@ public class Price {
 
     public void setQuotationCode(String quotationCode) {
         this.quotationCode = quotationCode;
+    }
+
+    public Long getQuotation_id() {
+        return quotation_id;
+    }
+
+    public void setQuotation_id(Long quotation_id) {
+        this.quotation_id = quotation_id;
+    }
+
+    @Override
+    public String toString() {
+        return "Price{" +
+                "id=" + id +
+                ", date=" + date +
+                ", open=" + open +
+                ", high=" + high +
+                ", low=" + low +
+                ", close=" + close +
+                ", volume=" + volume +
+                ", quotationCode='" + quotationCode + '\'' +
+                ", quotation=" + quotation +
+                '}';
     }
 }
 

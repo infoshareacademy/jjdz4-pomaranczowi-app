@@ -27,6 +27,11 @@ public class PriceRepositoryDaoBean implements PriceRepositoryDao {
     }
 
     @Override
+    public Long getTheNextFreePriceId(){
+        return priceRepository.getTheNextFreePriceId();
+    }
+
+    @Override
     public List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
         return priceRepository.getPricesFromDateToDate(quotationCode, startDate, endDate);
     }
