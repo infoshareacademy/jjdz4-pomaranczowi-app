@@ -12,18 +12,20 @@ import java.util.List;
 @Stateless
 public class PriceRepository {
 
-    //@EJB
-    //QuotationRepository quotationRepository;
-
     @PersistenceContext(unitName = "pUnit")
     private EntityManager entityManager;
 
     public void addOrUpdatePrice(Price price, String quotationCode) {
-        price.setQuotationCode(quotationCode);
-        //price.setQuotation(quotationRepository.getQuotationByCode(quotationCode));
-        entityManager.flush();
         entityManager.merge(price);
-        System.out.println("Price id: " + price.getId() + " added/updatetd");
+    }
+
+    public Long getTheNextFreePriceId(){
+        try{
+            return (Long) entityManager.createNamedQuery("getTheNextFreePriceId").getResultList().get(0)+1;
+        }
+        catch (Exception e){
+            return 1l;
+        }
     }
 
     public List<Price> getPricesFromDate(String quotationCode, LocalDate localDate){

@@ -14,6 +14,7 @@ public interface PriceRepositoryDao {
     boolean addOrUpdatePrice (Price price, String quotationCode);
     List<Price> getPricesFromDate(String quotationCode, LocalDate localDate);
     List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate);
+    Long getTheNextFreePriceId();
     BigDecimal getMaxOpenFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate);
     BigDecimal getMinOpenFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate);
     BigDecimal getMaxCloseFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate);
