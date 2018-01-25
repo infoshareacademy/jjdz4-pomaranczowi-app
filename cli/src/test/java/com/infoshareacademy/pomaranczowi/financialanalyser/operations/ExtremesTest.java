@@ -1,22 +1,22 @@
-package com.infoshareacademy.pomaranczowi.financialanalyser;
+package com.infoshareacademy.pomaranczowi.financialanalyser.operations;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Extremes;
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.GlobalExt;
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.LocalExt;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
 import static org.assertj.core.api.Assertions.assertThat;
-
 
 @RunWith(JUnitParamsRunner.class)
 public class ExtremesTest {
