@@ -2,6 +2,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDao;
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationRepositoryDao;
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -20,10 +21,10 @@ import java.util.List;
 public class HomeServlet extends HttpServlet {
 
     @EJB
-    QuotationRepositoryDao quotationRepositoryDao;
+    private QuotationRepositoryDao quotationRepositoryDao;
 
     @EJB
-    PriceRepositoryDao priceRepositoryDao;
+    private PriceRepositoryDao priceRepositoryDao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,10 +41,10 @@ public class HomeServlet extends HttpServlet {
         request.getSession().setAttribute("step", step);
 
         if (step == 1) {
-            if (request.getParameter("data") != null) {
-                request.getSession().setAttribute("data", request.getParameter("data"));
-                List<String> waluty = Arrays.asList("USD", "EUR", "AUD");
-                request.getSession().setAttribute("listOfCodes", waluty);
+            String data = request.getParameter("data");
+            if (data != null) {
+                request.getSession().setAttribute("data", data);
+                request.getSession().setAttribute("codeList", getCodeList(data));
             }
         }
 
@@ -73,5 +74,23 @@ public class HomeServlet extends HttpServlet {
                 priceRepositoryDao.getMaxOpenFromDateToDate(code,
                         LocalDate.parse("2010-01-20", DateTimeFormatter.ISO_DATE),
                         LocalDate.parse("2018-01-20", DateTimeFormatter.ISO_DATE)));
+    }
+
+    private List<String> getCodeList(String data) {
+        List<String> codeList = quotationRepositoryDao
+                .getAllQuotationsList(chooseQuotation(data));
+        codeList.sort(String.CASE_INSENSITIVE_ORDER);
+        return codeList;
+    }
+
+    private QuotationType chooseQuotation(String quotationFromUser) {
+        switch (quotationFromUser) {
+            case "fund":
+                return QuotationType.FUNDINVESTMENT;
+            case "currency":
+                return QuotationType.CURRENCY;
+            default:
+                return null;
+        }
     }
 }

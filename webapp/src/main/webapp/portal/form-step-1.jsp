@@ -10,7 +10,7 @@
             <%--<input type="text" class="form-control" name="code" id="chooseCode"
                    value="<c:out value="${sessionScope.code}"/>" required>--%>
             <select type="text" class="form-control" name="code" id="chooseCode" required>
-                <c:forEach var="CodeFromDB" items="${listOfCodes}">
+                <c:forEach var="CodeFromDB" items="${codeList}">
                     <option <c:if test="${CodeFromDB == sessionScope.code}">selected</c:if>>
                         <c:out value="${CodeFromDB}"/></option>
                 </c:forEach>
