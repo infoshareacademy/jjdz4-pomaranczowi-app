@@ -17,6 +17,16 @@ import java.time.LocalDate;
         @NamedQuery(name = "getTheNextFreePriceId",
                 query = "select MAX(p.id)" +
                         "from Price p"),
+        @NamedQuery(name = "getMinDate",
+                query = "select MIN(p.date)" +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode"),
+        @NamedQuery(name = "getMaxDate",
+                query = "select MAX(p.date)" +
+                        "from Price p " +
+                        "join Quotation q on q.id = p.quotation.id " +
+                        "where q.code=:quotationCode"),
         @NamedQuery(name = "getMaxOpenFromDateToDate",
                 query = "select MAX(p.open) " +
                         "from Price p " +
