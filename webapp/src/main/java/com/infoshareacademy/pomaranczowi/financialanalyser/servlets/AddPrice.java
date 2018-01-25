@@ -107,7 +107,7 @@ public class AddPrice extends HttpServlet {
                     price.setQuotation(quotation);
                     priceRepositoryDao.addOrUpdatePrice(price, quotationCode);
 
-                    System.out.println(price.toString());
+                    //System.out.println(price.toString());
 
                     priceId+=1;
                 }

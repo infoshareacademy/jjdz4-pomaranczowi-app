@@ -72,17 +72,19 @@ public class Price {
 
     @Column
     private LocalDate date;
-    @Column(precision = 11, scale = 2)
+    @Column(precision = 11, scale = 4)
     private BigDecimal open;
-    @Column(precision = 11, scale = 2)
+    @Column(precision = 11, scale = 4)
     private BigDecimal high;
-    @Column(precision = 11, scale = 2)
+    @Column(precision = 11, scale = 4)
     private BigDecimal low;
-    @Column(precision = 11, scale = 2)
+    @Column(precision = 11, scale = 4)
     private BigDecimal close;
-    @Column(precision = 11, scale = 2)
+    @Column(precision = 11, scale = 4)
     private BigDecimal volume;
     private String quotationCode;
+    @Column(insertable = false, updatable = false)
+    private Long quotation_id;
 
     @ManyToOne
     @JoinColumn(name="quotation_id")
@@ -158,6 +160,14 @@ public class Price {
 
     public void setQuotationCode(String quotationCode) {
         this.quotationCode = quotationCode;
+    }
+
+    public Long getQuotation_id() {
+        return quotation_id;
+    }
+
+    public void setQuotation_id(Long quotation_id) {
+        this.quotation_id = quotation_id;
     }
 
     @Override
