@@ -15,7 +15,6 @@
             <jsp:include page="data-simplification.jsp"/>
         </c:when>
     </c:choose>
-    Tutaj znajdą się wyniki analizy w zależności od tego co użytkownik wybrał w formularzu.
 </div>
 <form action="/portal/home" method="post">
     <jsp:include page="form-step-nav.jsp"/>

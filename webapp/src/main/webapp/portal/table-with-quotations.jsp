@@ -7,7 +7,7 @@
         <th colspan="2">LOW</th>
         <th colspan="2">HIGH</th>
         <th colspan="2">CLOSE</th>
-        <th colspan="2">VOLUME</th>
+        <%--<th colspan="2">VOLUME</th>--%>
     </tr>
     <tr>
         <td>max</td>
@@ -18,8 +18,8 @@
         <td>min</td>
         <td>max</td>
         <td>min</td>
-        <td>max</td>
-        <td>min</td>
+        <%--<td>max</td>
+        <td>min</td>--%>
     </tr>
     <tr>
         <td>${sessionScope.maxOpen}</td>
@@ -30,7 +30,7 @@
         <td>${sessionScope.minHigh}</td>
         <td>${sessionScope.maxClose}</td>
         <td>${sessionScope.minClose}</td>
-        <td>${sessionScope.maxVolume}</td>
-        <td>${sessionScope.minVolume}</td>
+        <%--<td>${sessionScope.maxVolume}</td>
+        <td>${sessionScope.minVolume}</td>--%>
     </tr>
 </table>

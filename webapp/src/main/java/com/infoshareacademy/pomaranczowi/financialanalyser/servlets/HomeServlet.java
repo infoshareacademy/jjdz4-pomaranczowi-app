@@ -70,10 +70,29 @@ public class HomeServlet extends HttpServlet {
     }
 
     private void printPricesForGlobalExtremes(HttpServletRequest request, String code) {
+        LocalDate startDate = LocalDate.parse("2010-01-20", DateTimeFormatter.ISO_DATE);
+        LocalDate endDate = LocalDate.parse("2018-01-20", DateTimeFormatter.ISO_DATE);
+
         request.getSession().setAttribute("maxOpen",
-                priceRepositoryDao.getMaxOpenFromDateToDate(code,
-                        LocalDate.parse("2010-01-20", DateTimeFormatter.ISO_DATE),
-                        LocalDate.parse("2018-01-20", DateTimeFormatter.ISO_DATE)));
+                priceRepositoryDao.getMaxOpenFromDateToDate(code, startDate, endDate));
+        request.getSession().setAttribute("minOpen",
+                priceRepositoryDao.getMinOpenFromDateToDate(code, startDate, endDate));
+        request.getSession().setAttribute("maxLow",
+                priceRepositoryDao.getMaxLowFromDateToDate(code, startDate, endDate));
+        request.getSession().setAttribute("minLow",
+                priceRepositoryDao.getMinLowFromDateToDate(code, startDate, endDate));
+        request.getSession().setAttribute("maxHigh",
+                priceRepositoryDao.getMaxHighFromDateToDate(code, startDate, endDate));
+        request.getSession().setAttribute("minHigh",
+                priceRepositoryDao.getMinHighFromDateToDate(code, startDate, endDate));
+        request.getSession().setAttribute("maxClose",
+                priceRepositoryDao.getMaxCloseFromDateToDate(code, startDate, endDate));
+        request.getSession().setAttribute("minClose",
+                priceRepositoryDao.getMinCloseFromDateToDate(code, startDate, endDate));
+        /*request.getSession().setAttribute("maxVolume",
+                priceRepositoryDao.getMaxVolumeFromDateToDate(code, startDate, endDate));
+        request.getSession().setAttribute("minVolume",
+                priceRepositoryDao.getMinVolumeFromDateToDate(code, startDate, endDate));*/
     }
 
     private List<String> getCodeList(String data) {
