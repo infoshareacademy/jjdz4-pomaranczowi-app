@@ -1,3 +1,8 @@
+/*
+Serwlet wrzucający dane walut do bazy danych
+ */
+
+
 package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDao;
@@ -117,6 +122,6 @@ public class AddPrice extends HttpServlet {
         }
         //nextFreeQuot = quotId + 1;
         quotId+=1;
-        quotationRepositoryDao.addOrUpdateQuotation(quotation);
+        //quotationRepositoryDao.addOrUpdateQuotation(quotation);
     }
 }
