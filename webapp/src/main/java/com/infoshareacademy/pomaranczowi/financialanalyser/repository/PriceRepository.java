@@ -43,6 +43,18 @@ public class PriceRepository {
                 .getResultList();
     }
 
+    public LocalDate getMinDate(String quotationCode){
+        return (LocalDate) entityManager.createNamedQuery("getMinDate")
+                .setParameter("quotationCode", quotationCode)
+                .getResultList().get(0);
+    }
+
+    public LocalDate getMaxDate(String quotationCode){
+        return (LocalDate) entityManager.createNamedQuery("getMaxDate")
+                .setParameter("quotationCode", quotationCode)
+                .getResultList().get(0);
+    }
+
     public BigDecimal getMaxOpenFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){
         return  (BigDecimal) entityManager.createNamedQuery("getMaxOpenFromDateToDate")
                 .setParameter("quotationCode", quotationCode)
