@@ -70,8 +70,10 @@ public class HomeServlet extends HttpServlet {
     }
 
     private void printPricesForGlobalExtremes(HttpServletRequest request, String code) {
-        LocalDate startDate = LocalDate.parse("2010-01-20", DateTimeFormatter.ISO_DATE);
-        LocalDate endDate = LocalDate.parse("2018-01-20", DateTimeFormatter.ISO_DATE);
+        LocalDate startDate = priceRepositoryDao.getMinDate(code);
+        LocalDate endDate = priceRepositoryDao.getMaxDate(code);
+        request.getSession().setAttribute("startDate", startDate);
+        request.getSession().setAttribute("endDate", endDate);
 
         request.getSession().setAttribute("maxOpen",
                 priceRepositoryDao.getMaxOpenFromDateToDate(code, startDate, endDate));
