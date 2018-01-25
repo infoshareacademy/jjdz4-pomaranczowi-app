@@ -1,10 +1,12 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.repository;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Quotation;
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Stateless
 public class QuotationRepository {
@@ -31,6 +33,12 @@ public class QuotationRepository {
         }catch (Exception e){
             return 1l;
         }
+    }
+
+    public List<String> getAllQuotationsList(QuotationType quotationType){
+        return entityManager.createNamedQuery("getAllQuotationList")
+                .setParameter("quotationType",quotationType)
+                .getResultList();
     }
 
 }

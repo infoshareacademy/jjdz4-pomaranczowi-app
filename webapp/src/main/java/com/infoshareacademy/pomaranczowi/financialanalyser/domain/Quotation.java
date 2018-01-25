@@ -11,7 +11,9 @@ import java.util.List;
         @NamedQuery(name = "isQuotationCodeInDB",
                 query = "select q.code from Quotation q where q.code=:quotationCode"),
         @NamedQuery(name = "getTheNextFreeQuotationId",
-                query = "select MAX(q.id) from Quotation q")
+                query = "select MAX(q.id) from Quotation q"),
+        @NamedQuery(name = "getAllQuotationList",
+                query = "select DISTINCT q.code from Quotation q where q.quotationType=:quotationType")
 })
 public class Quotation implements Serializable {
 

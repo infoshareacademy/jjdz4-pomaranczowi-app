@@ -1,10 +1,12 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.dao;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Quotation;
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 import com.infoshareacademy.pomaranczowi.financialanalyser.repository.QuotationRepository;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.List;
 
 @Stateless
 public class QuotationRepositoryDaoBean implements QuotationRepositoryDao{
@@ -26,5 +28,10 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao{
     @Override
     public Long getTheNextFreeQuotationId(){
         return quotationRepository.getTheNextFreeQuotationId();
+    }
+
+    @Override
+    public List<String> getAllQuotationsList(QuotationType quotationType){
+        return quotationRepository.getAllQuotationsList(quotationType);
     }
 }
