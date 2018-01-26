@@ -65,11 +65,22 @@ public class HomeServlet extends HttpServlet {
                     case "globalExtremes":
                         printPricesForGlobalExtremes(request, code);
                         break;
+                    case "localExtremes":
+                        printPricesForLocalExtremes(request, code);
+                        break;
                 }
             }
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void printPricesForLocalExtremes(HttpServletRequest request, String code) {
+        LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
+        LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
+        request.getSession().setAttribute("startDate", startDate);
+        request.getSession().setAttribute("endDate", endDate);
+        printMinMaxValues(request, code, startDate, endDate);
     }
 
     private List<Integer> getYearsList(String code) {
@@ -87,7 +98,10 @@ public class HomeServlet extends HttpServlet {
         LocalDate endDate = priceRepositoryDao.getMaxDate(code);
         request.getSession().setAttribute("startDate", startDate);
         request.getSession().setAttribute("endDate", endDate);
+        printMinMaxValues(request, code, startDate, endDate);
+    }
 
+    private void printMinMaxValues(HttpServletRequest request, String code, LocalDate startDate, LocalDate endDate) {
         request.getSession().setAttribute("maxOpen",
                 priceRepositoryDao.getMaxOpenFromDateToDate(code, startDate, endDate));
         request.getSession().setAttribute("minOpen",

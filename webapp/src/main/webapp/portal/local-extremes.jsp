@@ -3,8 +3,10 @@
 
 <h4>
     Ekstrema lokalne dla
-    <c:out value="${sessionScope.data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'} ${sessionScope.code}."/>
+    <c:out value="${sessionScope.data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'} ${sessionScope.code}"/>
 </h4>
 <h5>
     z okresu <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
 </h5>
+
+<jsp:include page="table-with-quotations.jsp"/>
