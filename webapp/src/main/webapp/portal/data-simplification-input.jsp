@@ -6,8 +6,8 @@
         <div class="col-sm-10">
             <label for="chooseYear">Wybierz rok:</label>
             <select class="form-control" type="text" name="year" id="chooseYear" onchange="showOrHideMonths()">
-                <option></option>
                 <c:forEach var="singleYear" items="${yearsList}">
+                    <option></option>
                     <option <c:if test="${singleYear == sessionScope.singleYear}">selected</c:if>>
                         <c:out value="${singleYear}"/></option>
                 </c:forEach>
@@ -18,19 +18,19 @@
         <div class="col-sm-10">
             <label for="chooseMonth">Wybierz miesiac:</label>
             <select class="form-control" type="text" name="month" id="chooseMonth">
-                <option></option>
-                <option>styczen</option>
-                <option>luty</option>
-                <option>marzec</option>
-                <option>kwiecen</option>
-                <option>maj</option>
-                <option>czerwiec</option>
-                <option>lipiec</option>
-                <option>sierpien</option>
-                <option>wrzesien</option>
-                <option>pazdziernik</option>
-                <option>listopad</option>
-                <option>grudzien</option>
+                <option value="0"></option>
+                <option value="1">styczen</option>
+                <option value="2">luty</option>
+                <option value="3">marzec</option>
+                <option value="4">kwiecen</option>
+                <option value="5">maj</option>
+                <option value="6">czerwiec</option>
+                <option value="7">lipiec</option>
+                <option value="8">sierpien</option>
+                <option value="9">wrzesien</option>
+                <option value="10">pazdziernik</option>
+                <option value="11">listopad</option>
+                <option value="12">grudzien</option>
             </select>
         </div>
     </div>

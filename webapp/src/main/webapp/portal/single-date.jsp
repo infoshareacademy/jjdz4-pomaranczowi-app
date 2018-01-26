@@ -6,4 +6,12 @@
     <c:out value="${sessionScope.data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'} ${sessionScope.code}."/>
 </h4>
 
-<jsp:include page="single-date-table.jsp"/>
+<c:choose>
+    <c:when test="${dateError != null}">
+        <h5 style="color: red;">${dateError}</h5>
+    </c:when>
+    <c:otherwise>
+        <jsp:include page="single-date-table.jsp"/>
+    </c:otherwise>
+</c:choose>
+

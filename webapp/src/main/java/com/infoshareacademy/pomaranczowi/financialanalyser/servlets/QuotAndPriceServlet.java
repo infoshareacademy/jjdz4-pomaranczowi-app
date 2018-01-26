@@ -198,8 +198,8 @@ public class QuotAndPriceServlet extends HttpServlet {
         price7.setQuotation(quotation2);
         priceRepositoryDao.addOrUpdatePrice(price7, "price7");
 
-        List<Price> priceListFromDate = priceRepositoryDao.getPricesFromDate("PZU001", LocalDate.now());
-        for(Price priceFor : priceListFromDate) System.out.println("Price open: " + priceFor.getOpen());
+        Price priceFromDate = priceRepositoryDao.getPriceFromDate("PZU001", LocalDate.now());
+        System.out.println("Price open: " + priceFromDate.getOpen());
 
         if (quotationRepositoryDao.isQuotationCodeInDB(quotation2.getCode()))
             System.out.println("Znaleziono! " + quotation2.getCode());

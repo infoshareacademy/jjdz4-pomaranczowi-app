@@ -6,6 +6,7 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +74,7 @@ public class HomeServlet extends HttpServlet {
                         printPricesForSingleDate(request, code);
                         break;
                     case "dataSimplification":
-                        printSipmlifiedPrices(request, code);
+                        checkIfYearSelected(request, code);
                         break;
                 }
             }
@@ -82,10 +83,26 @@ public class HomeServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
-    private void printSipmlifiedPrices(HttpServletRequest request, String code) {
+    private void checkIfYearSelected(HttpServletRequest request, String code) {
+        if (request.getParameter("year").equals("")) {
+            request.setAttribute("errorMessage", "Wybierz rok!");
+        } else {
+            printSipmlifiedPrices(request, code);
+        }
+    }
 
+    private void printSipmlifiedPrices(HttpServletRequest request, String code) {
+        Integer month = Integer.valueOf(request.getParameter("month"));
+        Integer year = Integer.valueOf(request.getParameter("year"));
         LocalDate startDate;
         LocalDate endDate;
+        if (month.equals(0)) {
+            startDate = Year.of(year).atDay(1);
+            endDate = Year.of(year).atMonth(12).atEndOfMonth();
+        } else {
+            startDate = YearMonth.of(year, month).atDay(1);
+            endDate = YearMonth.of(year, month).atEndOfMonth();
+        }
         request.getSession().setAttribute("startDate", startDate);
         request.getSession().setAttribute("endDate", endDate);
         printMinMaxValues(request, code, startDate, endDate);
@@ -94,19 +111,29 @@ public class HomeServlet extends HttpServlet {
     private void printPricesForSingleDate(HttpServletRequest request, String code) {
         LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ISO_DATE);
         request.getSession().setAttribute("date", date);
-        Price price = priceRepositoryDao.getPricesFromDate(code, date).get(0);
-        request.getSession().setAttribute("Open", price.getOpen());
-        request.getSession().setAttribute("Low", price.getLow());
-        request.getSession().setAttribute("High", price.getHigh());
-        request.getSession().setAttribute("Close", price.getClose());
+        try {
+            Price price = priceRepositoryDao.getPriceFromDate(code, date);
+            request.getSession().setAttribute("Open", price.getOpen());
+            request.getSession().setAttribute("Low", price.getLow());
+            request.getSession().setAttribute("High", price.getHigh());
+            request.getSession().setAttribute("Close", price.getClose());
+        } catch (EJBTransactionRolledbackException e) {
+            request.setAttribute("dateError", "Nie ma notowan dla powyzszej daty!");
+        }
     }
 
     private void printPricesForLocalExtremes(HttpServletRequest request, String code) {
         LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
         LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
-        request.getSession().setAttribute("startDate", startDate);
-        request.getSession().setAttribute("endDate", endDate);
-        printMinMaxValues(request, code, startDate, endDate);
+        if (startDate.isBefore(endDate)) {
+            request.getSession().setAttribute("startDate", startDate);
+            request.getSession().setAttribute("endDate", endDate);
+            printMinMaxValues(request, code, startDate, endDate);
+        } else if (startDate.isAfter(endDate)) {
+            request.setAttribute("dateLogicError", "Blad chronologii dat!");
+        } else {
+            request.setAttribute("dateLogicError", "Wybierz opcje: Wartości z danego dnia!");
+        }
     }
 
     private List<Integer> getYearsList(String code) {
