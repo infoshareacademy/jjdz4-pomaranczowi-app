@@ -7,8 +7,10 @@
             <label for="chooseYear">Wybierz rok:</label>
             <select class="form-control" type="text" name="year" id="chooseYear" onchange="showOrHideMonths()">
                 <option></option>
-                <option>2018</option>
-                <option>2017</option>
+                <c:forEach var="singleYear" items="${yearsList}">
+                    <option <c:if test="${singleYear == sessionScope.singleYear}">selected</c:if>>
+                        <c:out value="${singleYear}"/></option>
+                </c:forEach>
             </select>
         </div>
     </div>

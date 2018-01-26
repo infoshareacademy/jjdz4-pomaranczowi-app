@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,8 +50,10 @@ public class HomeServlet extends HttpServlet {
         }
 
         if (step == 2) {
-            if (request.getParameter("code") != null) {
-                request.getSession().setAttribute("code", request.getParameter("code"));
+            String code = request.getParameter("code");
+            if (code != null) {
+                request.getSession().setAttribute("code", code);
+                request.getSession().setAttribute("yearsList", getYearsList(code));
             }
         }
 
@@ -67,6 +70,16 @@ public class HomeServlet extends HttpServlet {
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private List<Integer> getYearsList(String code) {
+        List<Integer> yearsList = new ArrayList<>();
+        Integer minYear = priceRepositoryDao.getMinDate(code).getYear();
+        Integer maxYear = priceRepositoryDao.getMaxDate(code).getYear();
+        for (; minYear <= maxYear; minYear++) {
+            yearsList.add(minYear);
+        }
+        return yearsList;
     }
 
     private void printPricesForGlobalExtremes(HttpServletRequest request, String code) {
