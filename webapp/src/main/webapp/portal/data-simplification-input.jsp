@@ -16,21 +16,21 @@
     </div>
     <div class="form-group row" id="chooseMonthToggleView" style="display: none">
         <div class="col-sm-10">
-            <label for="chooseMonth">Wybierz miesiac:</label>
+            <label for="chooseMonth">Wybierz miesiąc:</label>
             <select class="form-control" type="text" name="month" id="chooseMonth">
                 <option value="0"></option>
-                <option value="1">styczen</option>
+                <option value="1">styczeń</option>
                 <option value="2">luty</option>
                 <option value="3">marzec</option>
-                <option value="4">kwiecen</option>
+                <option value="4">kwieceń</option>
                 <option value="5">maj</option>
                 <option value="6">czerwiec</option>
                 <option value="7">lipiec</option>
-                <option value="8">sierpien</option>
-                <option value="9">wrzesien</option>
-                <option value="10">pazdziernik</option>
+                <option value="8">sierpień</option>
+                <option value="9">wrzesień</option>
+                <option value="10">październik</option>
                 <option value="11">listopad</option>
-                <option value="12">grudzien</option>
+                <option value="12">grudzień</option>
             </select>
         </div>
     </div>

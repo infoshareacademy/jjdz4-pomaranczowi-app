@@ -118,7 +118,7 @@ public class HomeServlet extends HttpServlet {
             request.getSession().setAttribute("High", price.getHigh());
             request.getSession().setAttribute("Close", price.getClose());
         } catch (EJBTransactionRolledbackException e) {
-            request.setAttribute("dateError", "Nie ma notowan dla powyzszej daty!");
+            request.setAttribute("dateError", "Nie ma notowań dla powyższej daty!");
         }
     }
 
@@ -130,9 +130,9 @@ public class HomeServlet extends HttpServlet {
             request.getSession().setAttribute("endDate", endDate);
             printMinMaxValues(request, code, startDate, endDate);
         } else if (startDate.isAfter(endDate)) {
-            request.setAttribute("dateLogicError", "Blad chronologii dat!");
+            request.setAttribute("dateLogicError", "Błąd chronologii dat!");
         } else {
-            request.setAttribute("dateLogicError", "Wybierz opcje: Wartości z danego dnia!");
+            request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
         }
     }
 

@@ -4,13 +4,13 @@
 <div id="chooseTwoDatesToggleView" style="display: none">
     <div class="form-group row">
         <div class="col-sm-10">
-            <label for="chooseStartDate">Podaj date poczatkowa</label>
+            <label for="chooseStartDate">Podaj datę poczatkową</label>
             <input type="date" class="form-control" name="startDate" id="chooseStartDate">
         </div>
     </div>
     <div class="form-group row">
         <div class="col-sm-10">
-            <label for="chooseEndDate">Podaj date koncowa</label>
+            <label for="chooseEndDate">Podaj datę koncową</label>
             <input type="date" class="form-control" name="endDate" id="chooseEndDate">
         </div>
     </div>
