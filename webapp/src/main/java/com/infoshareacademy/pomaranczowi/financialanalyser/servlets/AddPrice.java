@@ -36,8 +36,8 @@ public class AddPrice extends HttpServlet {
     @EJB
     PriceRepositoryDao priceRepositoryDao;
 
-    Long nextFreeQuot = 1l; //quotationRepositoryDao.getTheNextFreeQuotationId();
-    Long nextFreePrice = 1l; //priceRepositoryDao.getTheNextFreePriceId();
+    Long nextFreeQuot = 1l;   //quotationRepositoryDao.getTheNextFreeQuotationId();
+    Long nextFreePrice = 1l;  //priceRepositoryDao.getTheNextFreePriceId();
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
@@ -64,23 +64,19 @@ public class AddPrice extends HttpServlet {
 
         quotationCode = listOfFiles[i].getName().substring(0, listOfFiles[i].getName().length() - 4);
 
-        File file = listOfFiles[i];
-
         nextFreeQuot = quotationRepositoryDao.getTheNextFreeQuotationId();
         nextFreePrice = priceRepositoryDao.getTheNextFreePriceId();
 
-        SaveToDatabase(file, quotationCode, nextFreeQuot, nextFreePrice);
-
+        saveToDatabase(listOfFiles[i], quotationCode, nextFreeQuot, nextFreePrice);
 
             } else if (listOfFiles[i].isDirectory()) {
                 System.out.println("Directory " + listOfFiles[i].getName());
             }
         }
-
     }
 
 
-    private void SaveToDatabase(File file, String quotationCode, Long quotId, Long priceId) throws FileNotFoundException {
+    private void saveToDatabase(File file, String quotationCode, Long quotId, Long priceId) throws FileNotFoundException {
         Scanner fileScanner = new Scanner(file);
 
         Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]+.?[0-9]*)$");
@@ -92,36 +88,31 @@ public class AddPrice extends HttpServlet {
         quotation.setQuotationType(QuotationType.CURRENCY);
         quotationRepositoryDao.addOrUpdateQuotation(quotation);
 
-        try {
-            while (fileScanner.hasNextLine()) {
+            try {
+                while (fileScanner.hasNextLine()) {
 
-                Matcher matcher = pattern.matcher(fileScanner.nextLine());
-                if (matcher.matches()) {
+                    Matcher matcher = pattern.matcher(fileScanner.nextLine());
+                    if (matcher.matches()) {
 
+                        Price price = new Price();
 
-                    Price price = new Price();
+                        price.setId(priceId);
+                        price.setDate(LocalDate.parse(matcher.group(2), formatter));
+                        price.setOpen(new BigDecimal(matcher.group(3)));
+                        price.setHigh(new BigDecimal(matcher.group(4)));
+                        price.setLow(new BigDecimal(matcher.group(5)));
+                        price.setClose(new BigDecimal(matcher.group(6)));
+                        price.setVolume(new BigDecimal(matcher.group(7)));
+                        price.setQuotationCode(quotation.getCode());
+                        price.setQuotation(quotation);
+                        priceRepositoryDao.addOrUpdatePrice(price, quotationCode);
 
-                    price.setId(priceId);
-                    price.setDate(LocalDate.parse(matcher.group(2), formatter));
-                    price.setOpen(new BigDecimal(matcher.group(3)));
-                    price.setHigh(new BigDecimal(matcher.group(4)));
-                    price.setLow(new BigDecimal(matcher.group(5)));
-                    price.setClose(new BigDecimal(matcher.group(6)));
-                    price.setVolume(new BigDecimal(matcher.group(7)));
-                    price.setQuotationCode(quotation.getCode());
-                    price.setQuotation(quotation);
-                    priceRepositoryDao.addOrUpdatePrice(price, quotationCode);
-
-                    //System.out.println(price.toString());
-
-                    priceId+=1;
+                        priceId += 1;
+                    }
                 }
+            } catch (NullPointerException e) {
+                System.out.println("Wystąpił błąd przy wczytywaniu pliku!");
             }
-        } catch (NullPointerException e) {
-            System.out.println("Wystąpił błąd przy wczytywaniu pliku!");
-        }
-        //nextFreeQuot = quotId + 1;
-        quotId+=1;
-        //quotationRepositoryDao.addOrUpdateQuotation(quotation);
+            quotId += 1;
     }
 }

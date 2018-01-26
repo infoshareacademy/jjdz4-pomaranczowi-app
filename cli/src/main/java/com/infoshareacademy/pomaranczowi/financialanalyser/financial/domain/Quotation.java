@@ -1,17 +1,20 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.exceptions.NoSuchDateException;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Quotation {
 
     private List<Price> prices = new ArrayList<>();
-    @Setter @Getter private String name;
+    private String name;
 
     public static void showAll(Quotation quotation, LocalDate date) {
         try {
@@ -25,32 +28,32 @@ public class Quotation {
         }
     }
 
-    BigDecimal getOpen(LocalDate date) throws NoSuchDateException {
+    public BigDecimal getOpen(LocalDate date) throws NoSuchDateException {
 
         return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
                 findFirst().orElseThrow(NoSuchDateException::new).getOpen();
     }
 
-    BigDecimal getHigh(LocalDate date) throws NoSuchDateException {
+    public BigDecimal getHigh(LocalDate date) throws NoSuchDateException {
 
         return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
                 findFirst().orElseThrow(NoSuchDateException::new).getHigh();
     }
 
-    BigDecimal getLow(LocalDate date) throws NoSuchDateException {
+    public BigDecimal getLow(LocalDate date) throws NoSuchDateException {
 
         return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
                 findFirst().orElseThrow(NoSuchDateException::new).getLow();
 
     }
 
-    BigDecimal getClose(LocalDate date) throws NoSuchDateException {
+    public BigDecimal getClose(LocalDate date) throws NoSuchDateException {
 
         return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
                 findFirst().orElseThrow(NoSuchDateException::new).getClose();
     }
 
-    BigDecimal getVolume(LocalDate date) throws NoSuchDateException {
+    public BigDecimal getVolume(LocalDate date) throws NoSuchDateException {
 
         return getPrices().parallelStream().filter(x -> x.getDate().equals(date)).
                 findFirst().orElseThrow(NoSuchDateException::new).getVolume();
@@ -75,11 +78,6 @@ public class Quotation {
 
     public Integer countPrices() {
         return getPrices().size();
-    }
-
-    public List<Price> getPrices() {
-
-        return prices;
     }
 
     public boolean containsDate(LocalDate date) {

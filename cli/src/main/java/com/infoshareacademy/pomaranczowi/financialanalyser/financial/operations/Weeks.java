@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-class Weeks {
+public class Weeks {
 
     @Setter @Getter private int week;
     @Setter @Getter private LocalDate from;
