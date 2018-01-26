@@ -1,12 +1,18 @@
-/*
+
 package com.infoshareacademy.pomaranczowi.financialanalyser;
+
+import com.infoshareacademy.pomaranczowi.financialanalyser.exceptions.NoSuchDateException;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.currency.CurrencyLoader;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,7 +33,8 @@ public class QuotationCurrencyLoaderTest {
         list.add("AUD,19930115,1.0716,1.0717,1.0718,1.0719,0");
 
         try {
-            Files.write(Paths.get("cli/data/currency/test.txt"), list);
+         Path file = Paths.get("../cli/data/currency/test.txt");
+            Files.write(file, list);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -129,4 +136,4 @@ public class QuotationCurrencyLoaderTest {
         assertThat(currency.containsDate(correctDate)).isTrue();
         assertThat(currency.containsDate(wrongDate)).isFalse();
     }
-}*/
+}

@@ -4,8 +4,6 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Pric
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quotation;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -17,14 +15,14 @@ import java.util.*;
 
 public class Simplify {
 
-    private static HashSet<Integer> year = new HashSet<>();
-    private static HashSet<Integer> month = new HashSet<>();
+    public static HashSet<Integer> year = new HashSet<>();
+    public static HashSet<Integer> month = new HashSet<>();
 
     private static Integer yearSelected;
     private static String yearSelectedAsString;
     private static Integer monthSelected;
     private static String monthSelectedAsString;
-    private static ArrayList<Weeks> week = new ArrayList<>();
+    public static ArrayList<Weeks> week = new ArrayList<>();
 
     public static void periodYear(Quotation quotation) {
         System.out.println("\nDostępne są notowania z poniższych lat.\n" +
@@ -74,7 +72,7 @@ public class Simplify {
         }
     }
 
-    private static void periodMonth(Quotation quotation, Integer yearSelected) {
+    public static void periodMonth(Quotation quotation, Integer yearSelected) {
         boolean dataOk = false;
         getMonthsForYear(quotation, yearSelected);
         for (int i : month) {
@@ -122,7 +120,7 @@ public class Simplify {
         }
     }
 
-    private static void periodWeek(Quotation quotation, Integer yearSelected, Integer monthSelected) {
+    public static void periodWeek(Quotation quotation, Integer yearSelected, Integer monthSelected) {
         LocalDate date = LocalDate.of(yearSelected, monthSelected, 1);
         getWeeksForMonth(date);
         for (Weeks x : week) {
@@ -131,14 +129,14 @@ public class Simplify {
         }
     }
 
-    private static void getYear(Quotation quotation) {
+    public static void getYear(Quotation quotation) {
         year.clear();
         for (Price x : quotation.getPrices()) {
             year.add(x.getDate().getYear());
         }
     }
 
-    private static void getMonthsForYear(Quotation quotation, Integer yearSelected) {
+    public static void getMonthsForYear(Quotation quotation, Integer yearSelected) {
         month.clear();
         for (Price x : quotation.getPrices()) {
             if (x.getDate().getYear() == yearSelected)
@@ -146,14 +144,15 @@ public class Simplify {
         }
     }
 
-    private static void result(Quotation quotation, LocalDate from, LocalDate to) {
+    public static LocalExt result(Quotation quotation, LocalDate from, LocalDate to) {
         LocalExt localExt = new LocalExt();
         localExt.setStartDate(from);
         localExt.setEndDate(to);
         localExt.showAll(quotation);
+        return localExt;
     }
 
-    private static void getWeeksForMonth(LocalDate date) {
+    public static void getWeeksForMonth(LocalDate date) {
 
         LocalDate lastDateOfMonth = date.with(TemporalAdjusters.lastDayOfMonth());
         boolean dataOk = false;

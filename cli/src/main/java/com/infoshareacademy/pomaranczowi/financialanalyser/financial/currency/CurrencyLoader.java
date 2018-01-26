@@ -25,7 +25,7 @@ public class CurrencyLoader {
     public static Quotation load(String currencyCode) throws FileNotFoundException {
 
         Quotation currency = new Quotation();
-        File file = new File("cli/data/currency/" + currencyCode + ".txt");
+        File file = new File("../cli/data/currency/" + currencyCode + ".txt");
         Scanner fileScanner = new Scanner(file);
 
         Pattern pattern = Pattern.compile("^([A-Z]{3}),([0-9]{8}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]\\.[0-9]{4}),([0-9]+.?[0-9]*)$");
