@@ -72,11 +72,23 @@ public class HomeServlet extends HttpServlet {
                     case "singleDate":
                         printPricesForSingleDate(request, code);
                         break;
+                    case "dataSimplification":
+                        printSipmlifiedPrices(request, code);
+                        break;
                 }
             }
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void printSipmlifiedPrices(HttpServletRequest request, String code) {
+
+        LocalDate startDate;
+        LocalDate endDate;
+        request.getSession().setAttribute("startDate", startDate);
+        request.getSession().setAttribute("endDate", endDate);
+        printMinMaxValues(request, code, startDate, endDate);
     }
 
     private void printPricesForSingleDate(HttpServletRequest request, String code) {
