@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Stateless
 public class PriceRepository {
@@ -28,11 +29,11 @@ public class PriceRepository {
         }
     }
 
-    public List<Price> getPricesFromDate(String quotationCode, LocalDate localDate){
-        return   entityManager.createNamedQuery("getpricefromQurrencyCode")
+    public Price getPriceFromDate(String quotationCode, LocalDate localDate){
+        return   Optional.ofNullable((Price) entityManager.createNamedQuery("getpricefromQurrencyCode")
                 .setParameter("quotationCode", quotationCode)
                 .setParameter("userDate",localDate)
-                .getResultList();
+                .getResultList().get(0)).orElse(null);
     }
 
     public List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate){

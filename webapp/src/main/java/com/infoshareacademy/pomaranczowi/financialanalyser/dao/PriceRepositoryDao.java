@@ -12,7 +12,7 @@ import java.util.List;
 public interface PriceRepositoryDao {
 
     boolean addOrUpdatePrice (Price price, String quotationCode);
-    List<Price> getPricesFromDate(String quotationCode, LocalDate localDate);
+    Price getPriceFromDate(String quotationCode, LocalDate localDate);
     List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate);
     LocalDate getMinDate(String quotationCode);
     LocalDate getMaxDate(String quotationCode);
