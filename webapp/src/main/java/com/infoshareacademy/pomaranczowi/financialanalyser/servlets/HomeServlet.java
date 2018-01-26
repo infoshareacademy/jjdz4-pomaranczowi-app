@@ -2,6 +2,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDao;
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationRepositoryDao;
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 
 import javax.ejb.EJB;
@@ -68,11 +69,24 @@ public class HomeServlet extends HttpServlet {
                     case "localExtremes":
                         printPricesForLocalExtremes(request, code);
                         break;
+                    case "singleDate":
+                        printPricesForSingleDate(request, code);
+                        break;
                 }
             }
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void printPricesForSingleDate(HttpServletRequest request, String code) {
+        LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ISO_DATE);
+        request.getSession().setAttribute("date", date);
+        Price price = priceRepositoryDao.getPricesFromDate(code, date).get(0);
+        request.getSession().setAttribute("Open", price.getOpen());
+        request.getSession().setAttribute("Low", price.getLow());
+        request.getSession().setAttribute("High", price.getHigh());
+        request.getSession().setAttribute("Close", price.getClose());
     }
 
     private void printPricesForLocalExtremes(HttpServletRequest request, String code) {

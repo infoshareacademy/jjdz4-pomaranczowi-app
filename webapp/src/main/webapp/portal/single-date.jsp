@@ -5,3 +5,5 @@
     Notowania z dnia <c:out value="${sessionScope.date}"/> dla
     <c:out value="${sessionScope.data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'} ${sessionScope.code}."/>
 </h4>
+
+<jsp:include page="single-date-table.jsp"/>
