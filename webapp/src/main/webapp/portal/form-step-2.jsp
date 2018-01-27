@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<form action="/portal/home" method="post">
+<form action="" method="">
     <div class="form-group row">
         <div class="col-sm-10">
             <label for="chooseAction">Wybierz sposób sposób analizy:</label>
             <select type="text" class="form-control" name="action"
-                    id="chooseAction" onchange="toggleActionView()">
+                    id="chooseAction" onchange="toggleActionView()" onselect="toggleActionView()">
                 <option value="globalExtremes" <c:if test="${sessionScope.action == 'globalExtremes'}">selected</c:if>>
                     Ekstrema globalne
                 </option>
@@ -22,11 +22,13 @@
             </select>
         </div>
     </div>
-    <jsp:include page="data-simplification-input.jsp"/>
-    <jsp:include page="signle-date-input.jsp"/>
-    <jsp:include page="local-extremes-input.jsp"/>
+</form>
+<jsp:include page="data-simplification-input.jsp"/>
+<jsp:include page="signle-date-input.jsp"/>
+<jsp:include page="local-extremes-input.jsp"/>
+<form id="globalExtremes" action="/portal/home" method="post">
+    <input type="hidden" name="action" value="globalExtremes">
     <jsp:include page="form-step-nav.jsp"/>
-
 </form>
 
 <script>
@@ -34,23 +36,24 @@
         var yearSelectView = document.getElementById("chooseYearToggleView");
         var twoDatesSelectView = document.getElementById("chooseTwoDatesToggleView");
         var oneDateSelectView = document.getElementById("chooseOneDateToggleView");
+        var globalExtremes = document.getElementById("globalExtremes");
         var actionSelect = document.getElementById("chooseAction").selectedIndex;
-        if (actionSelect === 1) {
-            yearSelectView.style.display = "none";
+
+        yearSelectView.style.display = "none";
+        twoDatesSelectView.style.display = "none";
+        oneDateSelectView.style.display = "none";
+        globalExtremes.style.display = "none";
+
+        if (actionSelect === 0) {
+            globalExtremes.style.display = "block";
+        } else if (actionSelect === 1) {
             twoDatesSelectView.style.display = "block";
-            oneDateSelectView.style.display = "none";
         } else if (actionSelect === 2) {
-            yearSelectView.style.display = "none";
-            twoDatesSelectView.style.display = "none";
             oneDateSelectView.style.display = "block";
         } else if (actionSelect === 3) {
             yearSelectView.style.display = "block";
-            twoDatesSelectView.style.display = "none";
-            oneDateSelectView.style.display = "none";
-        } else {
-            yearSelectView.style.display = "none";
-            twoDatesSelectView.style.display = "none";
-            oneDateSelectView.style.display = "none";
         }
     }
+
+    toggleActionView().onload;
 </script>
