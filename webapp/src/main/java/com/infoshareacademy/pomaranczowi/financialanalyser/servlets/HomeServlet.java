@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -109,9 +110,9 @@ public class HomeServlet extends HttpServlet {
     }
 
     private void printPricesForSingleDate(HttpServletRequest request, String code) {
-        LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ISO_DATE);
-        request.getSession().setAttribute("date", date);
         try {
+            LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ISO_DATE);
+            request.getSession().setAttribute("date", date);
             Price price = priceRepositoryDao.getPriceFromDate(code, date);
             request.getSession().setAttribute("Open", price.getOpen());
             request.getSession().setAttribute("Low", price.getLow());
@@ -119,20 +120,27 @@ public class HomeServlet extends HttpServlet {
             request.getSession().setAttribute("Close", price.getClose());
         } catch (EJBTransactionRolledbackException e) {
             request.setAttribute("dateError", "Nie ma notowań dla powyższej daty!");
+        } catch (DateTimeParseException e) {
+            request.setAttribute("dateError", "Podaj datę!");
+            request.getSession().setAttribute("date", "\"brak daty\"");
         }
     }
 
     private void printPricesForLocalExtremes(HttpServletRequest request, String code) {
-        LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
-        LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
-        if (startDate.isBefore(endDate)) {
-            request.getSession().setAttribute("startDate", startDate);
-            request.getSession().setAttribute("endDate", endDate);
-            printMinMaxValues(request, code, startDate, endDate);
-        } else if (startDate.isAfter(endDate)) {
-            request.setAttribute("dateLogicError", "Błąd chronologii dat!");
-        } else {
-            request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
+        try {
+            LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
+            LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
+            if (startDate.isBefore(endDate)) {
+                request.getSession().setAttribute("startDate", startDate);
+                request.getSession().setAttribute("endDate", endDate);
+                printMinMaxValues(request, code, startDate, endDate);
+            } else if (startDate.isAfter(endDate)) {
+                request.setAttribute("dateLogicError", "Błąd chronologii dat!");
+            } else {
+                request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
+            }
+        } catch (DateTimeParseException e) {
+            request.setAttribute("dateLogicError", "Podaj daty!");
         }
     }
 
