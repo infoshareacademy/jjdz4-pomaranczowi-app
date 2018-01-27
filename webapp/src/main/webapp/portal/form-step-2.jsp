@@ -5,7 +5,7 @@
         <div class="col-sm-10">
             <label for="chooseAction">Wybierz sposób sposób analizy:</label>
             <select type="text" class="form-control" name="action"
-                    id="chooseAction" onchange="toggleActionView()" onselect="toggleActionView()">
+                    id="chooseAction" onchange="toggleActionView()">
                 <option value="globalExtremes" <c:if test="${sessionScope.action == 'globalExtremes'}">selected</c:if>>
                     Ekstrema globalne
                 </option>
@@ -30,7 +30,6 @@
     <input type="hidden" name="action" value="globalExtremes">
     <jsp:include page="form-step-nav.jsp"/>
 </form>
-
 <script>
     function toggleActionView() {
         var yearSelectView = document.getElementById("chooseYearToggleView");

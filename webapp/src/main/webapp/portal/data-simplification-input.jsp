@@ -5,9 +5,9 @@
     <div class="form-group row">
         <div class="col-sm-10">
             <label for="chooseYear">Wybierz rok:</label>
-            <select class="form-control" type="text" name="year" id="chooseYear" onchange="showOrHideMonths()" required>
+            <select class="form-control" type="text" name="year" id="chooseYear" onchange="showOrHideMonths()">
+                <option></option>
                 <c:forEach var="singleYear" items="${yearsList}">
-                    <option></option>
                     <option <c:if test="${singleYear == sessionScope.singleYear}">selected</c:if>>
                         <c:out value="${singleYear}"/></option>
                 </c:forEach>
