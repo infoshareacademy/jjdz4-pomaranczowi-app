@@ -41,3 +41,7 @@ h2 {
 .progress {
     margin-bottom: 1rem;
 }
+
+.hidden {
+    display: none;
+}

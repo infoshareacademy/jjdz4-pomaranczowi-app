@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div id="chooseYearToggleView" style="display: none">
+<form id="chooseYearToggleView" class="hidden" action="/portal/home" method="post">
     <div class="form-group row">
         <div class="col-sm-10">
             <label for="chooseYear">Wybierz rok:</label>
@@ -34,8 +34,9 @@
             </select>
         </div>
     </div>
-</div>
-
+    <input type="hidden" name="action" value="dataSimplification">
+    <jsp:include page="form-step-nav.jsp"/>
+</form>
 <script>
     function showOrHideMonths() {
         var monthSelectView = document.getElementById("chooseMonthToggleView");

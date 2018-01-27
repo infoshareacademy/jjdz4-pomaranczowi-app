@@ -1,8 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
-<form action="/portal/home" method="post">
+<form action="" method="">
     <div class="form-group row">
         <div class="col-sm-10">
             <label for="chooseAction">Wybierz sposób sposób analizy:</label>
@@ -24,11 +22,12 @@
             </select>
         </div>
     </div>
-    <jsp:include page="data-simplification-input.jsp"/>
-    <jsp:include page="signle-date-input.jsp"/>
-    <jsp:include page="local-extremes-input.jsp"/>
-    <jsp:include page="form-step-nav.jsp"/>
-
 </form>
-
-<script src="../js/toggleActionView.js"/>
+<jsp:include page="data-simplification-input.jsp"/>
+<jsp:include page="signle-date-input.jsp"/>
+<jsp:include page="local-extremes-input.jsp"/>
+<form id="globalExtremes" action="/portal/home" method="post">
+    <input type="hidden" name="action" value="globalExtremes">
+    <jsp:include page="form-step-nav.jsp"/>
+</form>
+<script src="../js/toggleActionView.js"></script>
