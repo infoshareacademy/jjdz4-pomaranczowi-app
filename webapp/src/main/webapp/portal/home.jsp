@@ -2,15 +2,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
+       value="en_GB"/>
+<%--value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"--%>
+<%--scope="session"/>--%>
 <fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="src/main/resources/language-files/fin-app"/>
+<fmt:setBundle basename="fin-app" var="finAppLanguage"/>
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
     <meta charset="UTF-8"/>
-    <title><fmt:message key="home.appName" /></title>
+    <title><fmt:message key="home.appName" bundle="${finAppLanguage}"/></title>
     <link rel="stylesheet" href="../css/style.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -18,7 +19,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/portal/home"><fmt:message key="home.appName" /></a>
+    <a class="navbar-brand" href="/portal/home"><fmt:message key="home.appName" bundle="${finAppLanguage}"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,13 +27,14 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="#"><fmt:message key="home.homePage" /> <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#"><fmt:message key="home.homePage" bundle="${finAppLanguage}"/> <span
+                        class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><fmt:message key="home.contact" /></a>
+                <a class="nav-link" href="#"><fmt:message key="home.contact" bundle="${finAppLanguage}"/></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout"><fmt:message key="home.logout" /></a>
+                <a class="nav-link" href="/logout"><fmt:message key="home.logout" bundle="${finAppLanguage}"/></a>
             </li>
         </ul>
     </div>

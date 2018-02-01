@@ -32,7 +32,6 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().setAttribute("language", "pl");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
         request.setAttribute("step", 0);
         requestDispatcher.forward(request, response);
