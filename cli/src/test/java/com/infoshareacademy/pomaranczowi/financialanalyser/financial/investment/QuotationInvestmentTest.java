@@ -169,44 +169,4 @@ public class QuotationInvestmentTest {
         //then
         assertThat(investment.lastDate().equals(date));
     }
-
-   /* @Test
-    public void currencyFirstDateLastDateTest() {
-        //given
-        Quotation currency = new Quotation();
-
-        try {
-            currency = CurrencyLoader.load("test");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        //when
-        LocalDate firstDate = LocalDate.parse("19930113",DateTimeFormatter.ofPattern("yyyyMMdd"));
-        LocalDate lastDate = LocalDate.parse("19930115",DateTimeFormatter.ofPattern("yyyyMMdd"));
-
-        //then
-        assertThat(currency.firstDate()).isEqualTo(firstDate);
-        assertThat(currency.lastDate()).isEqualTo(lastDate);
-    }
-
-    @Test
-    public void currencyContainsDateTest() {
-        //given
-        Quotation currency = new Quotation();
-
-        try {
-            currency = CurrencyLoader.load("test");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        //when
-        LocalDate correctDate = LocalDate.parse("19930114",DateTimeFormatter.ofPattern("yyyyMMdd"));
-        LocalDate wrongDate = LocalDate.parse("20100114",DateTimeFormatter.ofPattern("yyyyMMdd"));
-
-        //then
-        assertThat(currency.containsDate(correctDate)).isTrue();
-        assertThat(currency.containsDate(wrongDate)).isFalse();
-    }*/
 }
