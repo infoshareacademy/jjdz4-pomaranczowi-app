@@ -125,7 +125,8 @@ public class QuotationInvestmentTest {
             "2018-01-08",
             "2018-01-09",
             "2018-01-10",
-            "2018-01-11"
+            "2018-01-11",
+            "2018-01-12"
     })
     public void fundInvestmentContainsDateMethodTest(String correctDate) {
         //given
@@ -138,7 +139,7 @@ public class QuotationInvestmentTest {
         LocalDate date = LocalDate.parse(correctDate,DateTimeFormatter.ISO_DATE);
 
         //then
-            assertThat(investment.containsDate(date));
+        assertThat(investment.containsDate(date)).isTrue();
     }
 
     @Test
@@ -153,7 +154,8 @@ public class QuotationInvestmentTest {
         LocalDate date = LocalDate.parse("2018-01-08",DateTimeFormatter.ISO_DATE);
 
         //then
-        assertThat(investment.firstDate().equals(date));
+        assertEquals(investment.firstDate(),date);
+        //assertThat(investment.firstDate()).isEqualTo(s)
     }
 
     @Test
@@ -168,7 +170,7 @@ public class QuotationInvestmentTest {
         LocalDate date = LocalDate.parse("2018-01-11",DateTimeFormatter.ISO_DATE);
 
         //then
-        assertThat(investment.lastDate().equals(date));
+        assertEquals(investment.lastDate(),date);
     }
 
     @Test
