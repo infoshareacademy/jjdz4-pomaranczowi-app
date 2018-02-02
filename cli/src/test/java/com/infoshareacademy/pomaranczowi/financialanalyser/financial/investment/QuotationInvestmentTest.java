@@ -22,6 +22,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnitParamsRunner.class)
 public class QuotationInvestmentTest {
@@ -169,4 +170,17 @@ public class QuotationInvestmentTest {
         //then
         assertThat(investment.lastDate().equals(date));
     }
+
+    @Test
+    public void fundInvestmentCountPriceMethodTest() {
+        //given
+        Quotation investment;
+        QuotationCreate quotationCreate = new QuotationCreate();
+        quotationCreate.loadDataFromFile(filepath);
+        investment = InvestmentLoader.load(filepath);
+
+        //then
+        assertEquals(investment.countPrices().intValue(),4);
+    }
+
 }
