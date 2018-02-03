@@ -55,7 +55,7 @@ public class QuotationInvestmentTest {
             "2018-01-10",
             "2018-01-11"
     })
-    public void fundInvestmentCorrectExistingDateTest(String correctDate) {
+    public void fundInvestmentCorrectExistingDateValueIsNotNegativeTest(String correctDate) {
         //given
         Quotation investment;
         QuotationCreate quotationCreate = new QuotationCreate();
@@ -104,7 +104,13 @@ public class QuotationInvestmentTest {
     }
 
     @Test
-    public void fundInvestmentOneOfCorrectExistingDateTest() {
+    @Parameters({
+            "2018-01-08,109.42,109.42,109.42,109.42,0",
+            "2018-01-09,109.15,109.15,109.15,109.15,0",
+            "2018-01-10,108.47,108.47,108.47,108.47,0",
+            "2018-01-11,108.85,108.85,108.85,108.85,0"
+    })
+    public void fundInvestmentCorrectExistingDateTest(String correctDate, String open, String high, String low, String close, String volume) {
         //given
         Quotation investment;
         QuotationCreate quotationCreate = new QuotationCreate();
@@ -112,15 +118,15 @@ public class QuotationInvestmentTest {
         investment = InvestmentLoader.load(filepath);
 
         //when
-        LocalDate date = LocalDate.parse("2018-01-11",DateTimeFormatter.ISO_DATE);
+        LocalDate date = LocalDate.parse(correctDate,DateTimeFormatter.ISO_DATE);
 
         //then
         try {
-            assertThat(investment.getOpen(date)).isEqualTo(new BigDecimal("108.85"));
-            assertThat(investment.getHigh(date)).isEqualTo(new BigDecimal("108.85"));
-            assertThat(investment.getLow(date)).isEqualTo(new BigDecimal("108.85"));
-            assertThat(investment.getClose(date)).isEqualTo(new BigDecimal("108.85"));
-            assertThat(investment.getVolume(date)).isEqualTo(new BigDecimal("0"));
+            assertThat(investment.getOpen(date)).isEqualTo(new BigDecimal(open));
+            assertThat(investment.getHigh(date)).isEqualTo(new BigDecimal(high));
+            assertThat(investment.getLow(date)).isEqualTo(new BigDecimal(low));
+            assertThat(investment.getClose(date)).isEqualTo(new BigDecimal(close));
+            assertThat(investment.getVolume(date)).isEqualTo(new BigDecimal(volume));
         } catch (NoSuchDateException e) {
             fail("No such date");
         }
