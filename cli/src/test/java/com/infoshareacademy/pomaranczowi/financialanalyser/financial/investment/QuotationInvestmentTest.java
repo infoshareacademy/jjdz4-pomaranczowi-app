@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JUnitParamsRunner.class)
 public class QuotationInvestmentTest {
 
-    private static String filepath = "../cli/data/fund/test.txt";
+    private static String filepath = "../cli/data/fund/testFileWithFundInvestments.txt";
 
     @BeforeClass
     public static void BeforeClass() throws IOException {
