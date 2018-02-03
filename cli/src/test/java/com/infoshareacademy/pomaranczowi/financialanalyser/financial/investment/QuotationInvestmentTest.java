@@ -6,6 +6,7 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.financial.domain.Quot
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.QuotationCreate;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +41,12 @@ public class QuotationInvestmentTest {
 
             Path file = Paths.get(filepath);
             Files.write(file, list);
+    }
+
+    @AfterClass
+    public static void AfterClass() throws IOException {
+        Path file = Paths.get(filepath);
+        if (Files.exists(file)) Files.delete(file);
     }
 
     @Test
@@ -125,8 +132,7 @@ public class QuotationInvestmentTest {
             "2018-01-08",
             "2018-01-09",
             "2018-01-10",
-            "2018-01-11",
-            "2018-01-12"
+            "2018-01-11"
     })
     public void fundInvestmentContainsDateMethodTest(String correctDate) {
         //given
@@ -155,7 +161,6 @@ public class QuotationInvestmentTest {
 
         //then
         assertEquals(investment.firstDate(),date);
-        //assertThat(investment.firstDate()).isEqualTo(s)
     }
 
     @Test
