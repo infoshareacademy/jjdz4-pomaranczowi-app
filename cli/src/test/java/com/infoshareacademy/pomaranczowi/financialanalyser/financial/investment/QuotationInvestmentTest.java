@@ -1,4 +1,3 @@
-
 package com.infoshareacademy.pomaranczowi.financialanalyser.financial.investment;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.exceptions.NoSuchDateException;
@@ -189,5 +188,4 @@ public class QuotationInvestmentTest {
         //then
         assertEquals(investment.countPrices().intValue(),4);
     }
-
 }
