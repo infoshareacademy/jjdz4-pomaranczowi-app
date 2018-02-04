@@ -38,6 +38,19 @@
             </li>
         </ul>
     </div>
+    <div>
+        <ul style="list-style-type: none">
+            <li value="pl" style="display: inline">
+                <img src="../img/pl.gif" alt="polski" title="pl">
+            </li>
+            <li value="en" style="display: inline">
+                <img src="../img/en.gif" alt="english" title="en">
+            </li>
+            <li value="de" style="display: inline">
+                <img src="../img/de.gif" alt="deutsch" title="de">
+            </li>
+        </ul>
+    </div>
 </nav>
 <div class="container-fluid">
     <div class="row">
