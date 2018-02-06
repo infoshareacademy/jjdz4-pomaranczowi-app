@@ -32,9 +32,24 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        changeLanguage(request);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
-        request.setAttribute("step", 0);
+        setStepIfEmpty(request);
         requestDispatcher.forward(request, response);
+        doPost(request, response);
+    }
+
+    private void setStepIfEmpty(HttpServletRequest request) {
+        if (request.getSession().getAttribute("step") == null) {
+            request.setAttribute("step", 0);
+        }
+    }
+
+    private void changeLanguage(HttpServletRequest request) {
+        String pageLanguage = request.getParameter("lang");
+        if (pageLanguage != null) {
+            request.getSession().setAttribute("language", pageLanguage);
+        }
     }
 
     @Override

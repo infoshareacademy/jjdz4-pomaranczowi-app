@@ -1,10 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language"
-       value="en_GB"/>
-<%--value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"--%>
-<%--scope="session"/>--%>
+
+<c:if test="${sessionScope.language == null}">
+    <c:set var="language" scope="session" value="en_GB"/>
+</c:if>
+
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="fin-app" var="finAppLanguage"/>
 <!DOCTYPE html>
@@ -38,19 +39,7 @@
             </li>
         </ul>
     </div>
-    <div>
-        <ul style="list-style-type: none">
-            <li value="pl" style="display: inline">
-                <img src="../img/pl.gif" alt="polski" title="pl">
-            </li>
-            <li value="en" style="display: inline">
-                <img src="../img/en.gif" alt="english" title="en">
-            </li>
-            <li value="de" style="display: inline">
-                <img src="../img/de.gif" alt="deutsch" title="de">
-            </li>
-        </ul>
-    </div>
+    <jsp:include page="language-flags.jsp"/>
 </nav>
 <div class="container-fluid">
     <div class="row">
