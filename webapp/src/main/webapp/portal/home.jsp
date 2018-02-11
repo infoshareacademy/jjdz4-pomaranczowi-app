@@ -48,7 +48,7 @@
             <%-- Here you need to set total number of form steps --%>
             <c:set var="steps" scope="application" value="3"/>
 
-            <h2>Krok <c:out value="${step} z ${steps}"/></h2>
+            <h2><fmt:message key="home.step" bundle="${finAppLanguage}"/> <c:out value="${step} z ${steps}"/></h2>
 
             <c:set var="progress" scope="request" value="${(100/steps)*step}"/>
 
