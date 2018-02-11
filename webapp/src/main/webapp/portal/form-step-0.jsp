@@ -16,13 +16,13 @@
     <div class="form-group row">
         <div class="col-sm-10">
             <input type="hidden" name="step" value="1"/>
-            <label for="chooseFundOrCurrency">Wybierz proszę, jakie dane chcesz przeanalizować:</label>
+            <label for="chooseFundOrCurrency"><fmt:message key="app.chooseFundOrCurrency" bundle="${finAppLanguage}"/></label>
             <select class="form-control" type="text" name="data" id="chooseFundOrCurrency">
                 <option value="fund" <c:if test="${sessionScope.data == 'fund'}">selected</c:if>>
-                    Notowania funduszy inwestycyjnych
+                    <fmt:message key="app.fund" bundle="${finAppLanguage}"/>
                 </option>
                 <option value="currency" <c:if test="${sessionScope.data == 'currency'}">selected</c:if>>
-                    Notowania kursów walut
+                    <fmt:message key="app.currency" bundle="${finAppLanguage}"/>
                 </option>
             </select>
         </div>
