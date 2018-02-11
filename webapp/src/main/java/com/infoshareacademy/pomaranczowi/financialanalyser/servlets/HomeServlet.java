@@ -4,10 +4,13 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDa
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationRepositoryDao;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserService;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,10 +33,25 @@ public class HomeServlet extends HttpServlet {
     @EJB
     private PriceRepositoryDao priceRepositoryDao;
 
+    @EJB
+    private UserService userService;
+
+    private User user;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        userService = new UserService(config);
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
         request.setAttribute("step", 0);
+
+        request.getSession().setAttribute("User",userService.getUserInfo((String) request.getSession().getAttribute("AccessToken")));
+
         requestDispatcher.forward(request, response);
     }
 
@@ -43,6 +61,7 @@ public class HomeServlet extends HttpServlet {
 
         Integer step = Integer.valueOf(request.getParameter("step"));
         request.getSession().setAttribute("step", step);
+        request.getSession().setAttribute("User",userService.getUserInfo(request.getParameter("AccessToken")));
 
         if (step == 1) {
             String data = request.getParameter("data");

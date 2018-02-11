@@ -34,5 +34,5 @@ public class User {
 
     @JsonIgnore
     @JsonProperty("email_verified")
-    String emailVerified;
+    Boolean emailVerified;
 }
