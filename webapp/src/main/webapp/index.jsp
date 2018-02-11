@@ -26,11 +26,11 @@
         <content class="col col-sm-12 col-lg-8 offset-lg-2">
             <div class="jumbotron vertical-center opacity">
                 <h1 class="display-3"><fmt:message key="home.appName" bundle="${finAppLanguage}"/></h1>
-                <p class="lead">You need to log in to proceed.</p>
+                <p class="lead"><fmt:message key="home.loginInfo" bundle="${finAppLanguage}"/></p>
                 <hr class="my-4">
-                <p>Please use the button below to sign in or sign up.</p>
+                <p><fmt:message key="home.loginPressButtonInfo" bundle="${finAppLanguage}"/></p>
                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="/portal/home" role="button">Logowanie</a>
+                    <a class="btn btn-primary btn-lg" href="/portal/home" role="button"><fmt:message key="home.login" bundle="${finAppLanguage}"/></a>
                 </p>
             </div>
         </content>
