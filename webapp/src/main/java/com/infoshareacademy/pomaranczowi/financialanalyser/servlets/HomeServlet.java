@@ -64,6 +64,7 @@ public class HomeServlet extends HttpServlet {
             if (data != null) {
                 request.getSession().setAttribute("data", data);
                 request.getSession().setAttribute("codeList", getCodeList(data));
+                setChooseCodeMessage(request, data);
             }
         }
 
@@ -97,6 +98,14 @@ public class HomeServlet extends HttpServlet {
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void setChooseCodeMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("chooseCodeMessage", "chooseCode.fund");
+        } else {
+            request.getSession().setAttribute("chooseCodeMessage", "chooseCode.currency");
+        }
     }
 
     private void checkIfYearSelected(HttpServletRequest request, String code) {
