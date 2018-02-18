@@ -45,3 +45,16 @@ h2 {
 .hidden {
     display: none;
 }
+
+.alert img {
+    width: 120px;
+    height: 120px;
+    border: #ffffff solid;
+    border-radius: 50%;
+}
+
+.avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

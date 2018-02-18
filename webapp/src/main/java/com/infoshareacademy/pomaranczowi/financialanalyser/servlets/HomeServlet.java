@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -50,7 +51,9 @@ public class HomeServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
         request.setAttribute("step", 0);
 
-        request.getSession().setAttribute("User",userService.getUserInfo((String) request.getSession().getAttribute("AccessToken")));
+        HttpSession session = request.getSession(true);
+
+            session.setAttribute("user", userService.getUserInfo((String) session.getAttribute("accessToken")));
 
         requestDispatcher.forward(request, response);
     }
@@ -61,7 +64,6 @@ public class HomeServlet extends HttpServlet {
 
         Integer step = Integer.valueOf(request.getParameter("step"));
         request.getSession().setAttribute("step", step);
-        request.getSession().setAttribute("User",userService.getUserInfo(request.getParameter("AccessToken")));
 
         if (step == 1) {
             String data = request.getParameter("data");

@@ -26,13 +26,11 @@ public class User {
 
     String locale;
 
-    @JsonIgnore
     @JsonProperty("updated_at")
     String updatedAt;
 
     String email;
 
-    @JsonIgnore
     @JsonProperty("email_verified")
     Boolean emailVerified;
 }
