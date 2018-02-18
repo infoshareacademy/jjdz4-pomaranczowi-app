@@ -14,6 +14,9 @@
         <c:when test="${action == 'dataSimplification'}">
             <jsp:include page="data-simplification.jsp"/>
         </c:when>
+        <c:when test="${action == 'rawData'}">
+            <jsp:include page="raw-data.jsp"/>
+        </c:when>
     </c:choose>
 </div>
 <form action="/portal/home" method="post">

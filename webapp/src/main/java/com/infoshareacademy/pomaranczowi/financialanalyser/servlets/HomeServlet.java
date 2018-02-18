@@ -77,6 +77,10 @@ public class HomeServlet extends HttpServlet {
                     case "dataSimplification":
                         checkIfYearSelected(request, code);
                         break;
+                    case "rawData":
+                        request.getSession().setAttribute("prices", getPricesBetweenDates(request,code));
+
+                        break;
                 }
             }
         }
@@ -144,6 +148,30 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
+
+
+    private List<Price> getPricesBetweenDates(HttpServletRequest request, String code){
+        try {
+            LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
+            LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
+            if (startDate.isBefore(endDate)) {
+                request.getSession().setAttribute("startDate", startDate);
+                request.getSession().setAttribute("endDate", endDate);
+                List<Price> pricesBetweenDates = priceRepositoryDao.getPricesFromDateToDate(code,startDate,endDate);
+                return pricesBetweenDates;
+            } else if (startDate.isAfter(endDate)) {
+                request.setAttribute("dateLogicError", "Błąd chronologii dat!");
+            } else {
+                request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
+            }
+        } catch (DateTimeParseException e) {
+            request.setAttribute("dateLogicError", "Podaj daty!");
+        }
+
+        return null;
+    }
+
+
     private List<Integer> getYearsList(String code) {
         List<Integer> yearsList = new ArrayList<>();
         Integer minYear = priceRepositoryDao.getMinDate(code).getYear();
@@ -202,4 +230,9 @@ public class HomeServlet extends HttpServlet {
                 return null;
         }
     }
+
+
+
+
+
 }
