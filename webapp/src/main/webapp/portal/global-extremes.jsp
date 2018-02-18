@@ -1,12 +1,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="fin-app" var="finAppLanguage"/>
+
 <h4>
-    Ekstrema globalne dla
-    <c:out value="${sessionScope.data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'} ${sessionScope.code}"/>
+    <fmt:message key="${globalExtremesMessage}" bundle="${finAppLanguage}"/>
+    <c:out value="${sessionScope.code}"/>
 </h4>
 <h5>
-    z okresu <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
+    <fmt:message key="globalExtremes.period" bundle="${finAppLanguage}"/>
+    <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
 </h5>
 
 <jsp:include page="table-with-quotations.jsp"/>

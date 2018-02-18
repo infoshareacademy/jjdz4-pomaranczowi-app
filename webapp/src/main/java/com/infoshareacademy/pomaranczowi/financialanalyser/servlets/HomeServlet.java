@@ -79,8 +79,10 @@ public class HomeServlet extends HttpServlet {
             if (request.getParameter("action") != null) {
                 request.getSession().setAttribute("action", request.getParameter("action"));
                 String code = (String) request.getSession().getAttribute("code");
+                String data = (String) request.getSession().getAttribute("data");
                 switch (request.getParameter("action")) {
                     case "globalExtremes":
+                        setGlobalExtremesMessage(request, data);
                         printPricesForGlobalExtremes(request, code);
                         break;
                     case "localExtremes":
@@ -97,6 +99,14 @@ public class HomeServlet extends HttpServlet {
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void setGlobalExtremesMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("globalExtremesMessage", "globalExtremes.fundMessage");
+        } else {
+            request.getSession().setAttribute("globalExtremesMessage", "globalExtremes.currencyMessage");
+        }
     }
 
     private void setChooseCodeMessage(HttpServletRequest request, String data) {
@@ -116,7 +126,7 @@ public class HomeServlet extends HttpServlet {
     }
 
     private void printSipmlifiedPrices(HttpServletRequest request, String code) {
-        Integer month = Integer.valueOf(request.getParameter("month.june"));
+        Integer month = Integer.valueOf(request.getParameter("month"));
         Integer year = Integer.valueOf(request.getParameter("year"));
         LocalDate startDate;
         LocalDate endDate;
