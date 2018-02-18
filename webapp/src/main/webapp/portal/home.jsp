@@ -31,7 +31,7 @@
     </div>
 </nav>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row vertical-center">
         <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
 
             <%-- Here you need to set total number of form steps --%>

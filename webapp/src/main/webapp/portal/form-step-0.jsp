@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="alert alert-info" role="alert">
     <div class="row">
-        <div class="col col-10">
+        <div class="col col-12 col-md-10 col-sm-9">
             <h4 class="alert-heading">Witaj <c:out value="${sessionScope.user.name}"/>!</h4>
             <p>Za pomocą naszej aplikacji uzyskasz informacje na temat notowań kursów walut oraz funduszy
                 inwestycyjnych.
@@ -12,7 +12,7 @@
             <hr>
             <p class="mb-0">Aby skorzystać z tych możliwości przejdź przez wszystkie kroki poniższego formularza.</p>
         </div>
-        <div class="avatar col col-2">
+        <div class="avatar col col-12 col-md-2 col-sm-3">
             <img src="<c:out value="${sessionScope.user.picture}"/>">
         </div>
     </div>
