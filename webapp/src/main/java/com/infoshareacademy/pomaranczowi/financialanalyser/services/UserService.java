@@ -1,7 +1,9 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.services;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
+import com.infoshareacademy.pomaranczowi.financialanalyser.repository.UserRepository;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.ServletConfig;
 import javax.ws.rs.client.Client;
@@ -11,6 +13,9 @@ import javax.ws.rs.core.Response;
 
 @Stateless
 public class UserService {
+
+    @EJB
+    UserRepository userRepository;
 
     private ServletConfig config;
 
@@ -29,6 +34,9 @@ public class UserService {
         WebTarget webTarget = client.target(url);
         Response response = webTarget.request().header("Authorization","Bearer "+accessToken).get();
 
-        return response.readEntity(User.class);
+        User user = response.readEntity(User.class);
+        //if (user != null) userRepository.addUser(user);
+
+        return user;
     }
 }
