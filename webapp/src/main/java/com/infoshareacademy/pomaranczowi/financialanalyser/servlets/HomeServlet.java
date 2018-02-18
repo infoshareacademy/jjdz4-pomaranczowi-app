@@ -86,6 +86,7 @@ public class HomeServlet extends HttpServlet {
                         printPricesForGlobalExtremes(request, code);
                         break;
                     case "localExtremes":
+                        setLocalExtremesMessage(request, data);
                         printPricesForLocalExtremes(request, code);
                         break;
                     case "singleDate":
@@ -99,6 +100,14 @@ public class HomeServlet extends HttpServlet {
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void setLocalExtremesMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("localExtremesMessage", "localExtremes.fundMessage");
+        } else {
+            request.getSession().setAttribute("localExtremesMessage", "localExtremes.currencyMessage");
+        }
     }
 
     private void setGlobalExtremesMessage(HttpServletRequest request, String data) {
@@ -168,12 +177,12 @@ public class HomeServlet extends HttpServlet {
                 request.getSession().setAttribute("endDate", endDate);
                 printMinMaxValues(request, code, startDate, endDate);
             } else if (startDate.isAfter(endDate)) {
-                request.setAttribute("dateLogicError", "Błąd chronologii dat!");
+                request.setAttribute("dateLogicError", "localExtremes.chronologyError");
             } else {
-                request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
+                request.setAttribute("dateLogicError", "localExtremes.sameDateError");
             }
         } catch (DateTimeParseException e) {
-            request.setAttribute("dateLogicError", "Podaj daty!");
+            request.setAttribute("dateLogicError", "localExtremes.noDateError");
         }
     }
 

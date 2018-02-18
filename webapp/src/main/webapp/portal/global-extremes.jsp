@@ -10,7 +10,7 @@
     <c:out value="${sessionScope.code}"/>
 </h4>
 <h5>
-    <fmt:message key="globalExtremes.period" bundle="${finAppLanguage}"/>
+    <fmt:message key="extremes.period" bundle="${finAppLanguage}"/>
     <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
 </h5>
 
