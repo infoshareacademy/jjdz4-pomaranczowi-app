@@ -18,7 +18,6 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/portal/home")
@@ -117,7 +116,7 @@ public class HomeServlet extends HttpServlet {
     }
 
     private void printSipmlifiedPrices(HttpServletRequest request, String code) {
-        Integer month = Integer.valueOf(request.getParameter("month"));
+        Integer month = Integer.valueOf(request.getParameter("month.june"));
         Integer year = Integer.valueOf(request.getParameter("year"));
         LocalDate startDate;
         LocalDate endDate;
