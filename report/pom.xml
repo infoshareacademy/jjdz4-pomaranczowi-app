@@ -61,7 +61,7 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.2.0.Final</version>
                 <configuration>
-                    <name>rest-server.war</name>
+                    <name>report.war</name>
                 </configuration>
                 <executions>
                     <execution>
