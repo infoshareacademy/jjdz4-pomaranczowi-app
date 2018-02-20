@@ -90,6 +90,7 @@ public class HomeServlet extends HttpServlet {
                         printPricesForLocalExtremes(request, code);
                         break;
                     case "singleDate":
+                        setSingleDateMessage(request, data);
                         printPricesForSingleDate(request, code);
                         break;
                     case "dataSimplification":
@@ -100,6 +101,16 @@ public class HomeServlet extends HttpServlet {
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void setSingleDateMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("singleDateDayMessage", "singleDate.dayMessage");
+            request.getSession().setAttribute("singleDateDataMessage", "singleDate.fundMessage");
+        } else {
+            request.getSession().setAttribute("singleDateDayMessage", "singleDate.dayMessage");
+            request.getSession().setAttribute("singleDateDataMessage", "singleDate.currencyMessage");
+        }
     }
 
     private void setLocalExtremesMessage(HttpServletRequest request, String data) {
