@@ -19,6 +19,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet(urlPatterns = "/portal/home")
 public class HomeServlet extends HttpServlet {
@@ -172,10 +174,9 @@ public class HomeServlet extends HttpServlet {
             request.getSession().setAttribute("High", price.getHigh());
             request.getSession().setAttribute("Close", price.getClose());
         } catch (EJBTransactionRolledbackException e) {
-            request.setAttribute("dateError", "Nie ma notowań dla powyższej daty!");
+            request.setAttribute("dateError", "singleDate.noQuotesError");
         } catch (DateTimeParseException e) {
-            request.setAttribute("dateError", "Podaj datę!");
-            request.getSession().setAttribute("date", "\"brak daty\"");
+            request.setAttribute("dateError", "singleDate.enterDateError");
         }
     }
 
