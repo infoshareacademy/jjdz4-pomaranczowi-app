@@ -96,6 +96,7 @@ public class HomeServlet extends HttpServlet {
                         printPricesForSingleDate(request, code);
                         break;
                     case "dataSimplification":
+                        setDataSimplificationMessage(request, data);
                         checkIfYearSelected(request, code);
                         break;
                 }
@@ -103,6 +104,14 @@ public class HomeServlet extends HttpServlet {
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void setDataSimplificationMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("dataSimplificationMessage", "dataSimplification.fundMessage");
+        } else {
+            request.getSession().setAttribute("dataSimplificationMessage", "dataSimplification.currencyMessage");
+        }
     }
 
     private void setSingleDateMessage(HttpServletRequest request, String data) {
