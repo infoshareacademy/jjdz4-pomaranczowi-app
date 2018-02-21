@@ -150,7 +150,7 @@ public class HomeServlet extends HttpServlet {
 
     private void checkIfYearSelected(HttpServletRequest request, String code) {
         if (request.getParameter("year").equals("")) {
-            request.setAttribute("errorMessage", "Wybierz rok!");
+            request.setAttribute("errorMessage", "dataSimplification.errorMessage");
         } else {
             printSipmlifiedPrices(request, code);
         }

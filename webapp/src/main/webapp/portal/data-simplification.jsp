@@ -7,13 +7,11 @@
 
 <c:choose>
     <c:when test="${errorMessage != null}">
-        <h5 style="color: red;">${errorMessage}</h5>
+        <h5 style="color: red;"><fmt:message key="${errorMessage}" bundle="${finAppLanguage}"/></h5>
     </c:when>
     <c:otherwise>
         <h4>
-            <fmt:message key="${dataSimplificationMessage}" bundle="${finAppLanguage}"/>
-
-            <c:out value="${sessionScope.data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'} ${sessionScope.code}"/>
+            <fmt:message key="${dataSimplificationMessage}" bundle="${finAppLanguage}"/> ${sessionScope.code}
         </h4>
         <h5>
             <fmt:message key="dataSimplification.period" bundle="${finAppLanguage}"/>
