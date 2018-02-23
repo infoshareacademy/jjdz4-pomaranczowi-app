@@ -1,24 +1,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="fin-app" var="finAppLanguage"/>
+
 <div class="alert alert-info" role="alert">
-    <h4 class="alert-heading">Witaj!</h4>
-    <p>Za pomocą naszej aplikacji uzyskasz informacje na temat notowań kursów walut oraz funduszy inwestycyjnych.
-        Będziesz mógł odnaleźć ekstrema dla interesujących Cię wartości dla dowolnego okresu czasu, obejrzeć wykresy
-        oraz je uprościć.</p>
+    <h4 class="alert-heading"><fmt:message key="app.welcome" bundle="${finAppLanguage}"/></h4>
+    <p><fmt:message key="app.mainInfo" bundle="${finAppLanguage}"/></p>
     <hr>
-    <p class="mb-0">Aby skorzystać z tych możliwości przejdź przez wszystkie kroki poniższego formularza.</p>
+    <p class="mb-0"><fmt:message key="app.stepInfo" bundle="${finAppLanguage}"/></p>
 </div>
 
 <form action="/portal/home" method="post">
     <div class="form-group row">
         <div class="col-sm-10">
             <input type="hidden" name="step" value="1"/>
-            <label for="chooseFundOrCurrency">Wybierz proszę, jakie dane chcesz przeanalizować:</label>
+            <label for="chooseFundOrCurrency"><fmt:message key="app.chooseFundOrCurrency" bundle="${finAppLanguage}"/></label>
             <select class="form-control" type="text" name="data" id="chooseFundOrCurrency">
                 <option value="fund" <c:if test="${sessionScope.data == 'fund'}">selected</c:if>>
-                        Notowania funduszy inwestycyjnych</option>
+                    <fmt:message key="app.fund" bundle="${finAppLanguage}"/>
+                </option>
                 <option value="currency" <c:if test="${sessionScope.data == 'currency'}">selected</c:if>>
-                    Notowania kursów walut</option>
+                    <fmt:message key="app.currency" bundle="${finAppLanguage}"/>
+                </option>
             </select>
         </div>
     </div>
