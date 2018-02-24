@@ -7,7 +7,7 @@ public class Quotation {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(nullable=false, unique=true)
-    private Long id;
+    private Integer id;
 
     @Column
     private String name;
@@ -19,21 +19,24 @@ public class Quotation {
     @Enumerated(EnumType.STRING)
     private QuotationType quotationType;
 
-    public Quotation(Long id, String name, String code, QuotationType quotationType){
+    public Quotation(Integer id, String name, String code, QuotationType quotationType){
         this.id = id;
         this.name = name;
         this.code = code;
         this.quotationType = quotationType;
     }
 
+    public Quotation(){
+    }
+
     //@OneToMany(mappedBy = "quotation", targetEntity = Price.class ,cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
     //private List<Price> prices = new ArrayList<>();
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

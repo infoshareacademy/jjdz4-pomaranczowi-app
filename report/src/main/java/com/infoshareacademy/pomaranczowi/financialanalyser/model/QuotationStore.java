@@ -13,25 +13,25 @@ public class QuotationStore {
 
     private Logger LOG = LoggerFactory.getLogger(QuotationStore.class);
 
-    private Map<Long, Quotation> base;
+    private Map<Integer, Quotation> base;
 
-    public Map<Long, Quotation> getBase() {
+    public Map<Integer, Quotation> getBase() {
         return base;
     }
 
     public QuotationStore(){
-        base = new HashMap<Long, Quotation>();
+        base = new HashMap<Integer, Quotation>();
 
-        Quotation quotation1 = new Quotation(1l,"PZU Akcji Krakowiak", "PZU001", QuotationType.FUNDINVESTMENT);
-        Quotation quotation2 = new Quotation(2l,"EURO", "EURO", QuotationType.CURRENCY);
+        Quotation quotation1 = new Quotation(1,"PZU Akcji Krakowiak", "PZU001", QuotationType.FUNDINVESTMENT);
+        Quotation quotation2 = new Quotation(2,"EURO", "EURO", QuotationType.CURRENCY);
 
-        base.put(1l,quotation1);
-        base.put(2l,quotation2);
+        base.put(1,quotation1);
+        base.put(2,quotation2);
     }
 
-    public long getNewId() {
+    public Integer getNewId() {
         return  base.keySet().stream()
-                .mapToLong(i -> i)
+                .mapToInt(i -> i)
                 .max().orElse(0) + 1;
     }
 
@@ -40,7 +40,7 @@ public class QuotationStore {
         base.put(quotation.getId(), quotation);
     }
 
-    public Optional<Quotation> findById(Long id) {
+    public Optional<Quotation> findById(Integer id) {
         return Optional.ofNullable(base.get(id));
     }
 }

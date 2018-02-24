@@ -29,19 +29,6 @@ public class QuotationService {
     }
 
     @GET
-    @Path("/hi/{name}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response sayHello(@PathParam("name") String name) {
-        LOG.info("Saying hello to {}!", name);
-
-        LOG.info("Absolute Path: {}", uriInfo.getAbsolutePath());
-        LOG.info("Base URI: {}", uriInfo.getBaseUri());
-        LOG.info("Path Parameters: {}", uriInfo.getPathParameters());
-
-        return Response.ok("Saying hello to " + name + "!").build();
-    }
-
-    @GET
     @Path("/agent")
     @Produces(MediaType.TEXT_PLAIN)
     public Response getUserAgent(@HeaderParam("user-agent") String userAgent) {
@@ -66,7 +53,7 @@ public class QuotationService {
     @GET
     @Path("/quotation")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getQuotation(@QueryParam("id") Long id) {
+    public Response getQuotation(@QueryParam("id") Integer id) {
         Optional<Quotation> quotation = quotationStore.findById(id);
         if (quotation.isPresent()) {
             return Response.ok(quotation.get()).build();
@@ -82,13 +69,15 @@ public class QuotationService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addQuotation(Quotation quotation) {
 
-        long newId = quotationStore.getNewId();
+        Integer newId = quotationStore.getNewId();
         LOG.info("New ID: {}", newId);
 
-        quotationStore.add(new Quotation(newId,
+        Quotation quotation1 = new Quotation(newId,
                 quotation.getName(),
                 quotation.getCode(),
-                quotation.getQuotationType()));
+                quotation.getQuotationType());
+
+        quotationStore.add(quotation1);
 
         return getQuotations();
     }
