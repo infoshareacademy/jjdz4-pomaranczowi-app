@@ -9,19 +9,8 @@
         <th colspan="1">HIGH</th>
         <th colspan="1">CLOSE</th>
         <th colspan="1">VOLUME</th>
-        <%--<th colspan="2">VOLUME</th>--%>
-    </tr>
-   <%-- <tr>
 
-        <td>value</td>
-        <td>value</td>
-        <td>value</td>
-        <td>value</td>
-        <td>value</td>
-        <td>value</td>
-        &lt;%&ndash;<td>max</td>
-        <td>min</td>&ndash;%&gt;
-    </tr>--%>
+    </tr>
 
     <c:forEach var="price" items="${prices}">
         <tr>

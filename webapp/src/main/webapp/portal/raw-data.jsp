@@ -14,6 +14,16 @@
         <h5>
             z okresu <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
         </h5>
+        <hr>
+        <p>Upraszczanie danych:
+        <p>Simple Moving Average (SMA) z
+        <select name="period">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+        poprzednich okresow.
+        <hr>
         <jsp:include page="table-with-rawdata.jsp"/>
     </c:otherwise>
 </c:choose>
