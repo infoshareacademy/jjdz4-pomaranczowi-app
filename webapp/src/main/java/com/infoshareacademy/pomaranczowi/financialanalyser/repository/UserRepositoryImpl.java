@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Stateless
-public class UserRepositoryBean implements UserRepository {
+public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext(unitName = "pUnit")
     private EntityManager entityManager;
