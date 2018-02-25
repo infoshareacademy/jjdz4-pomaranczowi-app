@@ -34,7 +34,7 @@ batch
 
 #set CONNECTION_URL
 set CONNECTION_URL=jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE
-echo "Connection URL: " $CONNECTION_URL
+echo $CONNECTION_URL
 
 # Add MySQL module
 module add --name=com.mysql --resources=/opt/jboss/wildfly/config/mysql-connector-java-6.0.6.jar --dependencies=javax.api,javax.transaction.api
@@ -43,11 +43,15 @@ module add --name=com.mysql --resources=/opt/jboss/wildfly/config/mysql-connecto
 /subsystem=datasources/jdbc-driver=mysql:add(driver-name=mysql,driver-module-name=com.mysql,driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource)
 
 # Add the datasource
-data-source add --name=mysqlDS --driver-name=mysql --jndi-name=$DATASOURCE_NAME --connection-url=jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE?useUnicode=true&characterEncoding=UTF-8 --user-name=$MYSQL_USER --password=$MYSQL_PASSWORD --enabled=true < /tmp/dump.sql
+data-source add --name=mysqlDS --driver-name=mysql --jndi-name=$DATASOURCE_NAME --connection-url=jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE?useUnicode=true&characterEncoding=UTF-8 --user-name=$MYSQL_USER --password=$MYSQL_PASSWORD --enabled=true
 
 # Execute the batch
 run-batch
 EOF
+
+cp dump.sql $CONNECTION_URL:tmp/dump.sql
+
+docker exec -it jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE mysql $MYSQLDATABASE < /tmp/dump.sql
 
 # Deploy the WAR
 cp /opt/jboss/wildfly/config/*.war $JBOSS_HOME/$JBOSS_MODE/deployments/
@@ -66,4 +70,7 @@ echo "=> Restarting WildFly"
 
 #run wildfly
 $JBOSS_HOME/bin/$JBOSS_MODE.sh -b 0.0.0.0 -bmanagement 0.0.0.0 -c $JBOSS_CONFIG
+
+
+
 

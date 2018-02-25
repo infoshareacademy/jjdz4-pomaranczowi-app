@@ -2,11 +2,7 @@ FROM jboss/wildfly:latest
 
 ADD config /opt/jboss/wildfly/config/
 
-COPY web-app.war /opt/jboss/wildfly/config/
-
-COPY dump.sql /tmp/
-
-COPY dump.sql /docker-entrypoint-initdb.d/
+COPY webapp.war /opt/jboss/wildfly/config/
 
 CMD ["/opt/jboss/wildfly/config/execute.sh"]
 
