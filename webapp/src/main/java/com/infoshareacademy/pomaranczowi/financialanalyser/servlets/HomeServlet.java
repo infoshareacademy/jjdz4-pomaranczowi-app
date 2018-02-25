@@ -6,6 +6,7 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserService;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserServiceImpl;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
@@ -22,7 +23,6 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/portal/home")
@@ -39,11 +39,12 @@ public class HomeServlet extends HttpServlet {
 
     private User user;
 
+    private ServletConfig config;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
-        userService = new UserService(config);
+        this.config = config;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class HomeServlet extends HttpServlet {
 
         HttpSession session = request.getSession(true);
 
-            session.setAttribute("user", userService.getUserInfo((String) session.getAttribute("accessToken")));
+            session.setAttribute("user", userService.getUserInfo(config, (String) session.getAttribute("accessToken")));
 
         requestDispatcher.forward(request, response);
     }
