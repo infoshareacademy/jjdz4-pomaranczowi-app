@@ -49,7 +49,7 @@ data-source add --name=mysqlDS --driver-name=mysql --jndi-name=$DATASOURCE_NAME 
 run-batch
 EOF
 
-cp dump.sql $CONNECTION_URL:tmp/dump.sql
+docker cp dump.sql $CONNECTION_URL:tmp/dump.sql
 
 docker exec -it jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE mysql $MYSQLDATABASE < /tmp/dump.sql
 
