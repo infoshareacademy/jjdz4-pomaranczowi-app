@@ -1,0 +1,26 @@
+version: '2'
+services:
+  jjdz4-db:
+    container_name: "jjdz4-db"
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=jjdz4-db
+      - MYSQL_USER=homework
+      - MYSQL_PASSWORD=homework
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3307:3306
+  jjdz4-webapp:
+    container_name: "jjdz4-webapp"
+    build: .
+    environment:
+      - MYSQL_URI=jjdz4-db:3306
+      - MYSQL_DATABASE=jjdz4-db
+      - MYSQL_USER=homework
+      - MYSQL_PASSWORD=homework
+      - DATASOURCE_NAME=java:/FinAnalyser
+    ports:
+      - 8081:8080
+      - 9991:9990
+    depends_on:
+      - jjdz4-db
