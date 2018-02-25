@@ -18,8 +18,9 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet(urlPatterns = "/portal/home")
 public class HomeServlet extends HttpServlet {
@@ -32,9 +33,24 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        changeLanguage(request);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
-        request.setAttribute("step", 0);
+        setStepIfEmpty(request);
         requestDispatcher.forward(request, response);
+        doPost(request, response);
+    }
+
+    private void setStepIfEmpty(HttpServletRequest request) {
+        if (request.getSession().getAttribute("step") == null) {
+            request.setAttribute("step", 0);
+        }
+    }
+
+    private void changeLanguage(HttpServletRequest request) {
+        String pageLanguage = request.getParameter("lang");
+        if (pageLanguage != null) {
+            request.getSession().setAttribute("language", pageLanguage);
+        }
     }
 
     @Override
@@ -49,6 +65,7 @@ public class HomeServlet extends HttpServlet {
             if (data != null) {
                 request.getSession().setAttribute("data", data);
                 request.getSession().setAttribute("codeList", getCodeList(data));
+                setChooseCodeMessage(request, data);
             }
         }
 
@@ -64,17 +81,22 @@ public class HomeServlet extends HttpServlet {
             if (request.getParameter("action") != null) {
                 request.getSession().setAttribute("action", request.getParameter("action"));
                 String code = (String) request.getSession().getAttribute("code");
+                String data = (String) request.getSession().getAttribute("data");
                 switch (request.getParameter("action")) {
                     case "globalExtremes":
+                        setGlobalExtremesMessage(request, data);
                         printPricesForGlobalExtremes(request, code);
                         break;
                     case "localExtremes":
+                        setLocalExtremesMessage(request, data);
                         printPricesForLocalExtremes(request, code);
                         break;
                     case "singleDate":
+                        setSingleDateMessage(request, data);
                         printPricesForSingleDate(request, code);
                         break;
                     case "dataSimplification":
+                        setDataSimplificationMessage(request, data);
                         checkIfYearSelected(request, code);
                         break;
                 }
@@ -84,9 +106,51 @@ public class HomeServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
+    private void setDataSimplificationMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("dataSimplificationMessage", "dataSimplification.fundMessage");
+        } else {
+            request.getSession().setAttribute("dataSimplificationMessage", "dataSimplification.currencyMessage");
+        }
+    }
+
+    private void setSingleDateMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("singleDateDayMessage", "singleDate.dayMessage");
+            request.getSession().setAttribute("singleDateDataMessage", "singleDate.fundMessage");
+        } else {
+            request.getSession().setAttribute("singleDateDayMessage", "singleDate.dayMessage");
+            request.getSession().setAttribute("singleDateDataMessage", "singleDate.currencyMessage");
+        }
+    }
+
+    private void setLocalExtremesMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("localExtremesMessage", "localExtremes.fundMessage");
+        } else {
+            request.getSession().setAttribute("localExtremesMessage", "localExtremes.currencyMessage");
+        }
+    }
+
+    private void setGlobalExtremesMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("globalExtremesMessage", "globalExtremes.fundMessage");
+        } else {
+            request.getSession().setAttribute("globalExtremesMessage", "globalExtremes.currencyMessage");
+        }
+    }
+
+    private void setChooseCodeMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("chooseCodeMessage", "chooseCode.fund");
+        } else {
+            request.getSession().setAttribute("chooseCodeMessage", "chooseCode.currency");
+        }
+    }
+
     private void checkIfYearSelected(HttpServletRequest request, String code) {
         if (request.getParameter("year").equals("")) {
-            request.setAttribute("errorMessage", "Wybierz rok!");
+            request.setAttribute("errorMessage", "dataSimplification.errorMessage");
         } else {
             printSipmlifiedPrices(request, code);
         }
@@ -119,10 +183,9 @@ public class HomeServlet extends HttpServlet {
             request.getSession().setAttribute("High", price.getHigh());
             request.getSession().setAttribute("Close", price.getClose());
         } catch (EJBTransactionRolledbackException e) {
-            request.setAttribute("dateError", "Nie ma notowań dla powyższej daty!");
+            request.setAttribute("dateError", "singleDate.noQuotesError");
         } catch (DateTimeParseException e) {
-            request.setAttribute("dateError", "Podaj datę!");
-            request.getSession().setAttribute("date", "\"brak daty\"");
+            request.setAttribute("dateError", "singleDate.enterDateError");
         }
     }
 
@@ -135,12 +198,12 @@ public class HomeServlet extends HttpServlet {
                 request.getSession().setAttribute("endDate", endDate);
                 printMinMaxValues(request, code, startDate, endDate);
             } else if (startDate.isAfter(endDate)) {
-                request.setAttribute("dateLogicError", "Błąd chronologii dat!");
+                request.setAttribute("dateLogicError", "localExtremes.chronologyError");
             } else {
-                request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
+                request.setAttribute("dateLogicError", "localExtremes.sameDateError");
             }
         } catch (DateTimeParseException e) {
-            request.setAttribute("dateLogicError", "Podaj daty!");
+            request.setAttribute("dateLogicError", "localExtremes.noDateError");
         }
     }
 
