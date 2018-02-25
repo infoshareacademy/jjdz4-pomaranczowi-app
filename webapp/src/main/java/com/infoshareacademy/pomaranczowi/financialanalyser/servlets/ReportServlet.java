@@ -1,5 +1,6 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.QuotationReport;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.ReportService;
 
 import javax.servlet.ServletException;
@@ -11,9 +12,6 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/report")
 public class ReportServlet extends HttpServlet{
-
-
-
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
@@ -30,6 +28,14 @@ public class ReportServlet extends HttpServlet{
         ReportService reportService = new ReportService();
         String fromAPI = reportService.getUserAgent();
         System.out.println(fromAPI);
+
+        /*req.setAttribute("agent", fromAPI.toString());
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/portal/agent.jsp");
+        requestDispatcher.forward(req, resp);*/
+
+        ReportService reportService1 = new ReportService();
+        QuotationReport quotationReport = reportService1.getQuotation(1);
+        System.out.println(quotationReport.toString());
 
     }
 }
