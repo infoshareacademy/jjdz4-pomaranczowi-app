@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/report")
 public class ReportServlet extends HttpServlet{
@@ -34,8 +35,8 @@ public class ReportServlet extends HttpServlet{
         requestDispatcher.forward(req, resp);*/
 
         ReportService reportService1 = new ReportService();
-        QuotationReport quotationReport = reportService1.getQuotation(1);
-        System.out.println(quotationReport.toString());
+        List<QuotationReport> quotationReportList = reportService1.getAllQuotations();
+        quotationReportList.stream().forEach(quotationReport -> System.out.println(quotationReport));
 
     }
 }
