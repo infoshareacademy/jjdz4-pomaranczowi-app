@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -64,6 +65,7 @@ public class HomeServlet extends HttpServlet {
             if (request.getParameter("action") != null) {
                 request.getSession().setAttribute("action", request.getParameter("action"));
                 String code = (String) request.getSession().getAttribute("code");
+                Boolean toConversion1 =   request.getParameter("toConversion")==null? false:true;
                 switch (request.getParameter("action")) {
                     case "globalExtremes":
                         printPricesForGlobalExtremes(request, code);
@@ -78,8 +80,16 @@ public class HomeServlet extends HttpServlet {
                         checkIfYearSelected(request, code);
                         break;
                     case "rawData":
-                        request.getSession().setAttribute("prices", getPricesBetweenDates(request,code));
-
+                        request.getSession().setAttribute("toConversion",toConversion1);
+                        request.getSession().setAttribute("conversion",request.getParameter("conversion"));
+                        if (toConversion1) {
+                            switch (request.getParameter("conversion")){
+                                case "SMA": request.getSession().setAttribute("prices", getPricesBetweenDatesSMA(request, code));
+                                break;
+                            }
+                        }else {
+                            request.getSession().setAttribute("prices", getPricesBetweenDates(request, code));
+                        }
                         break;
                 }
             }
@@ -148,8 +158,6 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
-
-
     private List<Price> getPricesBetweenDates(HttpServletRequest request, String code){
         try {
             LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
@@ -159,6 +167,63 @@ public class HomeServlet extends HttpServlet {
                 request.getSession().setAttribute("endDate", endDate);
                 List<Price> pricesBetweenDates = priceRepositoryDao.getPricesFromDateToDate(code,startDate,endDate);
                 return pricesBetweenDates;
+            } else if (startDate.isAfter(endDate)) {
+                request.setAttribute("dateLogicError", "Błąd chronologii dat!");
+            } else {
+                request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
+            }
+        } catch (DateTimeParseException e) {
+            request.setAttribute("dateLogicError", "Podaj daty!");
+        }
+
+        return null;
+    }
+
+    private List<Price> getPricesBetweenDatesSMA(HttpServletRequest request, String code){
+        try {
+            LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
+            LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
+            int period = Integer.valueOf(request.getParameter("period"));
+            int i =1;
+            BigDecimal tmpOpen = BigDecimal.ZERO;
+            BigDecimal tmpClose = BigDecimal.ZERO;
+            BigDecimal tmpMin = BigDecimal.ZERO;
+            BigDecimal tmpMax = BigDecimal.ZERO;
+            BigDecimal tmpVolume = BigDecimal.ZERO;
+
+            if (startDate.isBefore(endDate)) {
+                request.getSession().setAttribute("startDate", startDate);
+                request.getSession().setAttribute("endDate", endDate);
+                List<Price> pricesBetweenDates = priceRepositoryDao.getPricesFromDateToDate(code,startDate,endDate);
+
+                List<Price> pricesBetweenDatesSMA = new ArrayList<>();
+
+                for(Price loopPrice:pricesBetweenDates){
+
+                    tmpOpen=tmpOpen.add(loopPrice.getOpen());
+
+                    if(i>=period){
+                        Price tmpPrice = new Price();
+                        tmpPrice.setDate(loopPrice.getDate());
+                        tmpPrice.setOpen(tmpOpen.divide(BigDecimal.valueOf(period)));
+                        pricesBetweenDatesSMA.add(tmpPrice);
+                    }
+                    i++;
+                }
+
+/*
+                Price a = new Price();
+                a.setDate(LocalDate.parse("2018-01-01",DateTimeFormatter.ISO_DATE));
+                a.setLow(BigDecimal.valueOf(1));
+                a.setClose(BigDecimal.valueOf(2));
+                a.setHigh(BigDecimal.valueOf(3));
+                a.setOpen(BigDecimal.valueOf(4));
+                a.setVolume(BigDecimal.valueOf(5));
+                pricesBetweenDatesSMA.add(a);
+*/
+
+
+                return pricesBetweenDatesSMA;
             } else if (startDate.isAfter(endDate)) {
                 request.setAttribute("dateLogicError", "Błąd chronologii dat!");
             } else {
