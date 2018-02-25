@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ReportService {
 
-    public static final String ADDRESS = "http://127.0.0.1:8081/web-app/";
+    public static final String ADDRESS = "http://127.0.0.1:8082/report/";
 
     public String getUserAgent() {
         Client client = ClientBuilder.newClient();
@@ -36,13 +36,13 @@ public class ReportService {
         throw new IllegalArgumentException("Unkown quotation - " + quotationReport.getName() + ".");
     }
 
-    public List<Quotation> getAllQuotations() {
+    public List<QuotationReport> getAllQuotations() {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(ADDRESS + "quotations");
         Response response = target.request().get();
 
-        //MultipleStatesResponse statesResponse = response.readEntity(MultipleStatesResponse.class);
-        QuotationReport quotationReport = response.readEntity(QuotationReport.class);
-        return null;
+        QuotationResponse quotationResponse = response.readEntity(QuotationResponse.class);
+
+        return quotationResponse.getData();
     }
 }
