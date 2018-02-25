@@ -39,7 +39,7 @@
             </li>
         </ul>
     </div>
-    <jsp:include page="language-flags.jsp"/>
+    <jsp:include page="general/language-flags.jsp"/>
 </nav>
 <div class="container-fluid">
     <div class="row">
@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <jsp:include page="form-step-${step}.jsp"/>
+            <jsp:include page="forms/form-step-${step}.jsp"/>
 
         </div>
     </div>

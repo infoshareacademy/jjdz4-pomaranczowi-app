@@ -21,5 +21,5 @@
         </div>
     </div>
     <input type="hidden" name="action" value="localExtremes">
-    <jsp:include page="form-step-nav.jsp"/>
+    <jsp:include page="../forms/form-step-nav.jsp"/>
 </form>

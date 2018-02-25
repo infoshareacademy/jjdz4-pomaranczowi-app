@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="float-right">
-    <jsp:include page="portal/language-flags.jsp"/>
+    <jsp:include page="portal/general/language-flags.jsp"/>
 </div>
 <div class="container-fluid">
     <div class="row">
