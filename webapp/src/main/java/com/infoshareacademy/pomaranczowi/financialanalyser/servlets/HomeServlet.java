@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 @WebServlet(urlPatterns = "/portal/home")
 public class HomeServlet extends HttpServlet {
@@ -185,27 +187,41 @@ public class HomeServlet extends HttpServlet {
             LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
             int period = Integer.valueOf(request.getParameter("period"));
             int i =1;
-            BigDecimal tmpOpen = BigDecimal.ZERO;
-            BigDecimal tmpClose = BigDecimal.ZERO;
-            BigDecimal tmpMin = BigDecimal.ZERO;
-            BigDecimal tmpMax = BigDecimal.ZERO;
-            BigDecimal tmpVolume = BigDecimal.ZERO;
+            ArrayList<BigDecimal> tmpOpen = new ArrayList<>();
+            ArrayList<BigDecimal> tmpLow = new ArrayList<>();
+            ArrayList<BigDecimal> tmpClose = new ArrayList<>();
+            ArrayList<BigDecimal> tmpHigh = new ArrayList<>();
+            ArrayList<BigDecimal> tmpVolume = new ArrayList<>();
 
             if (startDate.isBefore(endDate)) {
                 request.getSession().setAttribute("startDate", startDate);
                 request.getSession().setAttribute("endDate", endDate);
-                List<Price> pricesBetweenDates = priceRepositoryDao.getPricesFromDateToDate(code,startDate,endDate);
+                request.getSession().setAttribute("period",period);
 
+                List<Price> pricesBetweenDates = priceRepositoryDao.getPricesFromDateToDate(code,startDate,endDate);
                 List<Price> pricesBetweenDatesSMA = new ArrayList<>();
 
-                for(Price loopPrice:pricesBetweenDates){
 
-                    tmpOpen=tmpOpen.add(loopPrice.getOpen());
+                for(Price loopPrice:pricesBetweenDates){
+                    tmpOpen.add(loopPrice.getOpen());
+                    tmpLow.add(loopPrice.getLow());
+                    tmpHigh.add(loopPrice.getHigh());
+                    tmpClose.add(loopPrice.getClose());
+                    tmpVolume.add(loopPrice.getVolume());
 
                     if(i>=period){
                         Price tmpPrice = new Price();
                         tmpPrice.setDate(loopPrice.getDate());
-                        tmpPrice.setOpen(tmpOpen.divide(BigDecimal.valueOf(period)));
+                        tmpPrice.setOpen((tmpOpen.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpOpen.remove(0);
+                        tmpPrice.setLow((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpLow.remove(0);
+                        tmpPrice.setClose((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpClose.remove(0);
+                        tmpPrice.setHigh((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpHigh.remove(0);
+                        tmpPrice.setVolume((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpVolume.remove(0);
                         pricesBetweenDatesSMA.add(tmpPrice);
                     }
                     i++;

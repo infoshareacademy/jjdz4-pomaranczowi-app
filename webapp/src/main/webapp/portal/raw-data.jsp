@@ -16,12 +16,12 @@
         </h5>
         <c:choose>
             <c:when test="${sessionScope.toConversion==true}">
-                <h5 style="color: red;">Dane uproszczone za pomocą ${sessionScope.conversion}</h5>
+                <h6 style="color: red;">Dane uproszczone za pomocą ${sessionScope.conversion} z ${sessionScope.period} poprzednich okresów</h6>
             </c:when>
             <c:otherwise>
-                <h5>
+                <h6>
                     Dane nieuproszczone.
-                </h5>
+                </h6>
             </c:otherwise>
         </c:choose>
 
