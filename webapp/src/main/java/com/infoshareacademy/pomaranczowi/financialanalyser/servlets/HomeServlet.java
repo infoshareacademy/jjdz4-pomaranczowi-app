@@ -19,8 +19,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 @WebServlet(urlPatterns = "/portal/home")
 public class HomeServlet extends HttpServlet {
@@ -42,7 +40,7 @@ public class HomeServlet extends HttpServlet {
 
     private void setStepIfEmpty(HttpServletRequest request) {
         if (request.getSession().getAttribute("step") == null) {
-            request.setAttribute("step", 0);
+            request.getSession().setAttribute("step", 0);
         }
     }
 
@@ -57,8 +55,13 @@ public class HomeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
 
-        Integer step = Integer.valueOf(request.getParameter("step"));
-        request.getSession().setAttribute("step", step);
+
+        Integer step = (Integer) request.getSession().getAttribute("step");
+        if (request.getAttribute("inputError") == null) {
+            step = Integer.valueOf(request.getParameter("step"));
+            request.getSession().setAttribute("step", step);
+        }
+
 
         if (step == 1) {
             String data = request.getParameter("data");

@@ -31,6 +31,13 @@
 <jsp:include page="../data-simplification/data-simplification-input.jsp"/>
 <jsp:include page="../single-date/signle-date-input.jsp"/>
 <jsp:include page="../local-extremes/local-extremes-input.jsp"/>
+
+<c:if test="${inputError != null}">
+    <div class="alert alert-danger">
+        <fmt:message key="${inputError}" bundle="${finAppLanguage}"/>
+    </div>
+</c:if>
+
 <form id="globalExtremes" action="/portal/home" method="post">
     <input type="hidden" name="action" value="globalExtremes">
     <jsp:include page="form-step-nav.jsp"/>
