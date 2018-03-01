@@ -56,12 +56,7 @@ public class HomeServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
 
 
-        Integer step = (Integer) request.getSession().getAttribute("step");
-        if (request.getAttribute("inputError") == null) {
-            step = Integer.valueOf(request.getParameter("step"));
-            request.getSession().setAttribute("step", step);
-        }
-
+        Integer step = setStep(request);
 
         if (step == 1) {
             String data = request.getParameter("data");
@@ -107,6 +102,16 @@ public class HomeServlet extends HttpServlet {
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private Integer setStep(HttpServletRequest request) {
+        if (request.getSession().getAttribute("inputError") == null) {
+            Integer step = Integer.valueOf(request.getParameter("step"));
+            request.getSession().setAttribute("step", step);
+            return step;
+        } else {
+            return (Integer) request.getSession().getAttribute("step");
+        }
     }
 
     private void setDataSimplificationMessage(HttpServletRequest request, String data) {

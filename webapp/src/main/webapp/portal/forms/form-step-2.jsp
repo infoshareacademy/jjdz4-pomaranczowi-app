@@ -5,6 +5,14 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="fin-app" var="finAppLanguage"/>
 
+<c:if test="${sessionScope.inputError != null}">
+    <div class="col-sm-10">
+        <div class="alert alert-danger">
+            <fmt:message key="${sessionScope.inputError}" bundle="${finAppLanguage}"/>
+        </div>
+    </div>
+</c:if>
+
 <form action="" method="">
     <div class="form-group row">
         <div class="col-sm-10">
@@ -29,14 +37,8 @@
     </div>
 </form>
 <jsp:include page="../data-simplification/data-simplification-input.jsp"/>
-<jsp:include page="../single-date/signle-date-input.jsp"/>
+<jsp:include page="../single-date/single-date-input.jsp"/>
 <jsp:include page="../local-extremes/local-extremes-input.jsp"/>
-
-<c:if test="${inputError != null}">
-    <div class="alert alert-danger">
-        <fmt:message key="${inputError}" bundle="${finAppLanguage}"/>
-    </div>
-</c:if>
 
 <form id="globalExtremes" action="/portal/home" method="post">
     <input type="hidden" name="action" value="globalExtremes">
