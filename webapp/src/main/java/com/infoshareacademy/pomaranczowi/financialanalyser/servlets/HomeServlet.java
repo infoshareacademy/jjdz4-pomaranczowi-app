@@ -198,21 +198,11 @@ public class HomeServlet extends HttpServlet {
     }
 
     private void printPricesForLocalExtremes(HttpServletRequest request, String code) {
-        try {
-            LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
-            LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
-            if (startDate.isBefore(endDate)) {
-                request.getSession().setAttribute("startDate", startDate);
-                request.getSession().setAttribute("endDate", endDate);
-                printMinMaxValues(request, code, startDate, endDate);
-            } else if (startDate.isAfter(endDate)) {
-                request.setAttribute("dateLogicError", "localExtremes.chronologyError");
-            } else {
-                request.setAttribute("dateLogicError", "localExtremes.sameDateError");
-            }
-        } catch (DateTimeParseException e) {
-            request.setAttribute("dateLogicError", "localExtremes.noDateError");
-        }
+        LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
+        LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
+        request.getSession().setAttribute("startDate", startDate);
+        request.getSession().setAttribute("endDate", endDate);
+        printMinMaxValues(request, code, startDate, endDate);
     }
 
     private List<Integer> getYearsList(String code) {
@@ -250,10 +240,6 @@ public class HomeServlet extends HttpServlet {
                 priceRepositoryDao.getMaxCloseFromDateToDate(code, startDate, endDate));
         request.getSession().setAttribute("minClose",
                 priceRepositoryDao.getMinCloseFromDateToDate(code, startDate, endDate));
-        /*request.getSession().setAttribute("maxVolume",
-                priceRepositoryDao.getMaxVolumeFromDateToDate(code, startDate, endDate));
-        request.getSession().setAttribute("minVolume",
-                priceRepositoryDao.getMinVolumeFromDateToDate(code, startDate, endDate));*/
     }
 
     private List<String> getCodeList(String data) {
