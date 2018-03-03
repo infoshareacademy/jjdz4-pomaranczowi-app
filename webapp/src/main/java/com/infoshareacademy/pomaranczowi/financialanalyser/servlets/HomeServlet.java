@@ -55,14 +55,13 @@ public class HomeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
 
-
         Integer step = setStep(request);
 
         if (step == 1) {
             String data = request.getParameter("data");
             if (data != null) {
                 request.getSession().setAttribute("data", data);
-                request.getSession().setAttribute("codeList", getCodeList(data));
+                request.getSession().setAttribute("codeList", quotationRepositoryDao.getCodeList(data));
                 setChooseCodeMessage(request, data);
             }
         }
@@ -71,7 +70,7 @@ public class HomeServlet extends HttpServlet {
             String code = request.getParameter("code");
             if (code != null) {
                 request.getSession().setAttribute("code", code);
-                request.getSession().setAttribute("yearsList", getYearsList(code));
+                request.getSession().setAttribute("yearsList", priceRepositoryDao.getYearsList(code));
             }
         }
 
@@ -182,7 +181,6 @@ public class HomeServlet extends HttpServlet {
     }
 
     private void printPricesForSingleDate(HttpServletRequest request, String code) {
-        try {
             LocalDate date = LocalDate.parse(request.getParameter("date"), DateTimeFormatter.ISO_DATE);
             request.getSession().setAttribute("date", date);
             Price price = priceRepositoryDao.getPriceFromDate(code, date);
@@ -190,11 +188,6 @@ public class HomeServlet extends HttpServlet {
             request.getSession().setAttribute("Low", price.getLow());
             request.getSession().setAttribute("High", price.getHigh());
             request.getSession().setAttribute("Close", price.getClose());
-        } catch (EJBTransactionRolledbackException e) {
-            request.setAttribute("dateError", "singleDate.noQuotesError");
-        } catch (DateTimeParseException e) {
-            request.setAttribute("dateError", "singleDate.enterDateError");
-        }
     }
 
     private void printPricesForLocalExtremes(HttpServletRequest request, String code) {
@@ -203,16 +196,6 @@ public class HomeServlet extends HttpServlet {
         request.getSession().setAttribute("startDate", startDate);
         request.getSession().setAttribute("endDate", endDate);
         printMinMaxValues(request, code, startDate, endDate);
-    }
-
-    private List<Integer> getYearsList(String code) {
-        List<Integer> yearsList = new ArrayList<>();
-        Integer minYear = priceRepositoryDao.getMinDate(code).getYear();
-        Integer maxYear = priceRepositoryDao.getMaxDate(code).getYear();
-        for (; minYear <= maxYear; minYear++) {
-            yearsList.add(minYear);
-        }
-        return yearsList;
     }
 
     private void printPricesForGlobalExtremes(HttpServletRequest request, String code) {
@@ -240,23 +223,5 @@ public class HomeServlet extends HttpServlet {
                 priceRepositoryDao.getMaxCloseFromDateToDate(code, startDate, endDate));
         request.getSession().setAttribute("minClose",
                 priceRepositoryDao.getMinCloseFromDateToDate(code, startDate, endDate));
-    }
-
-    private List<String> getCodeList(String data) {
-        List<String> codeList = quotationRepositoryDao
-                .getAllQuotationsList(chooseQuotation(data));
-        codeList.sort(String.CASE_INSENSITIVE_ORDER);
-        return codeList;
-    }
-
-    private QuotationType chooseQuotation(String quotationFromUser) {
-        switch (quotationFromUser) {
-            case "fund":
-                return QuotationType.FUNDINVESTMENT;
-            case "currency":
-                return QuotationType.CURRENCY;
-            default:
-                return null;
-        }
     }
 }

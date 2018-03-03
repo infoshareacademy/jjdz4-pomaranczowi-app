@@ -10,7 +10,7 @@
         <div class="col-sm-10">
             <label for="chooseDate">
                 <fmt:message key="singleDateInput.chooseDate" bundle="${finAppLanguage}"/></label>
-            <input type="date" class="form-control" name="date" id="chooseDate" required>
+            <input type="date" class="form-control" name="date" id="chooseDate">
         </div>
     </div>
     <input type="hidden" name="action" value="singleDate">
