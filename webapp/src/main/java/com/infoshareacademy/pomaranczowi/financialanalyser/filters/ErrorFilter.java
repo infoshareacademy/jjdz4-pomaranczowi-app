@@ -28,13 +28,20 @@ public class ErrorFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        httpServletRequest.getSession().setAttribute("action", httpServletRequest.getParameter("action"));
         try {
             setErrorMessage(httpServletRequest);
         } catch (NullPointerException e) {
             e.getMessage();
         }
+        saveActionInSessionIfNotEmpty(httpServletRequest);
         filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private void saveActionInSessionIfNotEmpty(HttpServletRequest httpServletRequest) {
+        String action = httpServletRequest.getParameter("action");
+        if (action != null) {
+            httpServletRequest.getSession().setAttribute("action", action);
+        }
     }
 
     private void setErrorMessage(HttpServletRequest httpServletRequest) throws NullPointerException {
@@ -60,9 +67,9 @@ public class ErrorFilter implements Filter {
                     .getAttribute("code"), date);
             setNullForInputError(httpServletRequest);
         } catch (EJBTransactionRolledbackException e) {
-            httpServletRequest.setAttribute("inputError", "singleDate.noQuotesError");
+            httpServletRequest.getSession().setAttribute("inputError", "singleDate.noQuotesError");
         } catch (DateTimeParseException e) {
-            httpServletRequest.setAttribute("inputError", "singleDate.enterDateError");
+            httpServletRequest.getSession().setAttribute("inputError", "singleDate.enterDateError");
         }
     }
 
