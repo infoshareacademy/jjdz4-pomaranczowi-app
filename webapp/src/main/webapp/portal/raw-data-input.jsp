@@ -43,5 +43,5 @@
         <hr style="height:1px;border:none;color:#333;background-color:#333; width:auto;"/>
     </div>
     <input type="hidden" name="action" value="rawData">
-    <jsp:include page="form-step-nav.jsp"/>
+    <jsp:include page="forms/form-step-nav.jsp"/>
 </form>
