@@ -3,16 +3,16 @@
 <div class="alert alert-success" role="alert">
     <c:choose>
         <c:when test="${action == 'globalExtremes'}">
-            <jsp:include page="global-extremes.jsp"/>
+            <jsp:include page="../global-extremes/global-extremes.jsp"/>
         </c:when>
         <c:when test="${action == 'localExtremes'}">
-            <jsp:include page="local-extremes.jsp"/>
+            <jsp:include page="../local-extremes/local-extremes.jsp"/>
         </c:when>
         <c:when test="${action == 'singleDate'}">
-            <jsp:include page="single-date.jsp"/>
+            <jsp:include page="../single-date/single-date.jsp"/>
         </c:when>
         <c:when test="${action == 'dataSimplification'}">
-            <jsp:include page="data-simplification.jsp"/>
+            <jsp:include page="../data-simplification/data-simplification.jsp"/>
         </c:when>
         <c:when test="${action == 'rawData'}">
             <jsp:include page="raw-data.jsp"/>

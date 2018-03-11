@@ -12,6 +12,10 @@
         <artifactId>financialanalyser</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
