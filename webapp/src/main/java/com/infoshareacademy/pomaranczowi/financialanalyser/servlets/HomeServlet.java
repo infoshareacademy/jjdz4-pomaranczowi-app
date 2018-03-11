@@ -216,11 +216,11 @@ public class HomeServlet extends HttpServlet {
                         tmpOpen.remove(0);
                         tmpPrice.setLow((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
                         tmpLow.remove(0);
-                        tmpPrice.setClose((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpPrice.setClose((tmpClose.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
                         tmpClose.remove(0);
-                        tmpPrice.setHigh((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpPrice.setHigh((tmpHigh.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
                         tmpHigh.remove(0);
-                        tmpPrice.setVolume((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpPrice.setVolume((tmpVolume.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
                         tmpVolume.remove(0);
                         pricesBetweenDatesSMA.add(tmpPrice);
                     }
