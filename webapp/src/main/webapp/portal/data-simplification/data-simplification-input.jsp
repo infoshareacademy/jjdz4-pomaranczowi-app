@@ -41,7 +41,7 @@
         </div>
     </div>
     <input type="hidden" name="action" value="dataSimplification">
-    <jsp:include page="form-step-nav.jsp"/>
+    <jsp:include page="../forms/form-step-nav.jsp"/>
 </form>
 <script>
     function showOrHideMonths() {

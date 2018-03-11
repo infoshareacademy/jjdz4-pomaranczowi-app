@@ -14,4 +14,4 @@
     <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
 </h5>
 
-<jsp:include page="table-with-quotations.jsp"/>
+<jsp:include page="../general/table-with-quotations.jsp"/>

@@ -14,5 +14,5 @@
         </div>
     </div>
     <input type="hidden" name="action" value="singleDate">
-    <jsp:include page="form-step-nav.jsp"/>
+    <jsp:include page="../forms/form-step-nav.jsp"/>
 </form>

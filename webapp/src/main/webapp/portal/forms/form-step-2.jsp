@@ -28,11 +28,11 @@
         </div>
     </div>
 </form>
-<jsp:include page="data-simplification-input.jsp"/>
-<jsp:include page="signle-date-input.jsp"/>
-<jsp:include page="local-extremes-input.jsp"/>
+<jsp:include page="../data-simplification/data-simplification-input.jsp"/>
+<jsp:include page="../single-date/signle-date-input.jsp"/>
+<jsp:include page="../local-extremes/local-extremes-input.jsp"/>
 <form id="globalExtremes" action="/portal/home" method="post">
     <input type="hidden" name="action" value="globalExtremes">
     <jsp:include page="form-step-nav.jsp"/>
 </form>
-<script src="../js/toggleActionView.js"></script>
+<script src="../../js/toggleActionView.js"></script>
