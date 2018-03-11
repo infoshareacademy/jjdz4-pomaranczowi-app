@@ -38,5 +38,9 @@ public class ReportServlet extends HttpServlet{
         List<QuotationReport> quotationReportList = reportService1.getAllQuotations();
         quotationReportList.stream().forEach(quotationReport -> System.out.println(quotationReport));
 
+        ReportService reportService2 = new ReportService();
+        QuotationReport quotationReport = reportService2.getQuotation(1);
+        System.out.println("Quot" + quotationReport.toString());
+
     }
 }

@@ -53,9 +53,11 @@ public class QuotationReport {
 
     @Override
     public String toString(){
-        return "Quotation{" +
-                //"id=" + id +
+        return "Quotation from report module: " +
+                "id=" + id +
                 ", name=" + name + "\'" +
-                "}";
+                ", code=" + code + "\'" +
+                ", quotation Type=" + getQuotationType() + "\'" +
+                ".";
     }
 }

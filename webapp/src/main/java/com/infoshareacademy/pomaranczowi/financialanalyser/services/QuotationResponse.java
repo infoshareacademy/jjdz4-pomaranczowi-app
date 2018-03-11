@@ -1,9 +1,12 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.services;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class QuotationResponse {
 
+    @JsonIgnore
     private QuotationReport quotationReport;
 
     private List<QuotationReport> data;

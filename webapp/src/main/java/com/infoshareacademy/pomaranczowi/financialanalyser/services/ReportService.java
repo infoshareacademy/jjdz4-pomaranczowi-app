@@ -1,11 +1,12 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.services;
 
-import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Quotation;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class ReportService {
@@ -22,7 +23,7 @@ public class ReportService {
 
     public QuotationReport getQuotation(Integer id){
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(ADDRESS + "quotation");
+        WebTarget target = client.target(ADDRESS + "quotation" + "?id=" + id);
         Response response = target.request().get();
 
         QuotationReport quotationReport = response.readEntity(QuotationReport.class);
@@ -41,8 +42,25 @@ public class ReportService {
         WebTarget target = client.target(ADDRESS + "quotations");
         Response response = target.request().get();
 
-        QuotationResponse quotationResponse = response.readEntity(QuotationResponse.class);
+        List<QuotationReport> quotationReportList = response.readEntity(getListType(QuotationReport.class));
+        return quotationReportList;
+    }
 
-        return quotationResponse.getData();
+    private GenericType<List<QuotationReport>> getListType(final Class<QuotationReport> clazz) {
+        ParameterizedType genericType = new ParameterizedType() {
+            public Type[] getActualTypeArguments() {
+                return new Type[]{clazz};
+            }
+
+            public Type getRawType() {
+                return List.class;
+            }
+
+            public Type getOwnerType() {
+                return List.class;
+            }
+        };
+        return new GenericType<List<QuotationReport>>(genericType) {
+        };
     }
 }
