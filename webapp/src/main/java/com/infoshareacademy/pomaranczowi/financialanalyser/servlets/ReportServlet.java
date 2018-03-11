@@ -3,6 +3,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.QuotationReport;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.ReportService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,16 +16,16 @@ import java.util.List;
 public class ReportServlet extends HttpServlet{
 
     @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        getReports(req,res);
+    public void doGet(HttpServletRequest request, HttpServletResponse res) throws IOException, ServletException {
+        getReports(request,res);
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        getReports(req,res);
+    public void doPost(HttpServletRequest request, HttpServletResponse res) throws IOException, ServletException {
+        getReports(request,res);
     }
 
-    private void getReports(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void getReports(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 
         ReportService reportService = new ReportService();
         String fromAPI = reportService.getUserAgent();
@@ -42,5 +43,12 @@ public class ReportServlet extends HttpServlet{
         QuotationReport quotationReport = reportService2.getQuotation(1);
         System.out.println("Quot" + quotationReport.toString());
 
+
+        request.getSession().setAttribute("name", quotationReport.getName());
+        request.getSession().setAttribute("code", quotationReport.getCode());
+        request.getSession().setAttribute("quotationType", quotationReport.getQuotationType());
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("portal/report/report-page.jsp");
+        requestDispatcher.forward(request,resp);
     }
 }
