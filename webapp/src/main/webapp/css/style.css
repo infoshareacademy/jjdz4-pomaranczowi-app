@@ -67,3 +67,8 @@ label {
 .main {
     background-color: rgba(230,230,230,0.8) !important;
 }
+
+.content {
+    background-color: rgba(255,255,255,0.7);
+    margin-bottom: 1.25rem;
+}

@@ -43,7 +43,7 @@
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
+        <div class="content col col-sm-12 col-lg-8 offset-lg-2">
 
             <%-- Here you need to set total number of form steps --%>
             <c:set var="steps" scope="application" value="3"/>
