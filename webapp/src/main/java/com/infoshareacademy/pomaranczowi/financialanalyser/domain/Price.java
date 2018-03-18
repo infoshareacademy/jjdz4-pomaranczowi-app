@@ -13,7 +13,7 @@ import java.time.LocalDate;
                 query = "select p " +
                         "from Price p " +
                         "join Quotation q on q.id = p.quotation.id " +
-                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate"),
+                        "where q.code=:quotationCode AND p.date>:startDate AND p.date<:endDate  order by p.date asc"), //order sortuje rosnaco aby miec dane po kolei przy upraszczaniu
         @NamedQuery(name = "getTheNextFreePriceId",
                 query = "select MAX(p.id)" +
                         "from Price p"),

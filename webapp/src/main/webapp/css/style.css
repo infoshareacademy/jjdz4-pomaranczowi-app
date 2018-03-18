@@ -46,15 +46,24 @@ h2 {
     display: none;
 }
 
-.alert img {
-    width: 120px;
-    height: 120px;
-    border: #ffffff solid;
-    border-radius: 50%;
+tr:nth-child(even) {
+    background-color: #e8f3f3;
 }
 
-.avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+th {
+    background-color: #39afc2;
+    color: #ffffff;
+}
+
+#toConversion {
+    width: auto;
+    margin-bottom: .5rem;
+}
+
+label {
+    padding-right: .5rem;
+}
+
+.main {
+    background-color: rgba(230,230,230,0.8);
 }
