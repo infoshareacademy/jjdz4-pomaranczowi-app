@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<table class="table table-bordered">
+<table class="table">
     <tr>
         <th colspan="1">DATA</th>
         <th colspan="1">OPEN</th>

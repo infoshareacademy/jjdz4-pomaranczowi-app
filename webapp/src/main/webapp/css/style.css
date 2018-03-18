@@ -45,3 +45,12 @@ h2 {
 .hidden {
     display: none;
 }
+
+tr:nth-child(even) {
+    background-color: #e8f3f3;
+}
+
+th {
+    background-color: #39afc2;
+    color: #ffffff;
+}
