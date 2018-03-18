@@ -104,6 +104,7 @@ public class HomeServlet extends HttpServlet {
                         checkIfYearSelected(request, code);
                         break;
                     case "rawData":
+                        setRawDataMessage(request, data);
                         request.getSession().setAttribute("toConversion",toConversion1);
                         request.getSession().setAttribute("conversion",request.getParameter("conversion"));
                         if (toConversion1) {
@@ -130,6 +131,13 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
+    private void setRawDataMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("rawDataMessage", "rawData.fundMessage");
+        } else {
+            request.getSession().setAttribute("rawDataMessage", "rawData.currencyMessage");
+        }
+    }
     private void setSingleDateMessage(HttpServletRequest request, String data) {
         if (data.equals("fund")) {
             request.getSession().setAttribute("singleDateDayMessage", "singleDate.dayMessage");
@@ -289,18 +297,6 @@ public class HomeServlet extends HttpServlet {
                     }
                     i++;
                 }
-
-/*
-                Price a = new Price();
-                a.setDate(LocalDate.parse("2018-01-01",DateTimeFormatter.ISO_DATE));
-                a.setLow(BigDecimal.valueOf(1));
-                a.setClose(BigDecimal.valueOf(2));
-                a.setHigh(BigDecimal.valueOf(3));
-                a.setOpen(BigDecimal.valueOf(4));
-                a.setVolume(BigDecimal.valueOf(5));
-                pricesBetweenDatesSMA.add(a);
-*/
-
 
                 return pricesBetweenDatesSMA;
             } else if (startDate.isAfter(endDate)) {

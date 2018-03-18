@@ -1,9 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="fin-app" var="finAppLanguage"/>
+
+
 <h4>
-    Dane dla
-    <c:out value="${sessionScope.data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'} ${sessionScope.code}"/>
+
+    <fmt:message key="${rawDataMessage}" bundle="${finAppLanguage}"/>
+    <c:out value="${sessionScope.code}"/>
 </h4>
 
 <c:choose>
@@ -16,7 +22,12 @@
         </h5>
         <c:choose>
             <c:when test="${sessionScope.toConversion==true}">
-                <h6 style="color: red;">Dane uproszczone za pomocą ${sessionScope.conversion} z ${sessionScope.period} poprzednich okresów</h6>
+                <h6 style="color: red;">
+                    Dane uproszczone za pomocą
+                        ${sessionScope.conversion}
+                    z ${sessionScope.period}
+                    poprzednich okresów
+                </h6>
             </c:when>
             <c:otherwise>
                 <h6>
