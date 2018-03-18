@@ -51,7 +51,7 @@ EOF
 
 cp dump.sql $CONNECTION_URL:tmp/dump.sql
 
-docker exec -it jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE mysql $MYSQLDATABASE < /tmp/dump.sql
+#docker exec -it jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE mysql $MYSQLDATABASE < /tmp/dump.sql
 
 # Deploy the WAR
 cp /opt/jboss/wildfly/config/*.war $JBOSS_HOME/$JBOSS_MODE/deployments/
