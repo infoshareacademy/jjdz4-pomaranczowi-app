@@ -4,15 +4,20 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDa
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationRepositoryDao;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserService;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserServiceImpl;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -34,11 +39,26 @@ public class HomeServlet extends HttpServlet {
     @EJB
     private PriceRepositoryDao priceRepositoryDao;
 
+    @EJB
+    private UserService userService;
+
+    private User user;
+
+    private ServletConfig config;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        this.config = config;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         changeLanguage(request);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
         setStepIfEmpty(request);
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user", userService.getUserInfo(config, (String) session.getAttribute("accessToken")));
         requestDispatcher.forward(request, response);
         doPost(request, response);
     }
