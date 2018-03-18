@@ -3,6 +3,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class Quotation {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

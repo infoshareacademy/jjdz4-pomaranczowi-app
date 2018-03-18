@@ -17,11 +17,13 @@ public class ReportServlet extends HttpServlet{
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse res) throws IOException, ServletException {
+        changeLanguage(request);
         getReports(request,res);
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse res) throws IOException, ServletException {
+        changeLanguage(request);
         getReports(request,res);
     }
 
@@ -44,11 +46,20 @@ public class ReportServlet extends HttpServlet{
         System.out.println("Quot" + quotationReport.toString());
 
 
-        request.getSession().setAttribute("name", quotationReport.getName());
-        request.getSession().setAttribute("code", quotationReport.getCode());
-        request.getSession().setAttribute("quotationType", quotationReport.getQuotationType());
+//        request.getSession().setAttribute("name", quotationReport.getName());
+//        request.getSession().setAttribute("code", quotationReport.getCode());
+//        request.getSession().setAttribute("quotationType", quotationReport.getQuotationType());
+
+        request.getSession().setAttribute("quotationReport", quotationReport);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("portal/report/report-page.jsp");
         requestDispatcher.forward(request,resp);
+    }
+
+    private void changeLanguage(HttpServletRequest request) {
+        String pageLanguage = request.getParameter("lang");
+        if (pageLanguage != null) {
+            request.getSession().setAttribute("language", pageLanguage);
+        }
     }
 }

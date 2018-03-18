@@ -20,4 +20,9 @@
         <td>${sessionScope.code}</td>
         <td>${sessionScope.quotationType}</td>
     </tr>
+   <%-- <tr>
+        <c:forEach var="qu" items="elements">
+            Element: <c:out value="${entry}"/>
+        </c:forEach>
+    </tr>--%>
 </table>
