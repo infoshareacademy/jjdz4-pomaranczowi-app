@@ -4,21 +4,31 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDa
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationRepositoryDao;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserService;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserServiceImpl;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.stream.DoubleStream;
 
 @WebServlet(urlPatterns = "/portal/home")
 public class HomeServlet extends HttpServlet {
@@ -29,11 +39,26 @@ public class HomeServlet extends HttpServlet {
     @EJB
     private PriceRepositoryDao priceRepositoryDao;
 
+    @EJB
+    private UserService userService;
+
+    private User user;
+
+    private ServletConfig config;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        this.config = config;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         changeLanguage(request);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/home.jsp");
         setStepIfEmpty(request);
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user", userService.getUserInfo(config, (String) session.getAttribute("accessToken")));
         requestDispatcher.forward(request, response);
         doPost(request, response);
     }
@@ -79,6 +104,7 @@ public class HomeServlet extends HttpServlet {
                 request.getSession().setAttribute("action", request.getParameter("action"));
                 String code = (String) request.getSession().getAttribute("code");
                 String data = (String) request.getSession().getAttribute("data");
+                Boolean toConversion1 =   request.getParameter("toConversion")==null? false:true;
                 switch (request.getParameter("action")) {
                     case "globalExtremes":
                         setGlobalExtremesMessage(request, data);
@@ -95,6 +121,18 @@ public class HomeServlet extends HttpServlet {
                     case "dataSimplification":
                         setDataSimplificationMessage(request, data);
                         printSipmlifiedPrices(request, code);
+                        break;
+                    case "rawData":
+                        request.getSession().setAttribute("toConversion",toConversion1);
+                        request.getSession().setAttribute("conversion",request.getParameter("conversion"));
+                        if (toConversion1) {
+                            switch (request.getParameter("conversion")){
+                                case "SMA": request.getSession().setAttribute("prices", getPricesBetweenDatesSMA(request, code));
+                                break;
+                            }
+                        }else {
+                            request.getSession().setAttribute("prices", getPricesBetweenDates(request, code));
+                        }
                         break;
                 }
             }
@@ -190,6 +228,98 @@ public class HomeServlet extends HttpServlet {
         printMinMaxValues(request, code, startDate, endDate);
     }
 
+    private List<Price> getPricesBetweenDates(HttpServletRequest request, String code){
+        try {
+            LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
+            LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
+            if (startDate.isBefore(endDate)) {
+                request.getSession().setAttribute("startDate", startDate);
+                request.getSession().setAttribute("endDate", endDate);
+                List<Price> pricesBetweenDates = priceRepositoryDao.getPricesFromDateToDate(code,startDate,endDate);
+                return pricesBetweenDates;
+            } else if (startDate.isAfter(endDate)) {
+                request.setAttribute("dateLogicError", "Błąd chronologii dat!");
+            } else {
+                request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
+            }
+        } catch (DateTimeParseException e) {
+            request.setAttribute("dateLogicError", "Podaj daty!");
+        }
+
+        return null;
+    }
+
+    private List<Price> getPricesBetweenDatesSMA(HttpServletRequest request, String code){
+        try {
+            LocalDate startDate = LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
+            LocalDate endDate = LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
+            int period = Integer.valueOf(request.getParameter("period"));
+            int i =1;
+            ArrayList<BigDecimal> tmpOpen = new ArrayList<>();
+            ArrayList<BigDecimal> tmpLow = new ArrayList<>();
+            ArrayList<BigDecimal> tmpClose = new ArrayList<>();
+            ArrayList<BigDecimal> tmpHigh = new ArrayList<>();
+            ArrayList<BigDecimal> tmpVolume = new ArrayList<>();
+
+            if (startDate.isBefore(endDate)) {
+                request.getSession().setAttribute("startDate", startDate);
+                request.getSession().setAttribute("endDate", endDate);
+                request.getSession().setAttribute("period",period);
+
+                List<Price> pricesBetweenDates = priceRepositoryDao.getPricesFromDateToDate(code,startDate,endDate);
+                List<Price> pricesBetweenDatesSMA = new ArrayList<>();
+
+
+                for(Price loopPrice:pricesBetweenDates){
+                    tmpOpen.add(loopPrice.getOpen());
+                    tmpLow.add(loopPrice.getLow());
+                    tmpHigh.add(loopPrice.getHigh());
+                    tmpClose.add(loopPrice.getClose());
+                    tmpVolume.add(loopPrice.getVolume());
+
+                    if(i>=period){
+                        Price tmpPrice = new Price();
+                        tmpPrice.setDate(loopPrice.getDate());
+                        tmpPrice.setOpen((tmpOpen.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpOpen.remove(0);
+                        tmpPrice.setLow((tmpLow.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpLow.remove(0);
+                        tmpPrice.setClose((tmpClose.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpClose.remove(0);
+                        tmpPrice.setHigh((tmpHigh.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpHigh.remove(0);
+                        tmpPrice.setVolume((tmpVolume.stream().reduce(BigDecimal.ZERO, BigDecimal::add)).divide(BigDecimal.valueOf(period)));
+                        tmpVolume.remove(0);
+                        pricesBetweenDatesSMA.add(tmpPrice);
+                    }
+                    i++;
+                }
+
+/*
+                Price a = new Price();
+                a.setDate(LocalDate.parse("2018-01-01",DateTimeFormatter.ISO_DATE));
+                a.setLow(BigDecimal.valueOf(1));
+                a.setClose(BigDecimal.valueOf(2));
+                a.setHigh(BigDecimal.valueOf(3));
+                a.setOpen(BigDecimal.valueOf(4));
+                a.setVolume(BigDecimal.valueOf(5));
+                pricesBetweenDatesSMA.add(a);
+*/
+
+
+                return pricesBetweenDatesSMA;
+            } else if (startDate.isAfter(endDate)) {
+                request.setAttribute("dateLogicError", "Błąd chronologii dat!");
+            } else {
+                request.setAttribute("dateLogicError", "Wybierz opcję: Wartości z danego dnia!");
+            }
+        } catch (DateTimeParseException e) {
+            request.setAttribute("dateLogicError", "Podaj daty!");
+        }
+
+        return null;
+    }
+
     private void printPricesForGlobalExtremes(HttpServletRequest request, String code) {
         LocalDate startDate = priceRepositoryDao.getMinDate(code);
         LocalDate endDate = priceRepositoryDao.getMaxDate(code);
@@ -216,4 +346,9 @@ public class HomeServlet extends HttpServlet {
         request.getSession().setAttribute("minClose",
                 priceRepositoryDao.getMinCloseFromDateToDate(code, startDate, endDate));
     }
+
+
+
+
+
 }

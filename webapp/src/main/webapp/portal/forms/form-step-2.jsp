@@ -32,6 +32,11 @@
                         <c:if test="${sessionScope.action == 'dataSimplification'}">selected</c:if>>
                     <fmt:message key="chooseAction.dataSimplification" bundle="${finAppLanguage}"/>
                 </option>
+                <option value="rawData"
+                        <c:if test="${sessionScope.action == 'rawData'}">selected</c:if>>
+                    Dane z okresu
+                </option>
+
             </select>
         </div>
     </div>
@@ -39,7 +44,7 @@
 <jsp:include page="../data-simplification/data-simplification-input.jsp"/>
 <jsp:include page="../single-date/single-date-input.jsp"/>
 <jsp:include page="../local-extremes/local-extremes-input.jsp"/>
-
+<jsp:include page="../raw-data-input.jsp"/>
 <form id="globalExtremes" action="/portal/home" method="post">
     <input type="hidden" name="action" value="globalExtremes">
     <jsp:include page="form-step-nav.jsp"/>

@@ -194,4 +194,5 @@ public class QuotationInvestmentTest {
         //then
         assertEquals(investment.countPrices().intValue(),4);
     }
+
 }
