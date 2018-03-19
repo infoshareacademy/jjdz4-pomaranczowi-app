@@ -32,10 +32,10 @@ echo "=> MYSQL_USER: " $MYSQL_USER
 echo "=> MYSQL_PASSWORD: " $MYSQL_PASSWORD
 echo "=> DATASOURCE_NAME: " $DATASOURCE_NAME
 
-docker exec -it jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE mysql $MYSQL_DATABASE < /tmp/dump.sql
+docker exec -it jdbc:mysql://$MYSQL_URI/$MYSQL_DATABASE mysql $MYSQL_DATABASE < $JBOSS_HOME/config/dump.sql
 
 echo "[RESTORE DUMP FROM DB]"
-cat dump.sql | docker exec -i fin-analyser-db /usr/bin/mysql -u $MYSQL_USER --password=$MYSQL_PASSWORD $DATASOURCE_NAME
+cat $JBOSS_HOME/config/dump.sql | docker exec -i fin-analyser-db /usr/bin/mysql -u $MYSQL_USER --password=$MYSQL_PASSWORD $DATASOURCE_NAME
 echo "[FINISH RESTORING DUMP FROM DB]"
 
 
