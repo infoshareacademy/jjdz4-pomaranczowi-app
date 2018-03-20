@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         String redirectUri = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/callback";
 
         String authorizeUrl = authenticationController.buildAuthorizeUrl(req, redirectUri)
-                .withAudience(String.format("https://%s/userinfo", domain))
+                .withAudience(String.format("https://%s/userinfo", domain)).withScope("openid profile email name")
                 .build();
         res.sendRedirect(authorizeUrl);
     }
