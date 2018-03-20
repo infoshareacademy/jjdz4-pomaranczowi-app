@@ -102,6 +102,8 @@ public class ErrorFilter implements Filter {
         try {
             LocalDate startDate = LocalDate.parse(httpServletRequest.getParameter("startDate"), DateTimeFormatter.ISO_DATE);
             LocalDate endDate = LocalDate.parse(httpServletRequest.getParameter("endDate"), DateTimeFormatter.ISO_DATE);
+            checkIfNotFutureDate(startDate);
+            checkIfNotFutureDate(endDate);
 
             if (startDate.isAfter(endDate)) {
                 httpServletRequest.getSession().setAttribute("inputError", "localExtremes.chronologyError");
@@ -112,6 +114,8 @@ public class ErrorFilter implements Filter {
             }
         } catch (DateTimeParseException e) {
             httpServletRequest.getSession().setAttribute("inputError", "localExtremes.noDateError");
+        } catch (DateFromTheFutureException e) {
+            httpServletRequest.getSession().setAttribute("inputError", "singleDate.dateFromTheFutureError");
         }
     }
 
