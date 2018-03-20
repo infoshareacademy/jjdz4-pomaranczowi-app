@@ -2,6 +2,7 @@ package com.infoshareacademy.pomaranczowi.financialanalyser.filters;
 
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDao;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
+import com.infoshareacademy.pomaranczowi.financialanalyser.exceptions.DateFromTheFutureException;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
@@ -74,6 +75,7 @@ public class ErrorFilter implements Filter {
     private void setSingleDateErrorMessage(HttpServletRequest httpServletRequest) {
         try {
             LocalDate date = LocalDate.parse(httpServletRequest.getParameter("date"), DateTimeFormatter.ISO_DATE);
+            checkIfNotFutureDate(date);
             Price price = priceRepositoryDao.getPriceFromDate((String) httpServletRequest.getSession()
                     .getAttribute("code"), date);
             setNullForInputError(httpServletRequest);
@@ -81,6 +83,14 @@ public class ErrorFilter implements Filter {
             httpServletRequest.getSession().setAttribute("inputError", "singleDate.noQuotesError");
         } catch (DateTimeParseException e) {
             httpServletRequest.getSession().setAttribute("inputError", "singleDate.enterDateError");
+        } catch (DateFromTheFutureException e) {
+            httpServletRequest.getSession().setAttribute("inputError", "singleDate.dateFromTheFutureError");
+        }
+    }
+
+    private void checkIfNotFutureDate(LocalDate date) throws DateFromTheFutureException {
+        if (date.isAfter(LocalDate.now())) {
+            throw new DateFromTheFutureException();
         }
     }
 
