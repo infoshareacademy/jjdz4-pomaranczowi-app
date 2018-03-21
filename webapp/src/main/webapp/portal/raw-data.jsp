@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="fin-app" var="finAppLanguage"/>
@@ -18,20 +18,24 @@
     </c:when>
     <c:otherwise>
         <h5>
-            z okresu <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
+            <fmt:message key="localExtremesInput.period" bundle="${finAppLanguage}"/>
+            <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
         </h5>
         <c:choose>
             <c:when test="${sessionScope.toConversion==true}">
                 <h6 style="color: red;">
-                    Dane uproszczone za pomocą
+                    <fmt:message key="localExtremesInput.simpl" bundle="${finAppLanguage}"/>
                         ${sessionScope.conversion}
-                    z ${sessionScope.period}
-                    poprzednich okresów
+                    <fmt:message key="localExtremesInput.from" bundle="${finAppLanguage}"/>
+                    ${sessionScope.period}
+                    <fmt:message key="localExtremesInput.periods" bundle="${finAppLanguage}"/>
+
                 </h6>
             </c:when>
             <c:otherwise>
                 <h6>
-                    Dane nieuproszczone.
+                    <fmt:message key="localExtremesInput.dataNotSimpl" bundle="${finAppLanguage}"/>
+
                 </h6>
             </c:otherwise>
         </c:choose>

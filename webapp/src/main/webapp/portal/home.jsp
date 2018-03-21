@@ -37,7 +37,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/logout"><fmt:message key="home.logout" bundle="${finAppLanguage}"/></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="upload.jsp"><fmt:message key="home.upload" bundle="${finAppLanguage}"/></a>
+            </li>
         </ul>
+
     </div>
     <jsp:include page="general/language-flags.jsp"/>
 </nav>
