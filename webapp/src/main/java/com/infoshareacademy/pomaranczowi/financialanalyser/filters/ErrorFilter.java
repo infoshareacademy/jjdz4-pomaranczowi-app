@@ -55,6 +55,9 @@ public class ErrorFilter implements Filter {
                 case "singleDate":
                     setSingleDateErrorMessage(httpServletRequest);
                     break;
+                default:
+                    setNullForInputError(httpServletRequest);
+                    break;
             }
         } else {
             setNullForInputError(httpServletRequest);
