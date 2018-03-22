@@ -200,23 +200,42 @@ public class HomeServlet extends HttpServlet {
         Integer year = Integer.valueOf(request.getParameter("year"));
         LocalDate startDate;
         LocalDate endDate;
+        List<MinMaxPrice> minMaxPriceList = new ArrayList<>();
         if (year.equals(0)) {
             List<Integer> yearsList = priceRepositoryDao.getYearsList(code);
             startDate = Year.of(yearsList.get(0)).atDay(1);
             endDate = Year.of(yearsList.get(yearsList.size() - 1)).atMonth(12).atEndOfMonth();
-            List<MinMaxPrice> minMaxPriceList = new ArrayList<>();
             setMinMaxValuesForAllYears(code, yearsList, minMaxPriceList);
-            request.getSession().setAttribute("yearsPriceList", minMaxPriceList);
         } else if (month.equals(0)) {
             startDate = Year.of(year).atDay(1);
             endDate = Year.of(year).atMonth(12).atEndOfMonth();
+            setMinMaxValuesForAllMonths(code, year, minMaxPriceList);
         } else {
             startDate = YearMonth.of(year, month).atDay(1);
             endDate = YearMonth.of(year, month).atEndOfMonth();
         }
+        request.getSession().setAttribute("periodPriceList", minMaxPriceList);
         request.getSession().setAttribute("startDate", startDate);
         request.getSession().setAttribute("endDate", endDate);
         printMinMaxValues(request, code, startDate, endDate);
+    }
+
+    private void setMinMaxValuesForAllMonths(String code, Integer year, List<MinMaxPrice> minMaxPriceList) {
+        for (int month = 1; month <= 12; month++) {
+            LocalDate monthStartDate = Year.of(year).atMonth(month).atDay(1);
+            LocalDate monthEndDate = Year.of(year).atMonth(month).atEndOfMonth();
+            MinMaxPrice monthPrice = new MinMaxPrice();
+            monthPrice.setMaxOpen(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
+            monthPrice.setMinOpen(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
+            monthPrice.setMaxClose(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
+            monthPrice.setMinClose(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
+            monthPrice.setMaxHigh(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
+            monthPrice.setMinHigh(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
+            monthPrice.setMaxLow(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
+            monthPrice.setMinLow(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
+            monthPrice.setPeriod(Integer.toString(month));
+            minMaxPriceList.add(monthPrice);
+        }
     }
 
     private void setMinMaxValuesForAllYears(String code, List<Integer> yearsList, List<MinMaxPrice> minMaxPriceList) {
@@ -232,7 +251,7 @@ public class HomeServlet extends HttpServlet {
             yearPrice.setMinHigh(priceRepositoryDao.getMaxOpenFromDateToDate(code, yearStartDate, yearEndDate));
             yearPrice.setMaxLow(priceRepositoryDao.getMaxOpenFromDateToDate(code, yearStartDate, yearEndDate));
             yearPrice.setMinLow(priceRepositoryDao.getMaxOpenFromDateToDate(code, yearStartDate, yearEndDate));
-            yearPrice.setPeriod(localYear);
+            yearPrice.setPeriod(localYear.toString());
             minMaxPriceList.add(yearPrice);
         }
     }

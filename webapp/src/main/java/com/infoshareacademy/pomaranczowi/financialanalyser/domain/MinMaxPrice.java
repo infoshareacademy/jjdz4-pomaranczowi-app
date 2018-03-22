@@ -12,13 +12,13 @@ public class MinMaxPrice {
     private BigDecimal minHigh;
     private BigDecimal maxClose;
     private BigDecimal minClose;
-    private Integer period;
+    private String period;
 
-    public Integer getPeriod() {
+    public String getPeriod() {
         return period;
     }
 
-    public void setPeriod(Integer period) {
+    public void setPeriod(String period) {
         this.period = period;
     }
 

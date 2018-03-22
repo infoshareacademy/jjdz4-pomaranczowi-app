@@ -21,17 +21,17 @@
         <td>min</td>
     </tr>
 
-    <c:forEach var="singleYearPrice" items="${yearsPriceList}">
+    <c:forEach var="singlePeriodPrice" items="${periodPriceList}">
         <tr>
-            <td><c:out value="${singleYearPrice.getPeriod()}"/>:</td>
-            <td><c:out value="${singleYearPrice.getMaxOpen()}"/></td>
-            <td><c:out value="${singleYearPrice.getMinOpen()}"/></td>
-            <td><c:out value="${singleYearPrice.getMaxLow()}"/></td>
-            <td><c:out value="${singleYearPrice.getMinLow()}"/></td>
-            <td><c:out value="${singleYearPrice.getMaxHigh()}"/></td>
-            <td><c:out value="${singleYearPrice.getMinHigh()}"/></td>
-            <td><c:out value="${singleYearPrice.getMaxClose()}"/></td>
-            <td><c:out value="${singleYearPrice.getMinClose()}"/></td>
+            <td><c:out value="${singlePeriodPrice.getPeriod()}"/>:</td>
+            <td><c:out value="${singlePeriodPrice.getMaxOpen()}"/></td>
+            <td><c:out value="${singlePeriodPrice.getMinOpen()}"/></td>
+            <td><c:out value="${singlePeriodPrice.getMaxLow()}"/></td>
+            <td><c:out value="${singlePeriodPrice.getMinLow()}"/></td>
+            <td><c:out value="${singlePeriodPrice.getMaxHigh()}"/></td>
+            <td><c:out value="${singlePeriodPrice.getMinHigh()}"/></td>
+            <td><c:out value="${singlePeriodPrice.getMaxClose()}"/></td>
+            <td><c:out value="${singlePeriodPrice.getMinClose()}"/></td>
         </tr>
     </c:forEach>
 
