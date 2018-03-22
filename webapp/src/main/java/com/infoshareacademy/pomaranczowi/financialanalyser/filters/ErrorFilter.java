@@ -55,18 +55,7 @@ public class ErrorFilter implements Filter {
                 case "singleDate":
                     setSingleDateErrorMessage(httpServletRequest);
                     break;
-                case "dataSimplification":
-                    setDataSimplificationErrorMessage(httpServletRequest);
-                    break;
             }
-        } else {
-            setNullForInputError(httpServletRequest);
-        }
-    }
-
-    private void setDataSimplificationErrorMessage(HttpServletRequest httpServletRequest) {
-        if (httpServletRequest.getParameter("year").equals("")) {
-            httpServletRequest.getSession().setAttribute("inputError", "dataSimplification.errorMessage");
         } else {
             setNullForInputError(httpServletRequest);
         }
