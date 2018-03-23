@@ -11,18 +11,17 @@
 <table class="table table-bordered">
 
     <tr>
-        <td>name</td>
-        <td>code</td>
-        <td>quotationType</td>
+        <td>Quotation Name</td>
+        <td>Quotation Code</td>
+        <td>Quotation Type</td>
     </tr>
-    <tr>
-        <td>${sessionScope.name}</td>
-        <td>${sessionScope.code}</td>
-        <td>${sessionScope.quotationType}</td>
-    </tr>
-   <%-- <tr>
-        <c:forEach var="qu" items="elements">
-            Element: <c:out value="${entry}"/>
-        </c:forEach>
-    </tr>--%>
+
+    <c:forEach var="entry" items="${quotationReportList}">
+        <tr>
+            <td><c:out value="${entry.name}"/>
+            <td><c:out value="${entry.code}"/>
+            <td><c:out value="${entry.quotationType}"/>
+        </tr>
+
+    </c:forEach>
 </table>

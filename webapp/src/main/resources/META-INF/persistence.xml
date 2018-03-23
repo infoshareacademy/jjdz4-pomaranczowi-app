@@ -8,13 +8,14 @@
     <persistence-unit name="pUnit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:/FinAnalyser</jta-data-source>
-        <class>com.infoshareacademy.pomaranczowi.financialanalyser.domain.Quotation</class>
-        <class>com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price</class>
+        <!--<class>com.infoshareacademy.pomaranczowi.financialanalyser.domain.Quotation</class>-->
+        <!--<class>com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price</class>-->
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
+          <!--  <property name="hibernate.hbm2ddl.import_files" value="dump.sql"/>-->
         </properties>
     </persistence-unit>
 </persistence>
