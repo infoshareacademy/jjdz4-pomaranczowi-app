@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
                 query = "select MAX(q.id) from Quotation q"),
         @NamedQuery(name = "getAllQuotationList",
                 query = "select DISTINCT q.code from Quotation q where q.quotationType=:quotationType"),
-        @NamedQuery(name = "getQuotationInfoReport",
+        @NamedQuery(name = "getQuotation",
                 query = "select q from Quotation q where q.code=:code"),
 })
 public class Quotation {

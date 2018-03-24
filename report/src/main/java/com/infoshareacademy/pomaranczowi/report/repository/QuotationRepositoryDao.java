@@ -11,5 +11,5 @@ public interface QuotationRepositoryDao {
     boolean isQuotationCodeInDB(String quotationCode);
    // Long getTheNextFreeQuotationId();
    // List<String> getAllQuotationsList(QuotationType quotationType);
-   // Quotation getQuotationInfoToReport(String code);
+    Quotation getQuotation(String code);
 }

@@ -13,10 +13,16 @@ public class QuotationRepository {
     private EntityManager entityManager;
 
     public boolean addOrUpdateQuotation(Quotation quotation) {
-        entityManager.flush();
-        entityManager.merge(quotation);
-        System.out.println("Quotation " + quotation + " added or update");
-        return true;
+
+        if (isQuotationCodeInDB(quotation.getCode())){
+            entityManager.flush();
+            entityManager.merge(quotation);
+            System.out.println("Quotation " + quotation + " added or update");
+            return true;
+        } else {
+            System.out.println("Quotation " + quotation + " already exists id db");
+            return false;
+        }
     }
 
     public boolean isQuotationCodeInDB(String quotationCode) {
@@ -39,12 +45,12 @@ public class QuotationRepository {
                 .getResultList();
     }*/
 
-    /*public Quotation getQuotationInfoToReport(String code) {
-        return (Quotation) entityManager.createNamedQuery("getQuotationInfoReport")
+    public Quotation getQuotation(String code) {
+        return (Quotation) entityManager.createNamedQuery("getQuotation")
                 .setParameter("code", code)
                 .getResultList()
                 .get(0);
-    }*/
+    }
 }
 
 

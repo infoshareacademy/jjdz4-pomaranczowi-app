@@ -67,7 +67,6 @@ public class QuotationService {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
-
     @POST
     @Path("/addquotation")
     @Consumes(MediaType.APPLICATION_JSON)
