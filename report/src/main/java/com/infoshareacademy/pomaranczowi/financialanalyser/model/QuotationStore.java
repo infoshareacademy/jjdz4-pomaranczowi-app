@@ -36,8 +36,13 @@ public class QuotationStore {
     }
 
     public void add(Quotation quotation) {
-        LOG.info("Adding to store: " + quotation.toString());
-        base.put(quotation.getId(), quotation);
+        if (!base.containsValue(quotation)){
+            LOG.info("Adding to store: " + quotation.toString());
+            base.put(quotation.getId(), quotation);
+        } else {
+            LOG.info("Quotation " +quotation.toString() + " is already exists!");
+        }
+
     }
 
     public Optional<Quotation> findById(Integer id) {

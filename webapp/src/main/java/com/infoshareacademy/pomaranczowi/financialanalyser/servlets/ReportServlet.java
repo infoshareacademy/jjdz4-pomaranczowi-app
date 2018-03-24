@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/report")
 public class ReportServlet extends HttpServlet{
@@ -34,37 +35,17 @@ public class ReportServlet extends HttpServlet{
         String fromAPI = reportService.getUserAgent();
         System.out.println(fromAPI);
 
-        ReportService reportServicePost = new ReportService();
-
-        //test
-        QuotationReport qrObject = new QuotationReport();
-        qrObject.setCode("HJK");
-        qrObject.setName("HJK");
-        qrObject.setQuotationType(QuotationType.CURRENCY);
-        reportServicePost.addQuotationToRaport(qrObject);
-        //end test
-
-        //ponizej ok
-        //reportServicePost.addQuotationToRaport("USD","USD", QuotationType.CURRENCY);
-
-        /*req.setAttribute("agent", fromAPI.toString());
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/portal/agent.jsp");
-        requestDispatcher.forward(req, resp);*/
+       // ReportService reportServicePost = new ReportService();
+        /*ReportService reportService2 = new ReportService();
+        QuotationReport quotationReport = reportService2.getQuotation(1);
+        System.out.println("Quot" + quotationReport.toString());*/
 
         ReportService reportService1 = new ReportService();
         List<QuotationReport> quotationReportList = reportService1.getAllQuotations();
-        quotationReportList.stream().forEach(quotationReport -> System.out.println(quotationReport));
+        quotationReportList = quotationReportList.stream()
+                .filter(quotationReport -> quotationReport.getQuotationType() == QuotationType.CURRENCY)
+                .collect(Collectors.toList());
 
-        ReportService reportService2 = new ReportService();
-        QuotationReport quotationReport = reportService2.getQuotation(1);
-        System.out.println("Quot" + quotationReport.toString());
-
-
-//        request.getSession().setAttribute("name", quotationReport.getName());
-//        request.getSession().setAttribute("code", quotationReport.getCode());
-//        request.getSession().setAttribute("quotationType", quotationReport.getQuotationType());
-
-       // request.getSession().setAttribute("quotationReport", quotationReport);
         request.getSession().setAttribute("quotationReportList", quotationReportList);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("portal/report/report-page.jsp");
