@@ -1,12 +1,9 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.services;
 
-import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -26,7 +23,7 @@ public class ReportService {
         return response.toString();
     }
 
-    public QuotationReport getQuotation(Integer id){
+    public QuotationReport getQuotation(Integer id) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(ADDRESS + "quotation" + "?id=" + id);
         Response response = target.request().get();
@@ -35,7 +32,7 @@ public class ReportService {
 
         response.close();
 
-        if (quotationReport != null){
+        if (quotationReport != null) {
             return quotationReport;
         }
 
@@ -70,25 +67,24 @@ public class ReportService {
     }
 
     //public QuotationReport addQuotationToRaport(String name, String code, QuotationType quotationType) {
-    public QuotationReport addQuotationToRaport(String name, String code, QuotationType quotationType) {
+    //public QuotationReport addQuotationToRaport(String name, String code, QuotationType quotationType) {
+    //String input = "{\"name\":USD,\"code\":\"USD\",\"quotationType\":\"CURRENCY\"}";
+    public List<QuotationReport> addQuotationToRaport(QuotationReport quotationReport) {
 
         String address = ADDRESS + "addquotation";
 
-        Form form = new Form();
-        form.param("name", name);
-        form.param("code", code);
-        form.param("quotationType", quotationType.toString());
 
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(address);
 
-       // String input = "{\"name\":USD,\"code\":\"USD\",\"quotationType\":\"CURRENCY\"}";
 
+        Response response = webTarget.request().post(Entity.entity(quotationReport, MediaType.APPLICATION_JSON_TYPE));
 
-        Response response = webTarget.request().accept("co").accept(MediaType.APPLICATION_JSON_TYPE).post(Entity.form(form));
-        QuotationResponse responseValue = response.readEntity(QuotationResponse.class);
+        //QuotationResponse responseValue = response.readEntity(QuotationResponse.class);
+        List<QuotationReport> responseValue = response.readEntity(getListType(QuotationReport.class));
+
         response.close();
-        return responseValue.getData().get(0);
+        return responseValue;
 
 
 

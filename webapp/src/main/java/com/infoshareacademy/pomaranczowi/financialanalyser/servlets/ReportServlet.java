@@ -35,7 +35,17 @@ public class ReportServlet extends HttpServlet{
         System.out.println(fromAPI);
 
         ReportService reportServicePost = new ReportService();
-        reportServicePost.addQuotationToRaport("USD","USD", QuotationType.CURRENCY);
+
+        //test
+        QuotationReport qrObject = new QuotationReport();
+        qrObject.setCode("HJK");
+        qrObject.setName("HJK");
+        qrObject.setQuotationType(QuotationType.CURRENCY);
+        reportServicePost.addQuotationToRaport(qrObject);
+        //end test
+
+        //ponizej ok
+        //reportServicePost.addQuotationToRaport("USD","USD", QuotationType.CURRENCY);
 
         /*req.setAttribute("agent", fromAPI.toString());
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/portal/agent.jsp");
