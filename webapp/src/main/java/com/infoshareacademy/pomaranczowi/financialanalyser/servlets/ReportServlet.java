@@ -1,5 +1,6 @@
 package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 
+import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.QuotationReport;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.ReportService;
 
@@ -32,6 +33,9 @@ public class ReportServlet extends HttpServlet{
         ReportService reportService = new ReportService();
         String fromAPI = reportService.getUserAgent();
         System.out.println(fromAPI);
+
+        ReportService reportServicePost = new ReportService();
+        reportServicePost.addQuotationToRaport("USD","USD", QuotationType.CURRENCY);
 
         /*req.setAttribute("agent", fromAPI.toString());
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/portal/agent.jsp");
