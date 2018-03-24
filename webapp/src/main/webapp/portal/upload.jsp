@@ -19,7 +19,7 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<form method="post" action="/servlets/UploadServlet" enctype="multipart/form-data">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/portal/home"><fmt:message key="home.appName" bundle="${finAppLanguage}"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
@@ -39,7 +39,7 @@
                 <a class="nav-link" href="/logout"><fmt:message key="home.logout" bundle="${finAppLanguage}"/></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="upload.jsp"><fmt:message key="home.upload" bundle="${finAppLanguage}"/></a>
+                <a class="nav-link" href="/portal/upload.jsp"><fmt:message key="home.upload" bundle="${finAppLanguage}"/></a>
             </li>
         </ul>
 
@@ -49,11 +49,61 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
+<%--
+            <form method="post" action="UploadServlet" enctype="multipart/form-data">
+--%>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
-                <input type="file" name="dataFile" id="fileChooser"/><br/><br/>
-                <input type="submit" value="Upload" />
+<%--
+                <button onclick="document.getElementById('fileChooser').click()">
+                    <fmt:message key="home.browse" bundle="${finAppLanguage}"/>
+                </button>
+                <input  type="file" name="dataFile" id="fileChooser" style="display:none">
+--%>
 
+                <h2><fmt:message key="upload.selectFile" bundle="${finAppLanguage}"/> </h2>
+
+                <br/>
+                (<fmt:message key="upload.maxFileSize" bundle="${finAppLanguage}"/> 10 Mb)
+                <br/><br/>
+
+                <input type="file" name="dataFile" id="fileChooser" onchange=""/>
+
+                <br/><br/>
+
+                <input type="submit" id="upload" value="Upload"/>
+
+                <br/><br/>
+                <c:choose>
+                    <c:when test="${file != null}">
+
+                        <h5 style="color: red;">
+                            <fmt:message key="upload.fileUploaded" bundle="${finAppLanguage}"/>
+                            ${file}
+
+                        </h5>
+                    </c:when>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${hasFile ==0}">
+
+                        <h5 style="color: red;">
+                            <fmt:message key="upload.pleasefile" bundle="${finAppLanguage}"/>
+                        </h5>
+                    </c:when>
+                </c:choose>
+                            <div id="message"></div>
+
+                <br/><br/>
+
+    <%--
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet.css" rel="stylesheet"/>
+            <label for="imageUpload" class="btn btn-primary btn-block btn-outlined">Seleccionar imagenes</label>
+            <input type="file" id="imageUpload" accept="image/*" style="display: none">
+
+--%>       <%-- </form>--%>
 
         </div>
     </div>
@@ -61,6 +111,23 @@
 
 <script src="../js/jquery-3.2.1.slim.min.js"></script>
 <script src="../js/popper.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#upload").click(function () {
+                if (jQuery('#fileChooser').val()===''){
+                    $('#message').html("Please Attach File");
+                }
+           });
+        });
+    </script>
+
+        <%--    if (jQuery('#fileChooser').val() === '') {
+            $('#message').html("Please Attach File");
+            }else {
+
+                alert('not work');
+            }
+        --%>
 
 <script>
     (function () {
@@ -78,7 +145,7 @@
         }, false);
     })();
 </script>
-
+</form>
 </body>
 </html>
 <%--
