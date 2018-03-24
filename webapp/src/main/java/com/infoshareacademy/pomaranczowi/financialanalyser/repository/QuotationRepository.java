@@ -21,26 +21,32 @@ public class QuotationRepository {
         return true;
     }
 
-    public boolean isQuotationCodeInDB(String quotationCode){
+    public boolean isQuotationCodeInDB(String quotationCode) {
         return entityManager.createNamedQuery("isQuotationCodeInDB")
                 .setParameter("quotationCode", quotationCode)
                 .getSingleResult().equals(quotationCode);
     }
 
-    public Long getTheNextFreeQuotationId(){
-        try{
-            return (Long) entityManager.createNamedQuery("getTheNextFreeQuotationId").getResultList().get(0)+1;
-        }catch (Exception e){
+    public Long getTheNextFreeQuotationId() {
+        try {
+            return (Long) entityManager.createNamedQuery("getTheNextFreeQuotationId").getResultList().get(0) + 1;
+        } catch (Exception e) {
             return 1l;
         }
     }
 
-    public List<String> getAllQuotationsList(QuotationType quotationType){
+    public List<String> getAllQuotationsList(QuotationType quotationType) {
         return entityManager.createNamedQuery("getAllQuotationList")
-                .setParameter("quotationType",quotationType)
+                .setParameter("quotationType", quotationType)
                 .getResultList();
     }
 
+    public Quotation getQuotationInfoToReport(String code) {
+        return (Quotation) entityManager.createNamedQuery("getQuotationInfoReport")
+                .setParameter("code", code)
+                .getResultList()
+                .get(0);
+    }
 }
 
 

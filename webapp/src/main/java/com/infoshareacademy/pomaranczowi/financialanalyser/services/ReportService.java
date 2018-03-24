@@ -66,9 +66,7 @@ public class ReportService {
         };
     }
 
-    //public QuotationReport addQuotationToRaport(String name, String code, QuotationType quotationType) {
-    //public QuotationReport addQuotationToRaport(String name, String code, QuotationType quotationType) {
-    //String input = "{\"name\":USD,\"code\":\"USD\",\"quotationType\":\"CURRENCY\"}";
+
     public List<QuotationReport> addQuotationToRaport(QuotationReport quotationReport) {
 
         String address = ADDRESS + "addquotation";
@@ -80,31 +78,11 @@ public class ReportService {
 
         Response response = webTarget.request().post(Entity.entity(quotationReport, MediaType.APPLICATION_JSON_TYPE));
 
-        //QuotationResponse responseValue = response.readEntity(QuotationResponse.class);
-        List<QuotationReport> responseValue = response.readEntity(getListType(QuotationReport.class));
-
-        response.close();
-        return responseValue;
-
-
-
-     /*   Response response = webTarget.request().post(Entity.form(form));
-        QuotationReport responseValue = response.readEntity(QuotationReport.class);
-        response.close();
-        return responseValue;
-        */
-
-
-        /*if (response.getStatus() == 200) {
-            TranslateResponse result = response.readEntity(TranslateResponse.class);
+        if (response.getStatus() == 200) {
+            List<QuotationReport> responseValue = response.readEntity(getListType(QuotationReport.class));
             response.close();
+            return responseValue;
+        } else return null; //TODO add Exception
 
-            return result.getData().getTranslations().get(0).getTranslatedText();
-        } else {
-            ErrorResponse result = response.readEntity(ErrorResponse.class);
-            response.close();
-
-            throw new RuntimeException(result.getError().getMessage());
-        }*/
     }
 }

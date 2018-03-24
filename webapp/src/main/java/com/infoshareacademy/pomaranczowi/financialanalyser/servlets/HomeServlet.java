@@ -5,8 +5,9 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationReposito
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.QuotationReport;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.ReportService;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserService;
-import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserServiceImpl;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
@@ -19,16 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.stream.DoubleStream;
 
 @WebServlet(urlPatterns = "/portal/home")
 public class HomeServlet extends HttpServlet {
@@ -94,6 +93,8 @@ public class HomeServlet extends HttpServlet {
 
         if (step == 2) {
             String code = request.getParameter("code");
+            sendPostWithQuotationInfoToReport(code);
+
             if (code != null) {
                 request.getSession().setAttribute("code", code);
                 request.getSession().setAttribute("yearsList", getYearsList(code));
@@ -140,6 +141,15 @@ public class HomeServlet extends HttpServlet {
         }
 
         requestDispatcher.forward(request, response);
+    }
+
+    private void sendPostWithQuotationInfoToReport(String code) {
+        ReportService reportServicePost = new ReportService();
+        QuotationReport quotationReport = new QuotationReport();
+        quotationReport.setName(quotationRepositoryDao.getQuotationInfoToReport(code).getName());
+        quotationReport.setQuotationType(quotationRepositoryDao.getQuotationInfoToReport(code).getQuotationType());
+        quotationReport.setCode(code);
+        reportServicePost.addQuotationToRaport(quotationReport);
     }
 
     private void setDataSimplificationMessage(HttpServletRequest request, String data) {

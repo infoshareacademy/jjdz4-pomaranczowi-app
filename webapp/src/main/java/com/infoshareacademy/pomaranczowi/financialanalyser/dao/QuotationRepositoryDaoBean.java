@@ -34,4 +34,9 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao{
     public List<String> getAllQuotationsList(QuotationType quotationType){
         return quotationRepository.getAllQuotationsList(quotationType);
     }
+
+    @Override
+    public Quotation getQuotationInfoToReport(String code){
+        return quotationRepository.getQuotationInfoToReport(code);
+    }
 }
