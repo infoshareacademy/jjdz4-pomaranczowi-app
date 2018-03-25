@@ -50,8 +50,6 @@ public class ReportServlet extends HttpServlet{
                 .collect(Collectors.toList());
         request.getSession().setAttribute("quotationReportInvestmentsList", quotationReportInvestmentsList);
 
-
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("portal/report/report-page.jsp");
         requestDispatcher.forward(request,resp);
     }
