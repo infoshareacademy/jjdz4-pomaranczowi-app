@@ -5,6 +5,8 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationReposito
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.MinMaxPrice;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.Simplify;
+import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.Weeks;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserService;
 
 import javax.ejb.EJB;
@@ -198,6 +200,7 @@ public class HomeServlet extends HttpServlet {
         List<MinMaxPrice> minMaxPriceList = new ArrayList<>();
         if (year.equals(0)) {
             request.getSession().setAttribute("monthsLanguage", null);
+            request.getSession().setAttribute("weeksLanguage", null);
             List<Integer> yearsList = priceRepositoryDao.getYearsList(code);
             startDate = Year.of(yearsList.get(0)).atDay(1);
             endDate = Year.of(yearsList.get(yearsList.size() - 1)).atMonth(12).atEndOfMonth();
@@ -209,12 +212,39 @@ public class HomeServlet extends HttpServlet {
             setMinMaxValuesForAllMonths(code, year, getCurrentLanguageTag(request), minMaxPriceList);
         } else {
             request.getSession().setAttribute("monthsLanguage", null);
+            request.getSession().setAttribute("weeksLanguage", "week");
             startDate = YearMonth.of(year, month).atDay(1);
             endDate = YearMonth.of(year, month).atEndOfMonth();
+            Simplify.week.clear();
+            Simplify.getWeeksForMonth(startDate);
+            setMinMaxValuesForWeeks(code, Simplify.week, minMaxPriceList);
         }
         request.getSession().setAttribute("periodPriceList", minMaxPriceList);
         request.getSession().setAttribute("startDate", startDate);
         request.getSession().setAttribute("endDate", endDate);
+    }
+
+    private void setMinMaxValuesForWeeks(String code, List<Weeks> weeksList, List<MinMaxPrice> minMaxPriceList) {
+        minMaxPriceList.clear();
+        for (Weeks localWeek : weeksList) {
+            LocalDate weekStartDate = localWeek.getFrom();
+            LocalDate weekEndDate = localWeek.getTo();
+            MinMaxPrice weekPrice = new MinMaxPrice();
+            BigDecimal maxOpen = priceRepositoryDao.getMaxOpenFromDateToDate(code, weekStartDate, weekEndDate);
+            if (maxOpen == null) {
+                continue;
+            }
+            weekPrice.setMaxOpen(maxOpen);
+            weekPrice.setMinOpen(priceRepositoryDao.getMaxOpenFromDateToDate(code, weekStartDate, weekEndDate));
+            weekPrice.setMaxClose(priceRepositoryDao.getMaxOpenFromDateToDate(code, weekStartDate, weekEndDate));
+            weekPrice.setMinClose(priceRepositoryDao.getMaxOpenFromDateToDate(code, weekStartDate, weekEndDate));
+            weekPrice.setMaxHigh(priceRepositoryDao.getMaxOpenFromDateToDate(code, weekStartDate, weekEndDate));
+            weekPrice.setMinHigh(priceRepositoryDao.getMaxOpenFromDateToDate(code, weekStartDate, weekEndDate));
+            weekPrice.setMaxLow(priceRepositoryDao.getMaxOpenFromDateToDate(code, weekStartDate, weekEndDate));
+            weekPrice.setMinLow(priceRepositoryDao.getMaxOpenFromDateToDate(code, weekStartDate, weekEndDate));
+            weekPrice.setPeriod(String.valueOf(localWeek.getWeek()));
+            minMaxPriceList.add(weekPrice);
+        }
     }
 
     private String getCurrentLanguageTag(HttpServletRequest request) {

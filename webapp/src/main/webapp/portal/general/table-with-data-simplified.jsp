@@ -32,7 +32,12 @@
                     <td><fmt:message key="${singlePeriodPrice.getPeriod()}" bundle="${finAppLanguage}"/>:</td>
                 </c:when>
                 <c:otherwise>
-                    <td><c:out value="${singlePeriodPrice.getPeriod()}"/>:</td>
+                    <td>
+                        <c:if test="${sessionScope.weeksLanguage != null}">
+                            <fmt:message key="dataSimplification.week" bundle="${finAppLanguage}"/>
+                        </c:if>
+                        <c:out value="${singlePeriodPrice.getPeriod()}"/> :
+                    </td>
                 </c:otherwise>
             </c:choose>
             <td><c:out value="${singlePeriodPrice.getMaxOpen()}"/></td>
