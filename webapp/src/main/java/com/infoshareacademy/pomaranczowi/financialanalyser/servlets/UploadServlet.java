@@ -2,7 +2,6 @@ package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 public class UploadServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     private static final String DATA_DIRECTORY = "data";
     private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 10;
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 10;
@@ -43,14 +41,12 @@ public class UploadServlet extends HttpServlet {
         // disk.
         factory.setSizeThreshold(MAX_MEMORY_SIZE);
 
-
         // Sets the directory used to temporarily store files that are larger
         // than the configured size threshold. We use temporary directory for
         // java
         factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 
         // constructs the folder where uploaded file will be stored
-
 /*
         String uploadFolder = getServletContext().getRealPath("")
                 + File.separator + DATA_DIRECTORY;
@@ -73,7 +69,7 @@ public class UploadServlet extends HttpServlet {
 
                 if (!item.isFormField()) {
                     String fileName = new File(item.getName()).getName();
-                    if(fileName!="") {
+                    if(fileName!="") { //check if we have any file to upload
                         String filePath = uploadFolder + File.separator + fileName;
                         File uploadedFile = new File(filePath);
                         System.out.println(filePath);
@@ -87,18 +83,13 @@ public class UploadServlet extends HttpServlet {
                     }
                 }
             }
-
-            // displays done.jsp page after upload finished
-
+            // displays page after upload finished
             getServletContext().getRequestDispatcher("/portal/upload.jsp").forward(request, response);
-
 
         } catch (FileUploadException ex) {
             throw new ServletException(ex);
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
-
     }
-
 }
