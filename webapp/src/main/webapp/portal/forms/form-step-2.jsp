@@ -34,7 +34,7 @@
                 </option>
                 <option value="rawData"
                         <c:if test="${sessionScope.action == 'rawData'}">selected</c:if>>
-                    Dane z okresu
+                    <fmt:message key="chooseAction.dataFromPeriod" bundle="${finAppLanguage}"/>
                 </option>
 
             </select>

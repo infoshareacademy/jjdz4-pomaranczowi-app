@@ -8,19 +8,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<table class="table table-bordered">
+<table class="table">
 
     <tr>
-        <td>Quotation Name</td>
-        <td>Quotation Code</td>
-        <td>Quotation Type</td>
+        <td>Currency Code</td>
+        <td>Currency number of use</td>
     </tr>
 
-    <c:forEach var="entry" items="${quotationReportCurrencyList}">
+
+    <c:forEach var="entry" items="${numberOfCurrencyUse}">
         <tr>
-            <td><c:out value="${entry.name}"/>
-            <td><c:out value="${entry.code}"/>
-            <td><c:out value="${entry.quotationType}"/>
+            <td><c:out value="${entry.key}"/>
+            <td><c:out value="${entry.value}"/>
         </tr>
 
     </c:forEach>

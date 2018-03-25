@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/report")
@@ -39,15 +41,68 @@ public class ReportServlet extends HttpServlet{
         logger.info("User korzysta z " + reportService.getUserAgent());
 
         // Currency
+        TreeMap<String, Integer> numberOfCurrencyUse = new TreeMap<>();
         List<QuotationReport> quotationReportCurrencyList = quotationReportList.stream()
                 .filter(quotationReport -> quotationReport.getQuotationType() == QuotationType.CURRENCY)
                 .collect(Collectors.toList());
+
+        for (QuotationReport quotationReport: quotationReportCurrencyList) {
+            if (!numberOfCurrencyUse.containsKey(quotationReport.getCode())){
+                numberOfCurrencyUse.put(quotationReport.getCode(),1);
+            } else{
+                Integer numberOfuse = numberOfCurrencyUse.get(quotationReport.getCode());
+                numberOfCurrencyUse.replace(quotationReport.getCode(),numberOfuse + 1);
+            }
+        }
+
+        Integer maxValueCurrency = numberOfCurrencyUse.values()
+                .stream()
+                .max(Integer::compare)
+                .get();
+
+        Map<String, Integer> maxCurrencyMap = numberOfCurrencyUse
+                .entrySet()
+                .stream()
+                .filter(map -> map.getValue() == maxValueCurrency)
+                .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+
+
+        request.getSession().setAttribute("maxCurrencyMap", maxCurrencyMap);
+        request.getSession().setAttribute("numberOfCurrencyUse", numberOfCurrencyUse);
         request.getSession().setAttribute("quotationReportCurrencyList", quotationReportCurrencyList);
 
+
         // Investments
+        TreeMap<String, Integer> numberOfInvestmentUse = new TreeMap<>();
         List<QuotationReport> quotationReportInvestmentsList = quotationReportList.stream()
                 .filter(quotationReport -> quotationReport.getQuotationType() == QuotationType.FUNDINVESTMENT)
                 .collect(Collectors.toList());
+
+        for (QuotationReport quotationReport: quotationReportInvestmentsList) {
+            if (!numberOfInvestmentUse.containsKey(quotationReport.getCode())){
+                numberOfInvestmentUse.put(quotationReport.getCode(),1);
+            } else{
+                Integer numberOfuse = numberOfInvestmentUse.get(quotationReport.getCode());
+                numberOfInvestmentUse.replace(quotationReport.getCode(),numberOfuse + 1);
+            }
+        }
+
+
+        Integer maxValueFunds = numberOfInvestmentUse.values()
+                .stream()
+                .max(Integer::compare)
+                .get();
+
+        Map<String, Integer> maxFundsMap = numberOfInvestmentUse
+                .entrySet()
+                .stream()
+                .filter(map -> map.getValue() == maxValueFunds)
+                .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+
+
+        request.getSession().setAttribute("maxFundsMap", maxFundsMap);
+
+        request.getSession().setAttribute("numberOfInvestmentUse", numberOfInvestmentUse);
         request.getSession().setAttribute("quotationReportInvestmentsList", quotationReportInvestmentsList);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("portal/report/report-page.jsp");

@@ -110,7 +110,7 @@ public class HomeServlet extends HttpServlet {
             }
             String code = (String) request.getSession().getAttribute("code");
             String data = (String) request.getSession().getAttribute("data");
-            Boolean toConversion1 = request.getParameter("toConversion") == null ? false : true;
+            Boolean toConversion1 = request.getParameter("toConversion") != null;
             switch ((String) request.getSession().getAttribute("action")) {
                 case "globalExtremes":
                     setGlobalExtremesMessage(request, data);
@@ -174,6 +174,13 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
+    private void setRawDataMessage(HttpServletRequest request, String data) {
+        if (data.equals("fund")) {
+            request.getSession().setAttribute("rawDataMessage", "rawData.fundMessage");
+        } else {
+            request.getSession().setAttribute("rawDataMessage", "rawData.currencyMessage");
+        }
+    }
     private void setSingleDateMessage(HttpServletRequest request, String data) {
         if (data.equals("fund")) {
             request.getSession().setAttribute("singleDateDayMessage", "singleDate.dayMessage");
@@ -264,9 +271,7 @@ public class HomeServlet extends HttpServlet {
     }
 
     private String getCurrentLanguageTag(HttpServletRequest request) {
-        return new StringBuilder()
-                .append(request.getSession().getAttribute("language"))
-                .toString()
+        return String.valueOf(request.getSession().getAttribute("language"))
                 .replace("_", "-");
     }
 
@@ -393,18 +398,6 @@ public class HomeServlet extends HttpServlet {
                     i++;
                 }
 
-/*
-                Price a = new Price();
-                a.setDate(LocalDate.parse("2018-01-01",DateTimeFormatter.ISO_DATE));
-                a.setLow(BigDecimal.valueOf(1));
-                a.setClose(BigDecimal.valueOf(2));
-                a.setHigh(BigDecimal.valueOf(3));
-                a.setOpen(BigDecimal.valueOf(4));
-                a.setVolume(BigDecimal.valueOf(5));
-                pricesBetweenDatesSMA.add(a);
-*/
-
-
                 return pricesBetweenDatesSMA;
             } else if (startDate.isAfter(endDate)) {
                 request.setAttribute("dateLogicError", "Błąd chronologii dat!");
@@ -444,6 +437,4 @@ public class HomeServlet extends HttpServlet {
         request.getSession().setAttribute("minClose",
                 priceRepositoryDao.getMinCloseFromDateToDate(code, startDate, endDate));
     }
-
-
 }
