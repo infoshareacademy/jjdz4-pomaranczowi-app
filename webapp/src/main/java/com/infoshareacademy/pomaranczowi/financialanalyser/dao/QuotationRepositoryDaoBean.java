@@ -14,6 +14,23 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao{
     @EJB
     QuotationRepository quotationRepository;
 
+    public List<String> getCodeList(String data) {
+        List<String> codeList = getAllQuotationsList(chooseQuotation(data));
+        codeList.sort(String.CASE_INSENSITIVE_ORDER);
+        return codeList;
+    }
+
+    private QuotationType chooseQuotation(String quotationFromUser) {
+        switch (quotationFromUser) {
+            case "fund":
+                return QuotationType.FUNDINVESTMENT;
+            case "currency":
+                return QuotationType.CURRENCY;
+            default:
+                return null;
+        }
+    }
+
     @Override
     public boolean addOrUpdateQuotation (Quotation quotation) {
         quotationRepository.addOrUpdateQuotation(quotation);

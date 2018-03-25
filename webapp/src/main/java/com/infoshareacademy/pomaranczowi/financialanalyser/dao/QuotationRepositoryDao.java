@@ -9,6 +9,7 @@ import java.util.List;
 @Local
 public interface QuotationRepositoryDao {
 
+    public List<String> getCodeList(String data);
     boolean addOrUpdateQuotation(Quotation quotation);
     boolean isQuotationCodeInDB(String quotationCode);
     Long getTheNextFreeQuotationId();

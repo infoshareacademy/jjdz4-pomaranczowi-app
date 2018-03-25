@@ -11,6 +11,7 @@ import java.util.List;
 @Local
 public interface PriceRepositoryDao {
 
+    List<Integer> getYearsList(String code);
     boolean addOrUpdatePrice (Price price, String quotationCode);
     Price getPriceFromDate(String quotationCode, LocalDate localDate);
     List<Price> getPricesFromDateToDate(String quotationCode, LocalDate startDate, LocalDate endDate);
