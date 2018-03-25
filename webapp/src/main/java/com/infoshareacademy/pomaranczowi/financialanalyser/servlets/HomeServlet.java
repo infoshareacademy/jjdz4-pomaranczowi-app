@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -95,11 +96,11 @@ public class HomeServlet extends HttpServlet {
 
         if (step == 2) {
             String code = request.getParameter("code");
-            sendPostWithQuotationInfoToReport(code);
 
             if (code != null) {
                 request.getSession().setAttribute("code", code);
                 request.getSession().setAttribute("yearsList", priceRepositoryDao.getYearsList(code));
+                sendPostWithQuotationInfoToReport(code);
             }
         }
 
