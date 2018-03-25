@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/report")
@@ -40,7 +40,7 @@ public class ReportServlet extends HttpServlet{
         logger.info("User korzysta z " + reportService.getUserAgent());
 
         // Currency
-        HashMap<String, Integer> numberOfCurrencyUse = new HashMap<>();
+        TreeMap<String, Integer> numberOfCurrencyUse = new TreeMap<>();
         List<QuotationReport> quotationReportCurrencyList = quotationReportList.stream()
                 .filter(quotationReport -> quotationReport.getQuotationType() == QuotationType.CURRENCY)
                 .collect(Collectors.toList());
@@ -54,12 +54,26 @@ public class ReportServlet extends HttpServlet{
             }
         }
 
+        Integer maxValueCurrency = numberOfCurrencyUse.values()
+                .stream()
+                .max(Integer::compare)
+                .get();
+
+        /*TreeMap<String,Integer> maxCurrencyUse = numberOfCurrencyUse
+                .entrySet()
+                .stream()
+                .filter(map -> map.getValue() == maxValueCurrency)
+                .collect(Collectors.toMap());*/
+
+       // String macCodeCurrency = numberOfCurrencyUse.
+
+
         request.getSession().setAttribute("numberOfCurrencyUse", numberOfCurrencyUse);
         request.getSession().setAttribute("quotationReportCurrencyList", quotationReportCurrencyList);
 
 
         // Investments
-        HashMap<String, Integer> numberOfInvestmentUse = new HashMap<>();
+        TreeMap<String, Integer> numberOfInvestmentUse = new TreeMap<>();
         List<QuotationReport> quotationReportInvestmentsList = quotationReportList.stream()
                 .filter(quotationReport -> quotationReport.getQuotationType() == QuotationType.FUNDINVESTMENT)
                 .collect(Collectors.toList());
