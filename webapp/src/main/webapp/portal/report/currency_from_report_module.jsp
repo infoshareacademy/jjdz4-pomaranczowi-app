@@ -11,16 +11,15 @@
 <table class="table table-bordered">
 
     <tr>
-        <td>Quotation Name</td>
-        <td>Quotation Code</td>
-        <td>Quotation Type</td>
+        <td>Currency Code</td>
+        <td>Currency number of use</td>
     </tr>
 
-    <c:forEach var="entry" items="${quotationReportCurrencyList}">
+
+    <c:forEach var="entry" items="${numberOfCurrencyUse}">
         <tr>
-            <td><c:out value="${entry.name}"/>
-            <td><c:out value="${entry.code}"/>
-            <td><c:out value="${entry.quotationType}"/>
+            <td><c:out value="${entry.key}"/>
+            <td><c:out value="${entry.value}"/>
         </tr>
 
     </c:forEach>
