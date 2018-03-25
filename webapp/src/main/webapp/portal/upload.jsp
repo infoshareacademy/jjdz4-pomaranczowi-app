@@ -23,13 +23,10 @@
 <form method="post" action="/portal/upload" enctype="multipart/form-data">
     <jsp:include page="general/navbar.jsp"/>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
+        <div class="row vertical-center">
+            <div class="col col-md-12 col-lg-6 offset-lg-3" style="background-color: rgba(255,255,255,0.7)">
                 <h2><fmt:message key="upload.selectFile" bundle="${finAppLanguage}"/></h2>
-
-                <br/>
-                (<fmt:message key="upload.maxFileSize" bundle="${finAppLanguage}"/> 10 Mb)
-                <br/><br/>
+                <p>(<fmt:message key="upload.maxFileSize" bundle="${finAppLanguage}"/> 10 Mb)</p>
 
                 <input type="file" name="dataFile" id="fileChooser"/>
 
