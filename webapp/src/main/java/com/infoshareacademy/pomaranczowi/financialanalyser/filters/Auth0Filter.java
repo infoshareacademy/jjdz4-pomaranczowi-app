@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/portal/*")
+@WebFilter(urlPatterns = {"/portal/*","/report"})
 public class Auth0Filter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {

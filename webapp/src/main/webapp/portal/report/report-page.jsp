@@ -30,29 +30,22 @@
 <jsp:include page="../general/navbar.jsp"/>
 <div class="container-fluid">
     <div class="row" style="height: auto;">
-        <content class="col col-sm-12 col-lg-8 offset-lg-2">
-            <div class="jumbotron content">
-                <h4>
-                    <fmt:message key="report.CurrencyMax" bundle="${finAppLanguage}"/>
-                </h4>
-
-                <jsp:include page="../report/currency_max_of_use.jsp"/>
-            </div>
-        </content>
-        <content class="col col-sm-12 col-lg-8 offset-lg-2">
-            <div class="jumbotron content">
-                <h4>
-                    <fmt:message key="report.InvestmentMax" bundle="${finAppLanguage}"/>
-                </h4>
-
-                <jsp:include page="../report/investments_max_of_use.jsp"/>
-            </div>
-        </content>
-        <content class="col col-sm-12 col-lg-8 offset-lg-2">
-            <div class="jumbotron content">
-                <h4>
+        <content class="col col-sm-12 col-lg-6 offset-lg-3">
             <div class="jumbotron content padding-small">
                 <h2><fmt:message key="report.Title" bundle="${finAppLanguage}"/></h2>
+                
+                <h3>
+                    <fmt:message key="report.CurrencyMax" bundle="${finAppLanguage}"/>
+                </h3>
+
+                <jsp:include page="../report/currency_max_of_use.jsp"/>
+            
+                <h3>
+                    <fmt:message key="report.InvestmentMax" bundle="${finAppLanguage}"/>
+                </h3>
+
+                <jsp:include page="../report/investments_max_of_use.jsp"/>
+                
                 <h3>
                     <fmt:message key="report.Currency" bundle="${finAppLanguage}"/>
                 </h3>
