@@ -75,7 +75,7 @@
         <content class="col col-sm-12 col-lg-8 offset-lg-2">
             <div class="jumbotron vertical-center opacity">
                     <h4>
-                        <fmt:message key="report.Report" bundle="${finAppLanguage}"/>
+                        <fmt:message key="report.Currency" bundle="${finAppLanguage}"/>
                     </h4>
 
 
@@ -87,7 +87,7 @@
         <content class="col col-sm-12 col-lg-8 offset-lg-2">
             <div class="jumbotron vertical-center opacity">
                 <h4>
-                    <fmt:message key="report.Report" bundle="${finAppLanguage}"/>
+                    <fmt:message key="report.Investment" bundle="${finAppLanguage}"/>
                 </h4>
 
 
