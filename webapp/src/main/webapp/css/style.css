@@ -46,6 +46,19 @@ h2 {
     display: none;
 }
 
+.alert img {
+    width: 120px;
+    height: 120px;
+    border: #ffffff solid;
+    border-radius: 50%;
+}
+
+.avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 tr:nth-child(even) {
     background-color: #e8f3f3;
 }
@@ -65,5 +78,10 @@ label {
 }
 
 .main {
-    background-color: rgba(230,230,230,0.8);
+    background-color: rgba(230,230,230,0.8) !important;
+}
+
+.content {
+    background-color: rgba(255,255,255,0.7);
+    margin-bottom: 1.25rem;
 }

@@ -1,0 +1,26 @@
+version: '2'
+services:
+  fin-analyser-db:
+    container_name: "fin-analyser-db"
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=fin-analyser-db
+      - MYSQL_USER=dockerdb
+      - MYSQL_PASSWORD=dockerdb
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3307:3306
+  financial-analyser:
+    container_name: "financial-analyser"
+    build: .
+    environment:
+      - MYSQL_URI=fin-analyser-db:3306
+      - MYSQL_DATABASE=fin-analyser-db
+      - MYSQL_USER=dockerdb
+      - MYSQL_PASSWORD=dockerdb
+      - DATASOURCE_NAME=java:/FinAnalyser
+    ports:
+      - 8081:8080
+      - 9991:9990
+    depends_on:
+      - fin-analyser-db

@@ -18,6 +18,11 @@ public class Auth0Filter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String accessToken = (String) SessionUtils.get(req, "accessToken");
+
+        if (accessToken != null) {
+            req.getSession().setAttribute("accessToken", accessToken);
+        }
+
         String idToken = (String) SessionUtils.get(req, "idToken");
         if (accessToken == null && idToken == null) {
             res.sendRedirect("/login");

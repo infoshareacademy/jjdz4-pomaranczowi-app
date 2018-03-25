@@ -11,7 +11,7 @@
             <label for="chooseYear">
                 <fmt:message key="dataSimplificationInput.chooseYear" bundle="${finAppLanguage}"/></label>
             <select class="form-control" type="text" name="year" id="chooseYear" onchange="showOrHideMonths()">
-                <option></option>
+                <option value="0"></option>
                 <c:forEach var="singleYear" items="${yearsList}">
                     <option <c:if test="${singleYear == sessionScope.singleYear}">selected</c:if>>
                         <c:out value="${singleYear}"/></option>

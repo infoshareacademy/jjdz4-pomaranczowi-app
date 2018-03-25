@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -14,6 +15,16 @@ public class PriceRepositoryDaoBean implements PriceRepositoryDao {
 
     @EJB
     PriceRepository priceRepository;
+
+    public List<Integer> getYearsList(String code) {
+        List<Integer> yearsList = new ArrayList<>();
+        Integer minYear = getMinDate(code).getYear();
+        Integer maxYear = getMaxDate(code).getYear();
+        for (; minYear <= maxYear; minYear++) {
+            yearsList.add(minYear);
+        }
+        return yearsList;
+    }
 
     @Override
     public boolean addOrUpdatePrice (Price price, String quotationCode){
