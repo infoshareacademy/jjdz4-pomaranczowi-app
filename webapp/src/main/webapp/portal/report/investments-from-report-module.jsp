@@ -11,16 +11,15 @@
 <table class="table">
 
     <tr>
-        <th>Quotation Name</th>
-        <th>Quotation Code</th>
-        <th>Quotation Type</th>
+        <td>Investment Code</td>
+        <td>Investment number of use</td>
     </tr>
 
-    <c:forEach var="entry" items="${quotationReportInvestmentsList}">
+
+    <c:forEach var="entry" items="${numberOfInvestmentUse}">
         <tr>
-            <td><c:out value="${entry.name}"/>
-            <td><c:out value="${entry.code}"/>
-            <td><c:out value="${entry.quotationType}"/>
+            <td><c:out value="${entry.key}"/>
+            <td><c:out value="${entry.value}"/>
         </tr>
 
     </c:forEach>
