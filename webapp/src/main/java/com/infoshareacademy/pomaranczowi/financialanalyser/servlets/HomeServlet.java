@@ -129,6 +129,7 @@ public class HomeServlet extends HttpServlet {
                     printSipmlifiedPrices(request, code);
                     break;
                 case "rawData":
+                    setRawDataMessage(request, data);
                     request.getSession().setAttribute("toConversion", toConversion1);
                     request.getSession().setAttribute("conversion", request.getParameter("conversion"));
                     if (toConversion1) {
@@ -181,6 +182,7 @@ public class HomeServlet extends HttpServlet {
             request.getSession().setAttribute("rawDataMessage", "rawData.currencyMessage");
         }
     }
+
     private void setSingleDateMessage(HttpServletRequest request, String data) {
         if (data.equals("fund")) {
             request.getSession().setAttribute("singleDateDayMessage", "singleDate.dayMessage");
