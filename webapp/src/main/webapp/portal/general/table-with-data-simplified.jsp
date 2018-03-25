@@ -36,7 +36,7 @@
                         <c:if test="${sessionScope.weeksLanguage != null}">
                             <fmt:message key="dataSimplification.week" bundle="${finAppLanguage}"/>
                         </c:if>
-                        <c:out value="${singlePeriodPrice.getPeriod()}"/> :
+                        <c:out value="${singlePeriodPrice.getPeriod()}"/>:
                     </td>
                 </c:otherwise>
             </c:choose>

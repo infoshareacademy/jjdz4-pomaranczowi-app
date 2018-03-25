@@ -96,11 +96,11 @@ public class HomeServlet extends HttpServlet {
 
         if (step == 2) {
             String code = request.getParameter("code");
-            sendPostWithQuotationInfoToReport(code);
 
             if (code != null) {
                 request.getSession().setAttribute("code", code);
                 request.getSession().setAttribute("yearsList", priceRepositoryDao.getYearsList(code));
+                sendPostWithQuotationInfoToReport(code);
             }
         }
 
