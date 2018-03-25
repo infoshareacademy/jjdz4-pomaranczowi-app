@@ -10,18 +10,8 @@
     <c:out value="${sessionScope.code}"/>
 </h4>
 
-<c:choose>
-    <c:when test="${dateLogicError != null}">
-        <h5 style="color: red;"><fmt:message key="${dateLogicError}" bundle="${finAppLanguage}"/></h5>
-    </c:when>
-    <c:otherwise>
-        <h5>
-            <fmt:message key="extremes.period" bundle="${finAppLanguage}"/>
-            <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
-        </h5>
-        <jsp:include page="../general/table-with-quotations.jsp"/>
-    </c:otherwise>
-</c:choose>
-
-
-
+<h5>
+    <fmt:message key="extremes.period" bundle="${finAppLanguage}"/>
+    <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
+</h5>
+<jsp:include page="../general/table-with-quotations.jsp"/>
