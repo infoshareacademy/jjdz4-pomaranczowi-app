@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -59,15 +60,14 @@ public class ReportServlet extends HttpServlet{
                 .max(Integer::compare)
                 .get();
 
-        /*TreeMap<String,Integer> maxCurrencyUse = numberOfCurrencyUse
+        Map<String, Integer> maxCurrencyMap = numberOfCurrencyUse
                 .entrySet()
                 .stream()
                 .filter(map -> map.getValue() == maxValueCurrency)
-                .collect(Collectors.toMap());*/
-
-       // String macCodeCurrency = numberOfCurrencyUse.
+                .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
 
 
+        request.getSession().setAttribute("maxCurrencyMap", maxCurrencyMap);
         request.getSession().setAttribute("numberOfCurrencyUse", numberOfCurrencyUse);
         request.getSession().setAttribute("quotationReportCurrencyList", quotationReportCurrencyList);
 
@@ -86,6 +86,21 @@ public class ReportServlet extends HttpServlet{
                 numberOfInvestmentUse.replace(quotationReport.getCode(),numberOfuse + 1);
             }
         }
+
+
+        Integer maxValueFunds = numberOfInvestmentUse.values()
+                .stream()
+                .max(Integer::compare)
+                .get();
+
+        Map<String, Integer> maxFundsMap = numberOfInvestmentUse
+                .entrySet()
+                .stream()
+                .filter(map -> map.getValue() == maxValueFunds)
+                .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+
+
+        request.getSession().setAttribute("maxFundsMap", maxFundsMap);
 
         request.getSession().setAttribute("numberOfInvestmentUse", numberOfInvestmentUse);
         request.getSession().setAttribute("quotationReportInvestmentsList", quotationReportInvestmentsList);

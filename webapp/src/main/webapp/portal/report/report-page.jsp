@@ -33,6 +33,24 @@
         <content class="col col-sm-12 col-lg-8 offset-lg-2">
             <div class="jumbotron content">
                 <h4>
+                    <fmt:message key="report.CurrencyMax" bundle="${finAppLanguage}"/>
+                </h4>
+
+                <jsp:include page="../report/currency_max_of_use.jsp"/>
+            </div>
+        </content>
+        <content class="col col-sm-12 col-lg-8 offset-lg-2">
+            <div class="jumbotron content">
+                <h4>
+                    <fmt:message key="report.InvestmentMax" bundle="${finAppLanguage}"/>
+                </h4>
+
+                <jsp:include page="../report/investments_max_of_use.jsp"/>
+            </div>
+        </content>
+        <content class="col col-sm-12 col-lg-8 offset-lg-2">
+            <div class="jumbotron content">
+                <h4>
                     <fmt:message key="report.Currency" bundle="${finAppLanguage}"/>
                 </h4>
 
