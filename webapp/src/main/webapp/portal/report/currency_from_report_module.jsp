@@ -8,12 +8,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<table class="table table-bordered">
+<table class="table">
 
     <tr>
-        <td>Quotation Name</td>
-        <td>Quotation Code</td>
-        <td>Quotation Type</td>
+        <th>Quotation Name</th>
+        <th>Quotation Code</th>
+        <th>Quotation Type</th>
     </tr>
 
     <c:forEach var="entry" items="${quotationReportCurrencyList}">

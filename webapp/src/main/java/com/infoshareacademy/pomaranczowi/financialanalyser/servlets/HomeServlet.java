@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -109,7 +110,7 @@ public class HomeServlet extends HttpServlet {
             }
             String code = (String) request.getSession().getAttribute("code");
             String data = (String) request.getSession().getAttribute("data");
-            Boolean toConversion1 = request.getParameter("toConversion") == null ? false : true;
+            Boolean toConversion1 = request.getParameter("toConversion") != null;
             switch ((String) request.getSession().getAttribute("action")) {
                 case "globalExtremes":
                     setGlobalExtremesMessage(request, data);
@@ -270,9 +271,7 @@ public class HomeServlet extends HttpServlet {
     }
 
     private String getCurrentLanguageTag(HttpServletRequest request) {
-        return new StringBuilder()
-                .append(request.getSession().getAttribute("language"))
-                .toString()
+        return String.valueOf(request.getSession().getAttribute("language"))
                 .replace("_", "-");
     }
 
@@ -438,6 +437,4 @@ public class HomeServlet extends HttpServlet {
         request.getSession().setAttribute("minClose",
                 priceRepositoryDao.getMinCloseFromDateToDate(code, startDate, endDate));
     }
-
-
 }

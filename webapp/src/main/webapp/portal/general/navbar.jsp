@@ -18,6 +18,9 @@
                         class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/report"><fmt:message key="home.report" bundle="${finAppLanguage}"/></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/portal/upload"><fmt:message key="home.upload" bundle="${finAppLanguage}"/></a>
             </li>
             <li class="nav-item">
