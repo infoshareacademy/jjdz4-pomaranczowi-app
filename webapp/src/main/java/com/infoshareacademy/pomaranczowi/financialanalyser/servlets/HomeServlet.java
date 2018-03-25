@@ -4,13 +4,10 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.dao.PriceRepositoryDa
 import com.infoshareacademy.pomaranczowi.financialanalyser.dao.QuotationRepositoryDao;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.MinMaxPrice;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
-import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserService;
-import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserServiceImpl;
 
 import javax.ejb.EJB;
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -20,16 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.stream.DoubleStream;
 
 @WebServlet(urlPatterns = "/portal/home")
 public class HomeServlet extends HttpServlet {
@@ -103,40 +98,40 @@ public class HomeServlet extends HttpServlet {
         if (step == 3) {
             if (request.getParameter("action") != null) {
                 request.getSession().setAttribute("action", request.getParameter("action"));
-                String code = (String) request.getSession().getAttribute("code");
-                String data = (String) request.getSession().getAttribute("data");
-                Boolean toConversion1 = request.getParameter("toConversion") == null ? false : true;
-                switch (request.getParameter("action")) {
-                    case "globalExtremes":
-                        setGlobalExtremesMessage(request, data);
-                        printPricesForGlobalExtremes(request, code);
-                        break;
-                    case "localExtremes":
-                        setLocalExtremesMessage(request, data);
-                        printPricesForLocalExtremes(request, code);
-                        break;
-                    case "singleDate":
-                        setSingleDateMessage(request, data);
-                        printPricesForSingleDate(request, code);
-                        break;
-                    case "dataSimplification":
-                        setDataSimplificationMessage(request, data);
-                        printSipmlifiedPrices(request, code);
-                        break;
-                    case "rawData":
-                        request.getSession().setAttribute("toConversion", toConversion1);
-                        request.getSession().setAttribute("conversion", request.getParameter("conversion"));
-                        if (toConversion1) {
-                            switch (request.getParameter("conversion")) {
-                                case "SMA":
-                                    request.getSession().setAttribute("prices", getPricesBetweenDatesSMA(request, code));
-                                    break;
-                            }
-                        } else {
-                            request.getSession().setAttribute("prices", getPricesBetweenDates(request, code));
+            }
+            String code = (String) request.getSession().getAttribute("code");
+            String data = (String) request.getSession().getAttribute("data");
+            Boolean toConversion1 = request.getParameter("toConversion") == null ? false : true;
+            switch ((String) request.getSession().getAttribute("action")) {
+                case "globalExtremes":
+                    setGlobalExtremesMessage(request, data);
+                    printPricesForGlobalExtremes(request, code);
+                    break;
+                case "localExtremes":
+                    setLocalExtremesMessage(request, data);
+                    printPricesForLocalExtremes(request, code);
+                    break;
+                case "singleDate":
+                    setSingleDateMessage(request, data);
+                    printPricesForSingleDate(request, code);
+                    break;
+                case "dataSimplification":
+                    setDataSimplificationMessage(request, data);
+                    printSipmlifiedPrices(request, code);
+                    break;
+                case "rawData":
+                    request.getSession().setAttribute("toConversion", toConversion1);
+                    request.getSession().setAttribute("conversion", request.getParameter("conversion"));
+                    if (toConversion1) {
+                        switch (request.getParameter("conversion")) {
+                            case "SMA":
+                                request.getSession().setAttribute("prices", getPricesBetweenDatesSMA(request, code));
+                                break;
                         }
-                        break;
-                }
+                    } else {
+                        request.getSession().setAttribute("prices", getPricesBetweenDates(request, code));
+                    }
+                    break;
             }
         }
 
@@ -202,25 +197,35 @@ public class HomeServlet extends HttpServlet {
         LocalDate endDate;
         List<MinMaxPrice> minMaxPriceList = new ArrayList<>();
         if (year.equals(0)) {
+            request.getSession().setAttribute("monthsLanguage", null);
             List<Integer> yearsList = priceRepositoryDao.getYearsList(code);
             startDate = Year.of(yearsList.get(0)).atDay(1);
             endDate = Year.of(yearsList.get(yearsList.size() - 1)).atMonth(12).atEndOfMonth();
             setMinMaxValuesForAllYears(code, yearsList, minMaxPriceList);
         } else if (month.equals(0)) {
+            request.getSession().setAttribute("monthsLanguage", "monthsLanguage");
             startDate = Year.of(year).atDay(1);
             endDate = Year.of(year).atMonth(12).atEndOfMonth();
-            setMinMaxValuesForAllMonths(code, year, minMaxPriceList);
+            setMinMaxValuesForAllMonths(code, year, getCurrentLanguageTag(request), minMaxPriceList);
         } else {
+            request.getSession().setAttribute("monthsLanguage", null);
             startDate = YearMonth.of(year, month).atDay(1);
             endDate = YearMonth.of(year, month).atEndOfMonth();
         }
         request.getSession().setAttribute("periodPriceList", minMaxPriceList);
         request.getSession().setAttribute("startDate", startDate);
         request.getSession().setAttribute("endDate", endDate);
-        printMinMaxValues(request, code, startDate, endDate);
     }
 
-    private void setMinMaxValuesForAllMonths(String code, Integer year, List<MinMaxPrice> minMaxPriceList) {
+    private String getCurrentLanguageTag(HttpServletRequest request) {
+        return new StringBuilder()
+                .append(request.getSession().getAttribute("language"))
+                .toString()
+                .replace("_", "-");
+    }
+
+    private void setMinMaxValuesForAllMonths(String code, Integer year,
+                                             String languageTag, List<MinMaxPrice> minMaxPriceList) {
         for (int month = 1; month <= 12; month++) {
             LocalDate monthStartDate = Year.of(year).atMonth(month).atDay(1);
             LocalDate monthEndDate = Year.of(year).atMonth(month).atEndOfMonth();
@@ -233,7 +238,8 @@ public class HomeServlet extends HttpServlet {
             monthPrice.setMinHigh(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
             monthPrice.setMaxLow(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
             monthPrice.setMinLow(priceRepositoryDao.getMaxOpenFromDateToDate(code, monthStartDate, monthEndDate));
-            monthPrice.setPeriod(Integer.toString(month));
+            monthPrice.setPeriod("month." + Month.of(month).getDisplayName(TextStyle.FULL,
+                    Locale.UK).toLowerCase());
             minMaxPriceList.add(monthPrice);
         }
     }

@@ -1,5 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="fin-app" var="finAppLanguage"/>
 
 <table class="table">
     <tr>
@@ -21,9 +25,16 @@
         <td>min</td>
     </tr>
 
-    <c:forEach var="singlePeriodPrice" items="${periodPriceList}">
+    <c:forEach var="singlePeriodPrice" items="${sessionScope.periodPriceList}">
         <tr>
-            <td><c:out value="${singlePeriodPrice.getPeriod()}"/>:</td>
+            <c:choose>
+                <c:when test="${sessionScope.monthsLanguage != null}">
+                    <td><fmt:message key="${singlePeriodPrice.getPeriod()}" bundle="${finAppLanguage}"/>:</td>
+                </c:when>
+                <c:otherwise>
+                    <td><c:out value="${singlePeriodPrice.getPeriod()}"/>:</td>
+                </c:otherwise>
+            </c:choose>
             <td><c:out value="${singlePeriodPrice.getMaxOpen()}"/></td>
             <td><c:out value="${singlePeriodPrice.getMinOpen()}"/></td>
             <td><c:out value="${singlePeriodPrice.getMaxLow()}"/></td>
