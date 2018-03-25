@@ -28,11 +28,14 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="#"><fmt:message key="home.homePage" bundle="${finAppLanguage}"/> <span
+                <a class="nav-link" href="portal/home"><fmt:message key="home.homePage" bundle="${finAppLanguage}"/> <span
                         class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><fmt:message key="home.contact" bundle="${finAppLanguage}"/></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/report"><fmt:message key="home.report" bundle="${finAppLanguage}"/></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout"><fmt:message key="home.logout" bundle="${finAppLanguage}"/></a>

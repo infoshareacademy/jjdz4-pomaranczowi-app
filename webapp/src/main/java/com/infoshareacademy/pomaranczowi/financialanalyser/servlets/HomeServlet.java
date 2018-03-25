@@ -7,6 +7,8 @@ import com.infoshareacademy.pomaranczowi.financialanalyser.domain.Price;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.User;
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.Simplify;
 import com.infoshareacademy.pomaranczowi.financialanalyser.financial.operations.Weeks;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.QuotationReport;
+import com.infoshareacademy.pomaranczowi.financialanalyser.services.ReportService;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.UserService;
 
 import javax.ejb.EJB;
@@ -20,7 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
@@ -91,6 +95,8 @@ public class HomeServlet extends HttpServlet {
 
         if (step == 2) {
             String code = request.getParameter("code");
+            sendPostWithQuotationInfoToReport(code);
+
             if (code != null) {
                 request.getSession().setAttribute("code", code);
                 request.getSession().setAttribute("yearsList", priceRepositoryDao.getYearsList(code));
@@ -148,6 +154,15 @@ public class HomeServlet extends HttpServlet {
         } else {
             return (Integer) request.getSession().getAttribute("step");
         }
+    }
+
+    private void sendPostWithQuotationInfoToReport(String code) {
+        ReportService reportServicePost = new ReportService();
+        QuotationReport quotationReport = new QuotationReport();
+        quotationReport.setName(quotationRepositoryDao.getQuotationInfoToReport(code).getName());
+        quotationReport.setQuotationType(quotationRepositoryDao.getQuotationInfoToReport(code).getQuotationType());
+        quotationReport.setCode(code);
+        reportServicePost.addQuotationToRaport(quotationReport);
     }
 
     private void setDataSimplificationMessage(HttpServletRequest request, String data) {

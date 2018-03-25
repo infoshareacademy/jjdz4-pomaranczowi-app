@@ -1,0 +1,26 @@
+version: '2'
+services:
+  report-db:
+    container_name: "report-db"
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=report-db
+      - MYSQL_USER=dockerdb
+      - MYSQL_PASSWORD=dockerdb
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3308:3306
+  report-module:
+    container_name: "report-module"
+    build: .
+    environment:
+      - MYSQL_URI=report-db:3306
+      - MYSQL_DATABASE=report-db
+      - MYSQL_USER=dockerdb
+      - MYSQL_PASSWORD=dockerdb
+      - DATASOURCE_NAME=java:/FinAnalyser
+    ports:
+      - 8082:8080
+      - 9992:9990
+    depends_on:
+      - report-db
