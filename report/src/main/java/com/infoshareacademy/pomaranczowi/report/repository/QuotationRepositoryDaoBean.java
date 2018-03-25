@@ -22,11 +22,11 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao {
         return quotationRepository.isQuotationCodeInDB(quotationCode);
     }
 
-    /*@Override
-    public Long getTheNextFreeQuotationId(){
+    @Override
+    public Integer getTheNextFreeQuotationId(){
         return quotationRepository.getTheNextFreeQuotationId();
     }
-*/
+
     /*@Override
     public List<String> getAllQuotationsList(QuotationType quotationType){
         return quotationRepository.getAllQuotationsList(quotationType);

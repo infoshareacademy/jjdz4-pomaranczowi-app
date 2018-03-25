@@ -14,15 +14,15 @@ public class QuotationRepository {
 
     public boolean addOrUpdateQuotation(Quotation quotation) {
 
-        if (isQuotationCodeInDB(quotation.getCode())){
+        /*if (!isQuotationCodeInDB(quotation.getCode())){*/
             entityManager.flush();
             entityManager.merge(quotation);
             System.out.println("Quotation " + quotation + " added or update");
             return true;
-        } else {
+      /*  } else {
             System.out.println("Quotation " + quotation + " already exists id db");
             return false;
-        }
+        }*/
     }
 
     public boolean isQuotationCodeInDB(String quotationCode) {
@@ -31,13 +31,13 @@ public class QuotationRepository {
                 .getSingleResult().equals(quotationCode);
     }
 
-    /*public Long getTheNextFreeQuotationId() {
+    public Integer getTheNextFreeQuotationId() {
         try {
-            return (Long) entityManager.createNamedQuery("getTheNextFreeQuotationId").getResultList().get(0) + 1;
+            return (Integer) entityManager.createNamedQuery("getTheNextFreeQuotationId").getResultList().get(0) + 1;
         } catch (Exception e) {
-            return 1l;
+            return 1;
         }
-    }*/
+    }
 
     /*public List<String> getAllQuotationsList(QuotationType quotationType) {
         return entityManager.createNamedQuery("getAllQuotationList")

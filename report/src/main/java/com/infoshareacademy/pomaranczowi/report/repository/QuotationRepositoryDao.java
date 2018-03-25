@@ -9,7 +9,7 @@ public interface QuotationRepositoryDao {
 
     boolean addOrUpdateQuotation(Quotation quotation);
     boolean isQuotationCodeInDB(String quotationCode);
-   // Long getTheNextFreeQuotationId();
+    Integer getTheNextFreeQuotationId();
    // List<String> getAllQuotationsList(QuotationType quotationType);
     Quotation getQuotation(String code);
 }

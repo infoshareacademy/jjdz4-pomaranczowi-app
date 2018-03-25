@@ -3,6 +3,8 @@ package com.infoshareacademy.pomaranczowi.financialanalyser.servlets;
 import com.infoshareacademy.pomaranczowi.financialanalyser.domain.QuotationType;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.QuotationReport;
 import com.infoshareacademy.pomaranczowi.financialanalyser.services.ReportService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/report")
 public class ReportServlet extends HttpServlet{
+    private Logger logger = LoggerFactory.getLogger(ReportServlet.class.getName());
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse res) throws IOException, ServletException {
@@ -32,21 +35,22 @@ public class ReportServlet extends HttpServlet{
     private void getReports(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 
         ReportService reportService = new ReportService();
-        String fromAPI = reportService.getUserAgent();
-        System.out.println(fromAPI);
+        List<QuotationReport> quotationReportList = reportService.getAllQuotations();
+        logger.info("User korzysta z " + reportService.getUserAgent());
 
-       // ReportService reportServicePost = new ReportService();
-        /*ReportService reportService2 = new ReportService();
-        QuotationReport quotationReport = reportService2.getQuotation(1);
-        System.out.println("Quot" + quotationReport.toString());*/
-
-        ReportService reportService1 = new ReportService();
-        List<QuotationReport> quotationReportList = reportService1.getAllQuotations();
-        quotationReportList = quotationReportList.stream()
+        // Currency
+        List<QuotationReport> quotationReportCurrencyList = quotationReportList.stream()
                 .filter(quotationReport -> quotationReport.getQuotationType() == QuotationType.CURRENCY)
                 .collect(Collectors.toList());
+        request.getSession().setAttribute("quotationReportCurrencyList", quotationReportCurrencyList);
 
-        request.getSession().setAttribute("quotationReportList", quotationReportList);
+        // Investments
+        List<QuotationReport> quotationReportInvestmentsList = quotationReportList.stream()
+                .filter(quotationReport -> quotationReport.getQuotationType() == QuotationType.FUNDINVESTMENT)
+                .collect(Collectors.toList());
+        request.getSession().setAttribute("quotationReportInvestmentsList", quotationReportInvestmentsList);
+
+
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("portal/report/report-page.jsp");
         requestDispatcher.forward(request,resp);

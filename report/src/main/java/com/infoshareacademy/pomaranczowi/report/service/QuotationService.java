@@ -75,11 +75,17 @@ public class QuotationService {
 
         Integer newId = quotationStore.getNewId();
         LOG.info("New ID: {}", newId);
+        //TODO ustawić query na następny numer
 
-        Quotation quotation1 = new Quotation(newId,
+        Quotation quotation1 = new Quotation(newId, //quotationRepository.getTheNextFreeQuotationId(),
                 quotation.getName(),
                 quotation.getCode(),
                 quotation.getQuotationType());
+        /*Quotation quotation1 = new Quotation();
+        quotation1.setId(quotationRepository.getTheNextFreeQuotationId());
+        quotation1.setName(quotation.getName());
+        quotation1.setCode(quotation.getCode());
+        quotation1.setQuotationType(quotation.getQuotationType());*/
 
         quotationStore.add(quotation1);
         quotationRepository.addOrUpdateQuotation(quotation1);

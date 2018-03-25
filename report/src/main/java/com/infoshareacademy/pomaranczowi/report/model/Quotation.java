@@ -16,7 +16,8 @@ import javax.validation.constraints.NotNull;
 })
 public class Quotation {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@SequenceGenerator(name="quotation_generator", sequenceName = "quotation_seq")
     @Column(nullable=false, unique=true)
     private Integer id;
 

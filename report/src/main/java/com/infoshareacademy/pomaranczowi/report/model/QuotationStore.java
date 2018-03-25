@@ -11,6 +11,9 @@ import java.util.Optional;
 @Singleton
 public class QuotationStore {
 
+   // @EJB
+   // QuotationRepository quotationRepository;
+
     private Logger LOG = LoggerFactory.getLogger(QuotationStore.class);
 
     private Map<Integer, Quotation> base;
@@ -26,7 +29,9 @@ public class QuotationStore {
         Quotation quotation2 = new Quotation(2,"EURO", "EURO", QuotationType.CURRENCY);
 
         base.put(1,quotation1);
+       // quotationRepository.addOrUpdateQuotation(quotation1);
         base.put(2,quotation2);
+       // quotationRepository.addOrUpdateQuotation(quotation2);
     }
 
     public Integer getNewId() {
@@ -36,12 +41,12 @@ public class QuotationStore {
     }
 
     public void add(Quotation quotation) {
-        if (!base.containsValue(quotation)){
+        //if (!base.containsValue(quotation)){
             LOG.info("Adding to store: " + quotation.toString());
             base.put(quotation.getId(), quotation);
-        } else {
-            LOG.info("Quotation " +quotation.toString() + " is already exists!");
-        }
+       // } else {
+        //    LOG.info("Quotation " +quotation.toString() + " is already exists!");
+      //  }
 
     }
 

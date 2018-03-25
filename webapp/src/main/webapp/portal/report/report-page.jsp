@@ -71,19 +71,24 @@
     <div class="row">
         <content class="col col-sm-12 col-lg-8 offset-lg-2">
             <div class="jumbotron vertical-center opacity">
-                <%--<h1 class="display-3"><fmt:message key="home.appName" bundle="${finAppLanguage}"/></h1>
-                <p class="lead"><fmt:message key="home.loginInfo" bundle="${finAppLanguage}"/></p>
-                <hr class="my-4">
-                <p><fmt:message key="home.loginPressButtonInfo" bundle="${finAppLanguage}"/></p>
-                <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="/portal/home" role="button"><fmt:message key="home.login" bundle="${finAppLanguage}"/></a>
-                </p>--%>
                     <h4>
                         <fmt:message key="report.Report" bundle="${finAppLanguage}"/>
                     </h4>
 
 
-                    <jsp:include page="../report/qotation_table_from_report_module.jsp"/>
+                    <jsp:include page="../report/currency_from_report_module.jsp"/>
+            </div>
+        </content>
+    </div>
+    <div class="row">
+        <content class="col col-sm-12 col-lg-8 offset-lg-2">
+            <div class="jumbotron vertical-center opacity">
+                <h4>
+                    <fmt:message key="report.Report" bundle="${finAppLanguage}"/>
+                </h4>
+
+
+                <jsp:include page="../report/investments-from-report-module.jsp"/>
             </div>
         </content>
     </div>
