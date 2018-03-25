@@ -6,7 +6,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="fin-app" var="finAppLanguage"/>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/portal/home"><fmt:message key="home.appName" bundle="${finAppLanguage}"/></a>
+    <a class="navbar-brand" href="/homepage"><fmt:message key="home.appName" bundle="${finAppLanguage}"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="/portal/home"><fmt:message key="home.homePage" bundle="${finAppLanguage}"/> <span
+                <a class="nav-link" href="/homepage"><fmt:message key="home.homePage" bundle="${finAppLanguage}"/> <span
                         class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
