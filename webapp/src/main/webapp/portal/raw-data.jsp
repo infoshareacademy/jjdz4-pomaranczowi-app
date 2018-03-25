@@ -1,9 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="fin-app" var="finAppLanguage"/>
+
 
 <h4>
-    Dane dla
-    <c:out value="${sessionScope.data == 'fund' ? 'funduszu inwestycyjnego': 'waluty'} ${sessionScope.code}"/>
+
+    <fmt:message key="${rawDataMessage}" bundle="${finAppLanguage}"/>
+    <c:out value="${sessionScope.code}"/>
 </h4>
 
 <c:choose>
@@ -12,15 +18,24 @@
     </c:when>
     <c:otherwise>
         <h5>
-            z okresu <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
+            <fmt:message key="localExtremesInput.period" bundle="${finAppLanguage}"/>
+            <c:out value="${startDate}"/> - <c:out value="${endDate}"/>
         </h5>
         <c:choose>
             <c:when test="${sessionScope.toConversion==true}">
-                <h6 style="color: red;">Dane uproszczone za pomocą ${sessionScope.conversion} z ${sessionScope.period} poprzednich okresów</h6>
+                <h6 style="color: red;">
+                    <fmt:message key="localExtremesInput.simpl" bundle="${finAppLanguage}"/>
+                        ${sessionScope.conversion}
+                    <fmt:message key="localExtremesInput.from" bundle="${finAppLanguage}"/>
+                    ${sessionScope.period}
+                    <fmt:message key="localExtremesInput.periods" bundle="${finAppLanguage}"/>
+
+                </h6>
             </c:when>
             <c:otherwise>
                 <h6>
-                    Dane nieuproszczone.
+                    <fmt:message key="localExtremesInput.dataNotSimpl" bundle="${finAppLanguage}"/>
+
                 </h6>
             </c:otherwise>
         </c:choose>
