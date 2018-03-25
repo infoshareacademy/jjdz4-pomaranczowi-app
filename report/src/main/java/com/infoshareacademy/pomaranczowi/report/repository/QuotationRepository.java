@@ -5,6 +5,7 @@ import com.infoshareacademy.pomaranczowi.report.model.Quotation;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Stateless
 public class QuotationRepository {
@@ -39,11 +40,10 @@ public class QuotationRepository {
         }
     }
 
-    /*public List<String> getAllQuotationsList(QuotationType quotationType) {
+    public List<Quotation> getAllQuotationsList() {
         return entityManager.createNamedQuery("getAllQuotationList")
-                .setParameter("quotationType", quotationType)
                 .getResultList();
-    }*/
+    }
 
     public Quotation getQuotation(String code) {
         return (Quotation) entityManager.createNamedQuery("getQuotation")

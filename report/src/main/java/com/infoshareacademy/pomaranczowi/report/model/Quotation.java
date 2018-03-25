@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
         @NamedQuery(name = "getTheNextFreeQuotationId",
                 query = "select MAX(q.id) from Quotation q"),
         @NamedQuery(name = "getAllQuotationList",
-                query = "select DISTINCT q.code from Quotation q where q.quotationType=:quotationType"),
+                query = "select DISTINCT q from Quotation q"),
         @NamedQuery(name = "getQuotation",
                 query = "select q from Quotation q where q.code=:code"),
 })

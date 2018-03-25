@@ -1,20 +1,17 @@
 package com.infoshareacademy.pomaranczowi.report.service;
 
 import com.infoshareacademy.pomaranczowi.report.model.Quotation;
-import com.infoshareacademy.pomaranczowi.report.model.QuotationStore;
 import com.infoshareacademy.pomaranczowi.report.repository.QuotationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.Collection;
-import java.util.Optional;
 
 @Path("/")
 public class QuotationService {
@@ -27,8 +24,8 @@ public class QuotationService {
     @EJB
     QuotationRepository quotationRepository;
 
-    @Inject
-    private QuotationStore quotationStore;
+   // @Inject
+   // private QuotationStore quotationStore;
 
     public QuotationService() {
     }
@@ -37,7 +34,7 @@ public class QuotationService {
     @Path("/agent")
     @Produces(MediaType.TEXT_PLAIN)
     public Response getUserAgent(@HeaderParam("user-agent") String userAgent) {
-        LOG.info("User agent: {}", userAgent);
+        LOG.info("User agent: {}", userAgent.toString());
 
         return Response.ok(userAgent).build();
     }
@@ -47,7 +44,8 @@ public class QuotationService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getQuotations() {
 
-        Collection<Quotation> quotations = quotationStore.getBase().values();
+        //Collection<Quotation> quotations = quotationStore.getBase().values();
+        Collection<Quotation> quotations = quotationRepository.getAllQuotationsList();
         if (quotations.isEmpty()) {
             return Response.noContent().build();
         }
@@ -55,7 +53,7 @@ public class QuotationService {
         return Response.ok(quotations).build();
     }
 
-    @GET
+   /* @GET
     @Path("/quotation")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getQuotation(@QueryParam("id") Integer id) {
@@ -65,7 +63,7 @@ public class QuotationService {
         }
 
         return Response.status(Response.Status.NOT_FOUND).build();
-    }
+    }*/
 
     @POST
     @Path("/addquotation")
@@ -73,7 +71,10 @@ public class QuotationService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addQuotation(Quotation quotation) {
 
-        Integer newId = quotationStore.getNewId();
+
+
+        //Integer newId = quotationStore.getNewId();
+        Integer newId = quotationRepository.getTheNextFreeQuotationId();
         LOG.info("New ID: {}", newId);
         //TODO ustawić query na następny numer
 
@@ -87,7 +88,7 @@ public class QuotationService {
         quotation1.setCode(quotation.getCode());
         quotation1.setQuotationType(quotation.getQuotationType());*/
 
-        quotationStore.add(quotation1);
+        //quotationStore.add(quotation1);
         quotationRepository.addOrUpdateQuotation(quotation1);
 
         return getQuotations();

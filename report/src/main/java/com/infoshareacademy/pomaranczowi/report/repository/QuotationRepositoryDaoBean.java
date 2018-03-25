@@ -4,6 +4,7 @@ import com.infoshareacademy.pomaranczowi.report.model.Quotation;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.List;
 
 @Stateless
 public class QuotationRepositoryDaoBean implements QuotationRepositoryDao {
@@ -27,10 +28,10 @@ public class QuotationRepositoryDaoBean implements QuotationRepositoryDao {
         return quotationRepository.getTheNextFreeQuotationId();
     }
 
-    /*@Override
-    public List<String> getAllQuotationsList(QuotationType quotationType){
-        return quotationRepository.getAllQuotationsList(quotationType);
-    }*/
+    @Override
+    public List<Quotation> getAllQuotationsList(){
+        return quotationRepository.getAllQuotationsList();
+    }
 
     @Override
     public Quotation getQuotation(String code){
