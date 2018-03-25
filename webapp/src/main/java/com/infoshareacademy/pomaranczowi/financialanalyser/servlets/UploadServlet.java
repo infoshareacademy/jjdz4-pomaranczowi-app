@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,11 +20,34 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /**
  * Servlet implementation class UploadServlet
  */
+@WebServlet(urlPatterns = "/portal/upload")
 public class UploadServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final String DATA_DIRECTORY = "data";
     private static final int MAX_MEMORY_SIZE = 1024 * 1024 * 10;
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 10;
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        changeLanguage(request);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/portal/upload.jsp");
+        setStepIfEmpty(request);
+        requestDispatcher.forward(request, response);
+        doPost(request, response);
+    }
+
+    private void setStepIfEmpty(HttpServletRequest request) {
+        if (request.getSession().getAttribute("step") == null) {
+            request.setAttribute("step", 0);
+        }
+    }
+
+    private void changeLanguage(HttpServletRequest request) {
+        String pageLanguage = request.getParameter("lang");
+        if (pageLanguage != null) {
+            request.getSession().setAttribute("language", pageLanguage);
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -16,89 +16,68 @@
     <link rel="stylesheet" href="../css/style.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <script src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap-filestyle.min.js"></script>
 </head>
 
 <body>
 
-<form method="post" action="/servlets/UploadServlet" enctype="multipart/form-data">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/portal/home"><fmt:message key="home.appName" bundle="${finAppLanguage}"/></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="/portal/home"><fmt:message key="home.homePage" bundle="${finAppLanguage}"/> <span
-                        class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><fmt:message key="home.contact" bundle="${finAppLanguage}"/></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/logout"><fmt:message key="home.logout" bundle="${finAppLanguage}"/></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/portal/upload.jsp"><fmt:message key="home.upload" bundle="${finAppLanguage}"/></a>
-            </li>
-        </ul>
-
-    </div>
-    <jsp:include page="general/language-flags.jsp"/>
-</nav>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
-
-
-
-   <%--         <script>
-                $(":file").filestyle();
-            </script>
-
-            <input type="file" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here.">
---%>
-
-                <h2><fmt:message key="upload.selectFile" bundle="${finAppLanguage}"/> </h2>
+<form method="post" action="/portal/upload" enctype="multipart/form-data">
+    <jsp:include page="general/navbar.jsp"/>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
+                <h2><fmt:message key="upload.selectFile" bundle="${finAppLanguage}"/></h2>
 
                 <br/>
                 (<fmt:message key="upload.maxFileSize" bundle="${finAppLanguage}"/> 10 Mb)
                 <br/><br/>
 
-                <input type="file" name="dataFile" id="fileChooser" onchange=""/>
+                <input type="file" name="dataFile" id="fileChooser"/>
 
-                <br/><br/>
-
-                <input type="submit" id="upload" value="<fmt:message key="upload.upload" bundle="${finAppLanguage}"/>"/>
+                <input type="submit" id="upload"
+                       value="<fmt:message key="upload.upload"
+                       bundle="${finAppLanguage}"/>"
+                       class="btn btn-dark"
+                       style="margin-top: 1.5rem"/>
 
                 <br/><br/>
                 <c:choose>
                     <c:when test="${file != null}">
-
-                        <h5 style="color: red;">
+                        <div class="alert alert-success" role="alert">
                             <fmt:message key="upload.fileUploaded" bundle="${finAppLanguage}"/>
-                            ${file}
+                                ${file}
 
-                        </h5>
+                        </div>
                     </c:when>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${hasFile ==0}">
-
-                        <h5 style="color: red;">
+                    <c:when test="${hasFile == 0}">
+                        <div class="alert alert-danger" role="alert">
                             <fmt:message key="upload.pleasefile" bundle="${finAppLanguage}"/>
-                        </h5>
+                        </div>
                     </c:when>
                 </c:choose>
-                            <div id="message"></div>
+                <div id="message"></div>
 
                 <br/><br/>
+            </div>
         </div>
     </div>
-</div>
 </form>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="../js/bootstrap-filestyle.min.js"></script>
+<script>
+    $("#fileChooser").filestyle({
+        'text': '<fmt:message key="home.browse" bundle="${finAppLanguage}"/>',
+        'btnClass': 'btn-dark'
+    });
+</script>
 </body>
 </html>

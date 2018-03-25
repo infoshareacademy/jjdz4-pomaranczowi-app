@@ -19,32 +19,7 @@
     <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/portal/home"><fmt:message key="home.appName" bundle="${finAppLanguage}"/></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#"><fmt:message key="home.homePage" bundle="${finAppLanguage}"/> <span
-                        class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><fmt:message key="home.contact" bundle="${finAppLanguage}"/></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/logout"><fmt:message key="home.logout" bundle="${finAppLanguage}"/></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="upload.jsp"><fmt:message key="home.upload" bundle="${finAppLanguage}"/></a>
-            </li>
-        </ul>
-
-    </div>
-    <jsp:include page="general/language-flags.jsp"/>
-</nav>
+<jsp:include page="general/navbar.jsp"/>
 <div class="container-fluid">
     <div class="row">
         <div class="col col-sm-12 col-lg-8 offset-lg-2" style="background-color: rgba(255,255,255,0.7)">
